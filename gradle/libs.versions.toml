@@ -1,0 +1,48 @@
+[versions]
+spring-boot = "3.4.2"
+spring-cloud = "2024.0.0"
+postgresql = "42.7.5"
+r2dbc_postgresql = "0.8.10.RELEASE"
+micrometer_prometheus = "1.9.1"
+dependency-management = "1.1.7"
+
+lombok = "1.18.24"
+spring_graphql = "1.0.0"
+reactor_resilience4j = "1.0.0"
+dgs-codegen = "7.0.3"
+eureka-ver = "4.2.0"
+[plugins]
+spring_boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+dgs_codegen = { id = "com.netflix.dgs.codegen", version.ref = "dgs-codegen" }
+dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
+
+
+[libraries]
+spring_boot_actuator = { group = "org.springframework.boot", name = "spring-boot-starter-actuator", version.ref = "spring-boot" }
+spring_boot_data_jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-jdbc", version.ref = "spring-boot" }
+spring_boot_data_jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+spring_boot_data_r2dbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-r2dbc", version.ref = "spring-boot" }
+spring_boot_graphql = { group = "org.springframework.boot", name = "spring-boot-starter-graphql", version.ref = "spring-boot" }
+spring_boot_jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc", version.ref = "spring-boot" }
+spring_boot_oauth2_authorization_server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-authorization-server", version.ref = "spring-boot" }
+spring_boot_oauth2_client = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-client", version.ref = "spring-boot" }
+spring_boot_oauth2_resource_server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot" }
+spring_boot_security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
+spring_boot_web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot" }
+spring_boot_webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux", version.ref = "spring-boot" }
+spring_cloud_circuitbreaker = { group = "org.springframework.cloud", name = "spring-cloud-starter-circuitbreaker-reactor-resilience4j", version.ref = "spring-cloud" }
+spring_cloud_gateway = { group = "org.springframework.cloud", name = "spring-cloud-starter-gateway", version.ref = "spring-cloud" }
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+r2dbc_postgresql = { group = "org.postgresql", name = "r2dbc-postgresql", version.ref = "r2dbc_postgresql" }
+micrometer_prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version.ref = "micrometer_prometheus" }
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+spring_graphql = { group = "org.springframework.graphql", name = "spring-graphql", version.ref = "spring_graphql" }
+reactor_test = { group = "io.projectreactor", name = "reactor-test", version.ref = "reactor_resilience4j" }
+spring_boot_test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }
+spring_security_test = { group = "org.springframework.security", name = "spring-security-test", version.ref = "spring-boot" }
+spring-cloud-starter-netflix-eureka-server = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-server", version.ref = "eureka-ver" }
+spring-cloud-starter-netflix-eureka-client = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-client", version.ref = "eureka-ver" }
+
+
+junit_platform_launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.7.2" }
+

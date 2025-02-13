@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service  # Уникальное имя сервиса
+
+eureka:
+  client:
+    service-url:
+      registry-fetch-interval-seconds: 10  # Обновлять список сервисов каждые 10 секунд
+      defaultZone: http://localhost:8761/eureka/  # Адрес Eureka
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    lease-renewal-interval-in-seconds: 10  # Отправлять heartbeat каждые 10 секунд
+    lease-expiration-duration-in-seconds: 30  # Удалять сервис, если он не отвечает 30 секунд
+    prefer-ip-address: true  # Использовать IP вместо имени хоста

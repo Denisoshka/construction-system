@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  postgres-node-0:
+    image: bitnami/postgresql-repmgr:16
+    restart: unless-stopped
+    environment:
+      POSTGRESQL_POSTGRES_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      POSTGRESQL_USERNAME: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
+      POSTGRESQL_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      REPMGR_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      REPMGR_PRIMARY_HOST: postgres-node-0
+      REPMGR_PARTNER_NODES: postgres-node-0:5432
+      REPMGR_NODE_NAME: postgres-node-0
+      REPMGR_NODE_NETWORK_NAME: postgres-node-0
+    healthcheck:
+      test: [ 'CMD-SHELL', '/opt/bitnami/scripts/postgresql-repmgr/entrypoint.sh', 'pg_isready' ]
+      interval: 5s
+      timeout: 5s
+      retries: 50
+    ports:
+      - ${CONSTRUCTION_SYSTEM_POSTGRES_0_PORT:-25432}:5432
+    volumes:
+      - postgres_node_0_dev_data:/bitnami/postgresql
+      - ./deploy/postgres-cluster:/docker-entrypoint-initdb.d
+    networks:
+      - construction-system-dev-net
+
+  postgres-migration:
+    image: liquibase/liquibase:4.27-alpine
+    command:
+      - --driver=org.postgresql.Driver
+      - --changeLogFile=db.changelog-master.xml
+      - --url=jdbc:postgresql://postgres-node-0:5432/construction-system
+      - --username=${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
+      - --password=${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      - update
+    volumes:
+      - ./db/db.changelog-master.xml:/liquibase/db.changelog-master.xml
+      - ./db/DDL:/liquibase/DDL
+      - ./db/DML:/liquibase/DML
+      - ./db/reports:/liquibase/reports
+    networks:
+      - construction-system   -dev-net
+    depends_on:
+      postgres-node-0:
+        condition: service_healthy
+
+volumes:
+  postgres_data: # Здесь явно определяем том
+    driver: local
+
+networks:
+  my-network:
+    driver: bridge

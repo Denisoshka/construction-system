@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     implementation(libs.spring.cloud.starter.netflix.eureka.server)
+    implementation(libs.gson)
+    implementation(libs.spring.boot.actuator)
 }
 
 tasks.test {

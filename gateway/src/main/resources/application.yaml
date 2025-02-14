@@ -1,12 +1,29 @@
 spring:
+  application:
+    name: gateway
   cloud:
-    discovery:
-      enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+#  security:
+#    oauth2:
+#      client:
 
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    d.zhdanov.ccfit.nsu: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+server:
+  port: 8080  # Gateway работает на этом порту
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-
-server:
-  port: 8080  # Gateway работает на этом порту

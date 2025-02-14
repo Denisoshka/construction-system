@@ -17,3 +17,5 @@ pluginManagement {
 }
 include(":eureka")
 include(":gateway")
+include("router")
+include("router")

@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8761
 
 spring:
   application:
-    name: user-service  # Уникальное имя сервиса
+    name: eureka  # Уникальное имя сервиса
 
 eureka:
   client:

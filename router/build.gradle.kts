@@ -11,7 +11,3 @@ repositories {
 
 dependencies {
 }
-
-tasks.test {
-    useJUnitPlatform()
-}

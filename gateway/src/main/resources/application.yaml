@@ -7,10 +7,20 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-#  security:
-#    oauth2:
-#      client:
-
+      routes:
+        - id: keycloak-route
+          uri: lb://keycloak
+          predicates:
+            - Path=/keycloak/**
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: gateway-client        # Ваш Client ID из Keycloak
+            client-secret: { your-client-secret }  # Ваш Client Secret
+            authorization-grant-type: authorization_code
+            scope: openid
 
 logging:
   level:

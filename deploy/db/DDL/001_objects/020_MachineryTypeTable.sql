@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS machinery_type
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL
+)

@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS machinery_management
+(
+    id           SERIAL PRIMARY KEY,
+    machinery_id SERIAL NOT NULL REFERENCES machinery_unit (id),
+    project_id   SERIAL NOT NULL REFERENCES construction_project (id),
+    start_date   DATE   NOT NULL,
+    end_date     DATE CHECK (end_date IS NULL OR end_date >= start_date)
+)

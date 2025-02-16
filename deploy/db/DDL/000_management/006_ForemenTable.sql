@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS foremen
+CREATE TABLE IF NOT EXISTS foremen_table
 (
-    foremanId integer NOT NULL REFERENCES employees (id),
-    profileId integer NOT NULL REFERENCES worker_position (id)
+    id        SERIAL PRIMARY KEY,
+    foremanId integer NOT NULL REFERENCES employees (id) ON DELETE CASCADE
 )

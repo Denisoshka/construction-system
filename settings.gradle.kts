@@ -15,7 +15,13 @@ pluginManagement {
 
 	}
 }
+
 include(":eureka")
 include(":gateway")
 include("router")
 include("router")
+include("api")
+include("employees")
+include("orders")
+include("stuff")
+include("system")

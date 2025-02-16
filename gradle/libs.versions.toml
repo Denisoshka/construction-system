@@ -12,11 +12,13 @@ dgs-codegen = "7.0.3"
 cloud-ver = "4.2.0"
 spring_boot_starter_logging = "3.4.2"
 logback = "1.5.16"
-
+docker_plugin = "0.36.0"
+dgs-ver = "8.5.5"
 [plugins]
 spring_boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dgs_codegen = { id = "com.netflix.dgs.codegen", version.ref = "dgs-codegen" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
+gradle_docker_plugin = { id = "com.palantir.docker", version.ref ="docker_plugin" }
 
 
 [libraries]
@@ -48,7 +50,7 @@ spring_security_test = { group = "org.springframework.security", name = "spring-
 logback_classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 spring-cloud-starter-netflix-eureka-server = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-server", version.ref = "cloud-ver" }
 spring-cloud-starter-netflix-eureka-client = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-client", version.ref = "cloud-ver" }
-
-
+spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
+dgs = {group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-starter", version.ref  = "dgs-ver"}
 junit_platform_launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.7.2" }
 

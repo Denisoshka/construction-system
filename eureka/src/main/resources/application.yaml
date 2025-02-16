@@ -2,6 +2,10 @@ server:
   port: 8761
 
 spring:
+  docker:
+    compose:
+      enabled: false
+      file: deploy/docker-compose-dev.yaml
   application:
     name: eureka  # Уникальное имя сервиса
 

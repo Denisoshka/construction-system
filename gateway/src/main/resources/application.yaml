@@ -1,4 +1,8 @@
 spring:
+  docker:
+    compose:
+      enabled: true
+      file: deploy/docker-compose-dev.yaml
   application:
     name: gateway
   cloud:
@@ -17,8 +21,8 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: gateway-client        # Ваш Client ID из Keycloak
-            client-secret: { your-client-secret }  # Ваш Client Secret
+            client-id: test        # Ваш Client ID из Keycloak
+            client-secret: ey6w2rx3XgVIJHr2vAFOkRvBhwieTuAr  # Ваш Client Secret
             authorization-grant-type: authorization_code
             scope: openid
 

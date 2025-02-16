@@ -1,37 +1,34 @@
 version: '3.8'
 
 services:
-  postgres-node-0:
-    image: bitnami/postgresql-repmgr:16
-    restart: unless-stopped
+  postgres:
+    image: postgres:16
+    container_name: postgres-db
     environment:
-      POSTGRESQL_POSTGRES_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
-      POSTGRESQL_USERNAME: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
-      POSTGRESQL_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
-      REPMGR_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
-      REPMGR_PRIMARY_HOST: postgres-node-0
-      REPMGR_PARTNER_NODES: postgres-node-0:5432
-      REPMGR_NODE_NAME: postgres-node-0
-      REPMGR_NODE_NETWORK_NAME: postgres-node-0
-    healthcheck:
-      test: [ 'CMD-SHELL', '/opt/bitnami/scripts/postgresql-repmgr/entrypoint.sh', 'pg_isready' ]
-      interval: 5s
-      timeout: 5s
-      retries: 50
+      POSTGRES_USER: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-construction-system}
     ports:
-      - ${CONSTRUCTION_SYSTEM_POSTGRES_0_PORT:-25432}:5432
+      - "5432:5432"
     volumes:
-      - postgres_node_0_dev_data:/bitnami/postgresql
-      - ./deploy/postgres-cluster:/docker-entrypoint-initdb.d
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql  # Добавляем скрипт для инициализации базы данных
+      - postgres-data-dev:/var/lib/postgresql/data
     networks:
-      - construction-system-dev-net
+      - dev-net
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "$POSTGRES_USER", "-d", "$POSTGRES_DB" ]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+      start_period: 10s
 
   postgres-migration:
     image: liquibase/liquibase:4.27-alpine
     command:
       - --driver=org.postgresql.Driver
       - --changeLogFile=db.changelog-master.xml
-      - --url=jdbc:postgresql://postgres-node-0:5432/construction-system
+      - --url=jdbc:postgresql://postgres:5432/construction-system
       - --username=${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
       - --password=${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
       - update
@@ -41,15 +38,57 @@ services:
       - ./db/DML:/liquibase/DML
       - ./db/reports:/liquibase/reports
     networks:
-      - construction-system   -dev-net
+      - dev-net
+    restart: no
     depends_on:
-      postgres-node-0:
+      postgres:
         condition: service_healthy
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    command:
+      - start-dev
+#      - --import-realm
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-password}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-db:5432/${CONSTRUCTION_SYSTEM_POSTGRES_DB:-construction-system}
+      KC_DB_USERNAME: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
+      KC_DB_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      KC_PROXY: edge
+      JAVA_OPTS: "-Dspring.cloud.eureka.client.service-url.defaultZone=http://localhost:8761/eureka/ -Dspring.application.name=keycloak-service"
+      EUREKA_CLIENT_SERVICEURL: http://localhost:8761/eureka
+      SPRING_APPLICATION_NAME: keycloak
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    networks:
+      - dev-net
+    depends_on:
+      - postgres
+      - eureka
+
+  eureka:
+    build:
+      context: ../eureka
+      dockerfile: Dockerfile
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    networks:
+      - dev-net
+
+
 volumes:
-  postgres_data: # Здесь явно определяем том
+  postgres-data-dev: # Здесь добавляем определение тома postgres-data-dev
     driver: local
 
+
 networks:
-  my-network:
+  dev-net:
     driver: bridge

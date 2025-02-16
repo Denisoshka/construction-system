@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS site_head
+(
+    employee_id SERIAL NOT NULL REFERENCES employees (id) ON DELETE CASCADE
+)

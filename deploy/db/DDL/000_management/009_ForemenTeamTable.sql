@@ -1,6 +1,8 @@
-CREATE TABLE IF NOT EXISTS foremen_table
+CREATE TABLE IF NOT EXISTS foremen_team_table
 (
-    id        SERIAL PRIMARY KEY,
-    site_head INTEGER NOT NULL REFERENCES foremen_table (id) ON DELETE SET DEFAULT,
-    PRIMARY KEY (id, site_head)
+    teamId     INTEGER NOT NULL REFERENCES foremen_table (id) ON DELETE CASCADE,
+    workerId   INTEGER NOT NULL ,
+    positionId INTEGER NOT NULL,
+    PRIMARY KEY (teamId, workerId, positionId),
+    CONSTRAINT fk_worker FOREIGN KEY (workerId, positionId) REFERENCES workers(employee_id, position)
 )

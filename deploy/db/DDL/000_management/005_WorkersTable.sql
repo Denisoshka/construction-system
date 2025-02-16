@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS workers
 (
-    employee_id SERIAL NOT NULL REFERENCES employees (id) ON DELETE CASCADE,
-    position   SERIAL NOT NULL REFERENCES worker_position (id) ON DELETE SET DEFAULT,
+    employee_id INTEGER NOT NULL REFERENCES employees (id) ON DELETE CASCADE,
+    position    INTEGER NOT NULL REFERENCES worker_position (id) ON DELETE CASCADE,
     PRIMARY KEY (employee_id, position)
 )

@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS construction_project_contract
     id                       SERIAL PRIMARY KEY,
     project_id               INTEGER      NOT NULL,
     site_id                  INTEGER      NOT NULL,
-    customer_organization_id INTEGER      NOT NULL REFERENCES customer_organization (id) ON DELETE NO ACTION,
-    name                     VARCHAR(150) NOT NULL,
+    customer_organization_id INTEGER      NOT NULL REFERENCES customer_organization (id) ON DELETE SET DEFAULT,
+    type                     VARCHAR(150) NOT NULL REFERENCES object_types (type) ON DELETE CASCADE,
     signing_date             DATE         NOT NULL CHECK (
         signing_date >= '1900-01-01'::DATE
         ),
@@ -17,5 +17,5 @@ CREATE TABLE IF NOT EXISTS construction_project_contract
     fact_end_date            date CHECK (
         fact_end_date >= '1900-01-01'::DATE AND fact_end_date >= fact_start_date
         ),
-    FOREIGN KEY (project_id, site_id) REFERENCES construction_project (id, site_id) ON DELETE NO ACTION
+    FOREIGN KEY (project_id, site_id) REFERENCES construction_project (id, site_id) ON DELETE CASCADE
 );

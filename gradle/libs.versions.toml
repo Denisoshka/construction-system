@@ -8,17 +8,20 @@ gson = "2.12.1"  # Указываем нужную версию Gson
 lombok = "1.18.24"
 spring_graphql = "1.0.0"
 reactor_resilience4j = "1.0.0"
-dgs-codegen = "7.0.3"
 cloud-ver = "4.2.0"
 spring_boot_starter_logging = "3.4.2"
 logback = "1.5.16"
 docker_plugin = "0.36.0"
+dgs-codegen = "7.0.3"
 dgs-ver = "8.5.5"
+dgs-extended-scalars-ver = "10.0.3"
+mapstruct-ver = "1.6.3"
+
 [plugins]
 spring_boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dgs_codegen = { id = "com.netflix.dgs.codegen", version.ref = "dgs-codegen" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
-gradle_docker_plugin = { id = "com.palantir.docker", version.ref ="docker_plugin" }
+gradle_docker_plugin = { id = "com.palantir.docker", version.ref = "docker_plugin" }
 
 
 [libraries]
@@ -27,7 +30,7 @@ spring_boot_data_jdbc = { group = "org.springframework.boot", name = "spring-boo
 spring_boot_data_jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot" }
 spring_boot_data_r2dbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-r2dbc", version.ref = "spring-boot" }
 spring_boot_graphql = { group = "org.springframework.boot", name = "spring-boot-starter-graphql", version.ref = "spring-boot" }
-spring_boot_jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc", version.ref = "spring-boot" }
+spring_boot_jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-data-jdbc", version.ref = "spring-boot" }
 spring_boot_oauth2_authorization_server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-authorization-server", version.ref = "spring-boot" }
 spring_boot_oauth2_client = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-client", version.ref = "spring-boot" }
 spring_boot_oauth2_resource_server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot" }
@@ -51,6 +54,8 @@ logback_classic = { group = "ch.qos.logback", name = "logback-classic", version.
 spring-cloud-starter-netflix-eureka-server = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-server", version.ref = "cloud-ver" }
 spring-cloud-starter-netflix-eureka-client = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-client", version.ref = "cloud-ver" }
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
-dgs = {group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-starter", version.ref  = "dgs-ver"}
 junit_platform_launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.7.2" }
-
+dgs = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-starter", version.ref = "dgs-ver" }
+dgs-extended-scalars = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-extended-scalars", version.ref = "dgs-extended-scalars-ver" }
+mapstruct-impl = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct-ver" }
+mapstruct-annotationprocessor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct-ver" }

@@ -16,7 +16,6 @@ dependencies {
 	implementation(libs.spring.cloud.starter.netflix.eureka.client)
 	implementation(libs.spring.boot.oauth2.client)
 	implementation(libs.gson)
-//	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-graphql-starter")
 	compileOnly(libs.lombok)
 	annotationProcessor(libs.lombok)
 	implementation(libs.spring.boot.actuator)

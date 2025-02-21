@@ -1,0 +1,39 @@
+scalar Date
+@specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
+
+type Employee {
+    systemId: String!
+    name: String!
+    surname: String!
+    patronymic : String
+    employmentDate : Date!
+    post: String
+    position: String
+}
+type Query {
+    getEmployee(systemId: String!): Employee
+    getEmployees(pagination: Pagination) : [Employee!]
+    getEngineersPositions(pagination: Pagination) :[String!]
+    getWorkerPositions(pagination: Pagination) : [String!]
+}
+
+
+input Pagination {
+    page: Int!
+    pageSize: Int!
+}
+
+input EmployeeInput {
+    systemId: String!
+    name: String!
+    surname: String!
+    patronymic : String
+    post: String
+    positionId: Int
+}
+
+type Mutation {
+    createEmployee(input: EmployeeInput!): Employee
+    updateEmployee(input: EmployeeInput!): Employee
+    deleteEmployee(systemId: String!) : Int
+}

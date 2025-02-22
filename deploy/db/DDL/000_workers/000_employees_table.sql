@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS employees
     patronymic      VARCHAR(100) NOT NULL,
     employment_date DATE         NOT NULL,
     post            VARCHAR(100) NOT NULL,
-    CHECK (post IN ('engineer', 'worker')),
+    CHECK (post IN ('engineer', 'worker', 'UNKNOWN')),
     UNIQUE (system_id)
 );

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS work_schedule
 (
     id              serial PRIMARY KEY,
-    brigade_id      INTEGER NOT NULL REFERENCES brigade_table (id) ON DELETE CASCADE,
+    brigade_id      INTEGER NOT NULL REFERENCES brigade (id) ON DELETE CASCADE,
     work_type_id    INTEGER NOT NULL REFERENCES work_type (id) ON DELETE CASCADE,
     plan_start_date DATE    NOT NULL CHECK ( plan_start_date >= '1900-01-01'::DATE),
     plan_end_date   DATE CHECK (

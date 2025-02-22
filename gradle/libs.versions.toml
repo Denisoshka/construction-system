@@ -4,7 +4,7 @@ postgresql = "42.7.5"
 r2dbc_postgresql = "0.8.10.RELEASE"
 micrometer_prometheus = "1.9.1"
 dependency-management = "1.1.7"
-gson = "2.12.1"  # Указываем нужную версию Gson
+gson = "2.12.1"
 lombok = "1.18.24"
 spring_graphql = "1.0.0"
 reactor_resilience4j = "1.0.0"
@@ -16,6 +16,7 @@ dgs-codegen = "7.0.3"
 dgs-ver = "8.5.5"
 dgs-extended-scalars-ver = "10.0.3"
 mapstruct-ver = "1.6.3"
+caffeine-ver = "3.2.0"
 
 [plugins]
 spring_boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -59,3 +60,4 @@ dgs = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-st
 dgs-extended-scalars = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-extended-scalars", version.ref = "dgs-extended-scalars-ver" }
 mapstruct-impl = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct-ver" }
 mapstruct-annotationprocessor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct-ver" }
+caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine-ver" }

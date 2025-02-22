@@ -8,15 +8,15 @@ import java.time.LocalDate;
 
 @Data
 @Table("employees")
-public class Employee {
+public class EmployeeDTO {
     @Id
     private long id;
 
-    private String system_id;
+    private String systemId;
     private String name;
     private String surname;
     private String patronymic;
-    private LocalDate seniority;
+    private LocalDate employmentDate;
     private String post;
 }
 

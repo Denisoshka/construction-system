@@ -8,8 +8,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @Table("engineers")
 public class Engineer {
-    @Id
-    private long employeeId;
-    @MappedCollection
-    private EngineerPosition position;
+  @Id
+  private Integer employeeId;
+  @MappedCollection
+  private EngineerPosition position;
 }

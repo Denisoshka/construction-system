@@ -9,14 +9,15 @@ import java.time.LocalDate;
 @Data
 @Table("employees")
 public class EmployeeDTO {
-    @Id
-    private long id;
+  @Id
+  private Integer id;
 
-    private String systemId;
-    private String name;
-    private String surname;
-    private String patronymic;
-    private LocalDate employmentDate;
-    private String post;
+  private String systemId;
+  private String name;
+  private String surname;
+  private String patronymic;
+  private LocalDate employmentDate;
+  private String post;
+  private String position;
 }
 

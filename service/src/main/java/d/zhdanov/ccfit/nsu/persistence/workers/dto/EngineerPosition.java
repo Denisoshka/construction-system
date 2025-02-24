@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @Table("engineer_position")
 public class EngineerPosition {
-    @Id
-    private long id;
-    private String name;
+  @Id
+  private Integer id;
+  private String name;
 }

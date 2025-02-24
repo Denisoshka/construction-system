@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Data
 @Table("site_team")
 public class SiteTeam {
-    @Id
-    private long id;
-    private long siteHeadId;
+  @Id
+  private Integer id;
+  private Integer siteHeadId;
 }

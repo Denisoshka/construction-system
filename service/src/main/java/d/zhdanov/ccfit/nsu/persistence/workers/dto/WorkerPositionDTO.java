@@ -1,13 +1,15 @@
 package d.zhdanov.ccfit.nsu.persistence.workers.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("workers")
-public class Worker {
+@AllArgsConstructor
+@Table("worker_position")
+public class WorkerPositionDTO {
   @Id
-  private Integer employeeId;
-  private Integer position;
+  private Integer id;
+  private String name;
 }

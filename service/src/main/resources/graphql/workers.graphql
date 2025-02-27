@@ -10,13 +10,25 @@ type Employee {
     post: String
     position: String
 }
+
+type EngineerPosition{
+    id: Int!
+    name : String!
+}
+
+type WorkerPosition{
+    id: Int!
+    name : String!
+}
+
 type Query {
     getEmployee(systemId: String!): Employee
     getEmployees(pagination: Pagination) : [Employee!]
-    getEngineersPositions(pagination: Pagination) :[String!]
-    getWorkerPositions(pagination: Pagination) : [String!]
+    getEngineers(pagination: Pagination) :[String!]
+    getWorkers(pagination: Pagination) : [String!]
+    getEngineerPositions(pagination: Pagination) : [EngineerPosition!]
+    getWorkersPositions(pagination: Pagination) : [WorkerPosition!]
 }
-
 
 input Pagination {
     page: Int!
@@ -32,8 +44,24 @@ input EmployeeInput {
     positionId: Int
 }
 
+input WorkerPositionInput {
+    name : String!
+}
+
+input EngineerPositionInput {
+    name : String!
+}
+
 type Mutation {
-    createEmployee(input: EmployeeInput!): Employee
-    updateEmployee(input: EmployeeInput!): Employee
-    deleteEmployee(systemId: String!) : Int
+    createEmployee(input: EmployeeInput!): Employee!
+    updateEmployee(input: EmployeeInput!): Employee!
+    deleteEmployee(systemId: String!) : Boolean!
+
+    createEngineerPosition(input : EngineerPositionInput!) :EngineerPosition!
+    updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPosition!
+    deleteEngineerPosition(id :Int!) : Boolean!
+
+    createWorkerPosition(input: WorkerPositionInput!) :WorkerPosition!
+    updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPosition!
+    deleteWorkerPosition(id :Int!) : Boolean!
 }

@@ -5,9 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("engineer_position")
-public class EngineerPosition {
+@Table("site_team")
+public class SiteTeamDTO {
   @Id
   private Integer id;
-  private String name;
+  private Integer siteHeadId;
 }

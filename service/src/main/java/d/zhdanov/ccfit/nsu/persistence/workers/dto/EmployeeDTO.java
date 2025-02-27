@@ -11,13 +11,17 @@ import java.time.LocalDate;
 public class EmployeeDTO {
   @Id
   private Integer id;
-
-  private String systemId;
-  private String name;
-  private String surname;
-  private String patronymic;
+  
+  private String    systemId;
+  private String    name;
+  private String    surname;
+  private String    patronymic;
   private LocalDate employmentDate;
-  private String post;
-  private String position;
+  private String    post;
+//  @MappedCollection(idColumn = "employee_id")
+//  private Engineer  engineer;
+
+//  @MappedCollection(idColumn = "employee_id")
+//  private Worker worker;
 }
 

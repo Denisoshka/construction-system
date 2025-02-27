@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.persistence.workers;
 
-import d.zhdanov.ccfit.nsu.persistence.workers.dto.EngineerPosition;
+import d.zhdanov.ccfit.nsu.persistence.workers.dto.EngineerPositionDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -10,9 +10,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface EngineersPositionRepository
-    extends PagingAndSortingRepository<EngineerPosition, Long>,
-    CrudRepository<EngineerPosition, Long> {
-  EngineerPosition findByName(@Param("name") String name);
+    extends PagingAndSortingRepository<EngineerPositionDTO, Long>,
+    CrudRepository<EngineerPositionDTO, Long> {
+  EngineerPositionDTO findByName(@Param("name") String name);
 
   @Modifying
   @Transactional
@@ -25,5 +25,11 @@ public interface EngineersPositionRepository
   @Query("UPDATE engineers SET position_id = :positionId WHERE employee_id = :employeeId")
   void updatePosition(@Param("employeeId") Integer employeeId,
                       @Param("positionId") Integer positionId);
+
+  @Modifying
+  @Query("DELETE FROM engineer_position WHERE name = :name")
+  void deleteByName(String name);
+  
+  EngineerPositionDTO findById(@Param("id") Integer id);
 }
 

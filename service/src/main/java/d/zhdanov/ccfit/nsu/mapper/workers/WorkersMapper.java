@@ -15,10 +15,13 @@ public interface WorkersMapper {
 
   List<Employee> toEmployeeResponseList(List<EmployeeDTO> employeesDTO);
 
-  EmployeeDTO toEmployeeDTO(Employee employeeDTO);
+  EmployeeDTO toEmployeeDTO(EmployeeInput employee);
 
   void updateEmployeeDTO(EmployeeInput employee,
                          @MappingTarget EmployeeDTO employeeDTO);
+
+  void exchangeEmployeeDTO(EmployeeDTO employee,
+                           @MappingTarget EmployeeDTO employeeDTO);
 
   List<EmployeeDTO> toEmployeeDTOList(List<Employee> employeesDTO);
 }

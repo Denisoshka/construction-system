@@ -6,10 +6,10 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("engineers")
-public class Engineer {
+@Table("workers")
+public class WorkerDTO {
   @Id
-  private Integer employeeId;
-  @MappedCollection
-  private EngineerPosition position;
+  private Integer           employeeId;
+  @MappedCollection(idColumn = "position_id")
+  private WorkerPositionDTO position;
 }

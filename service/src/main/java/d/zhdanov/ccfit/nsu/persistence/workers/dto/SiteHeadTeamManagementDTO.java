@@ -5,9 +5,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("brigade")
-public class Brigade {
+@Table("site_head_team_management_table")
+public class SiteHeadTeamManagementDTO {
   @Id
-  private Integer id;
-  private Integer foremanId;
+  private Integer teamId;
+  @Id
+  private Integer engineerId;
 }

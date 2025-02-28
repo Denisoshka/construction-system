@@ -1,7 +1,8 @@
 scalar Date
 @specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
 
-type Employee {
+type Employee @key(fields: "systemId"){
+    id:
     systemId: String!
     name: String!
     surname: String!
@@ -63,5 +64,5 @@ type Mutation {
 
     createWorkerPosition(input: WorkerPositionInput!) :WorkerPosition!
     updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPosition!
-    deleteWorkerPosition(id :Int!) : Boolean!
+    deleteWorkerPosition(id :Int!): Boolean!
 }

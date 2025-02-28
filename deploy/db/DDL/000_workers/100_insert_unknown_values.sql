@@ -1,7 +1,7 @@
 INSERT INTO employees(id, system_id, name,
                       surname, patronymic,
                       employment_date, post)
-VALUES (0, 'UNKNOWN',
+VALUES (default_uuid(), 'UNKNOWN',
         'UNKNOWN', 'UNKNOWN',
         'UNKNOWN', CURRENT_DATE,
         'UNKNOWN')
@@ -16,9 +16,9 @@ VALUES (0, 'UNKNOWN')
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO engineers(employee_id, position_id)
-VALUES (0, 0)
+VALUES (default_uuid(), 0)
 ON CONFLICT (employee_id) DO NOTHING;
 
-INSERT INTO workers(employee_id, position_id)
-VALUES (0, 0)
-ON CONFLICT (employee_id) DO NOTHING;
+/*INSERT INTO workers(employee_id, position_id)
+VALUES (default_uuid(), 0)
+ON CONFLICT (employee_id) DO NOTHING;*/

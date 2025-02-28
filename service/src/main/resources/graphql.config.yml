@@ -1,3 +1,4 @@
 schema:
   - graphql/workers.graphql
+  - graphql/objects.graphql
 documents: '**/*.graphql'

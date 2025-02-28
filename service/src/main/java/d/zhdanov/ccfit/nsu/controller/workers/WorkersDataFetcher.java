@@ -41,18 +41,25 @@ public class WorkersDataFetcher {
   }
   
   @DgsMutation
-  public Employee updateEmployee(@InputArgument String systemId,
-                                 @InputArgument EmployeeInput employee
+  public Employee createEmployee(final @InputArgument EmployeeInput input) {
+    final var infoDto = workersMapper.toEmployeeInfoDTO(input);
+    final var ret     = workersService.create(infoDto);
+    return workersMapper.toEmployeeResponse(ret);
+  }
+  
+  @DgsMutation
+  public Employee updateEmployee(final @InputArgument String systemId,
+                                 final @InputArgument EmployeeInput employee
   ) {
-    final var input = workersMapper.toEmployeeDTO(employee);
+    final var input = workersMapper.toEmployeeInfoDTO(employee);
     final var ret   = workersService.update(systemId, input);
     return workersMapper.toEmployeeResponse(ret);
   }
   
-  @DgsQuery
-  public boolean deleteEployee(@InputArgument String systemId
-  ) {
-    return workersService.delete(systemId);
+  @DgsMutation
+  public boolean deleteEmployee(final @InputArgument String systemId) {
+    workersService.delete(systemId);
+    return true;
   }
   
 }

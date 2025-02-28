@@ -88,8 +88,8 @@ public class WorkerEngineerPositionService {
     }
   }
   
-  private void insertWorkerPostInfo(int employeeId,
-                                    @NotNull EmployeeDTO input
+  private void insertWorkerPostInfo(final int employeeId,
+                                    final @NotNull EmployeeDTO input
   ) {
     final var posInfo = engineersPositionRepository.findByName(
       input.getPosition());
@@ -99,8 +99,8 @@ public class WorkerEngineerPositionService {
     engineersPositionRepository.insertEngineer(employeeId, posInfo.getId());
   }
   
-  private void insertEngineerPostInfo(int employeeId,
-                                      @NotNull EmployeeDTO input
+  private void insertEngineerPostInfo(final int employeeId,
+                                      final @NotNull EmployeeDTO input
   ) {
     final var posInfo = workersPositionRepository.findByName(
       input.getPosition());

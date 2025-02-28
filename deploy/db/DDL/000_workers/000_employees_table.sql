@@ -1,12 +1,17 @@
 CREATE TABLE IF NOT EXISTS employees
 (
-    id              SERIAL PRIMARY KEY,
-    system_id       VARCHAR(100) NOT NULL,
-    name            VARCHAR(100) NOT NULL,
-    surname         VARCHAR(100) NOT NULL,
-    patronymic      VARCHAR(100) NOT NULL,
-    employment_date DATE         NOT NULL,
-    post            VARCHAR(100) NOT NULL,
-    CHECK (post IN ('engineer', 'worker', 'UNKNOWN')),
-    UNIQUE (system_id)
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    system_id       VARCHAR(100) UNIQUE NOT NULL,
+    name            VARCHAR(100)        NOT NULL,
+    surname         VARCHAR(100)        NOT NULL,
+    patronymic      VARCHAR(100)        NOT NULL,
+    employment_date DATE                NOT NULL,
+    post            VARCHAR(100)        NOT NULL
 );
+
+CREATE FUNCTION default_uuid() RETURNS UUID AS
+$$
+BEGIN
+    RETURN '00000000-0000-0000-0000-000000000000'::UUID;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;

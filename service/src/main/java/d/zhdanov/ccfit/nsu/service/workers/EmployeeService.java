@@ -2,7 +2,7 @@ package d.zhdanov.ccfit.nsu.service.workers;
 
 import d.zhdanov.ccfit.nsu.exceptions.workers.EmployeeAlreadyExistsException;
 import d.zhdanov.ccfit.nsu.exceptions.workers.EmployeeNotFoundException;
-import d.zhdanov.ccfit.nsu.mapper.workers.WorkersMapper;
+import d.zhdanov.ccfit.nsu.mapper.workers.EmployeeMapper;
 import d.zhdanov.ccfit.nsu.persistence.workers.EmployeeRepository;
 import d.zhdanov.ccfit.nsu.persistence.workers.EngineersPositionRepository;
 import d.zhdanov.ccfit.nsu.persistence.workers.WorkersPositionRepository;
@@ -24,7 +24,7 @@ public class EmployeeService {
   
   private final EmployeeRepository            employeeRepository;
   private final WorkerEngineerPositionService workerEngineerPositionService;
-  private final WorkersMapper                 workersMapper;
+  private final EmployeeMapper                employeeMapper;
   
   public EmployeeService(@Autowired EmployeeRepository employeeRepository,
                          @Autowired
@@ -33,26 +33,26 @@ public class EmployeeService {
                          EngineersPositionRepository engineersPositionRepository,
                          @Autowired
                          WorkerEngineerPositionService workerEngineerPositionService,
-                         @Autowired WorkersMapper workersMapper
+                         @Autowired EmployeeMapper employeeMapper
   ) {
     this.workerEngineerPositionService = workerEngineerPositionService;
     this.employeeRepository            = employeeRepository;
-    this.workersMapper                 = workersMapper;
+    this.employeeMapper                = employeeMapper;
   }
   
   @Transactional
   public EmployeeInfoDTO create(final @NotNull EmployeeInfoDTO input) {
-    final var current = employeeRepository.findBySystemId(input.getSystemId())
-                                          .orElseThrow(
-                                            EmployeeAlreadyExistsException::new);
-//    final var xz    = workersMapper.toEmployeeDTO(input);
-
-//    final var saved = employeeRepository.save(xz);
-    workerEngineerPositionService.savePostPositionInfo(input);
-//    workerEngineerPositionService.preExecutePostPositionInsertInfo(input);
-//    var saved = employeeRepository.save(input);
-//    workerEngineerPositionService.insertPostPositionInfo(saved.getId(), input);
-    return workersMapper.toEmployeeInfoDTO(saved);
+    final var cur = employeeRepository.findBySystemId(input.getSystemId());
+    if(cur.isPresent()) {
+      throw new EmployeeAlreadyExistsException();
+    }
+//    workerEngineerPositionService.preExecuteForSave(input);
+    workerEngineerPositionService.fixPostPositionForSave(input);
+    final var forSave       = employeeMapper.toEmployeeDTO(input);
+    final var savedEmployee = employeeRepository.save(forSave);
+    final var savedPostInfo =
+      workerEngineerPositionService.savePostPositionInfo(input);
+    final var forRet        = employeeMapper.toEmployeeInfoDTO(savedEmployee);
   }
   
   @Transactional
@@ -62,7 +62,7 @@ public class EmployeeService {
     final var current = employeeRepository.findById(id).orElseThrow(
       EmployeeNotFoundException::new);
     workerEngineerPositionService.updatePostPositionInfo(input, current);
-    return workersMapper.toEmployeeInfoDTO(current);
+    return employeeMapper.toEmployeeInfoDTO(current);
   }
   
   /**

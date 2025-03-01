@@ -1,7 +1,7 @@
 package d.zhdanov.ccfit.nsu.controller.workers;
 
 import com.netflix.graphql.dgs.*;
-import d.zhdanov.ccfit.nsu.mapper.workers.WorkersMapper;
+import d.zhdanov.ccfit.nsu.mapper.workers.EmployeeMapper;
 import d.zhdanov.ccfit.nsu.service.workers.EmployeeService;
 import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.graphql.types.Employee;
@@ -17,10 +17,10 @@ import java.util.UUID;
 @DgsComponent
 public class WorkersDataFetcher {
   private final EmployeeService employeeService;
-  private final WorkersMapper   employeeMapper;
+  private final EmployeeMapper  employeeMapper;
   
   public WorkersDataFetcher(@Autowired EmployeeService employeeService,
-                            @Autowired WorkersMapper employeeMapper
+                            @Autowired EmployeeMapper employeeMapper
   ) {
     this.employeeService = employeeService;
     this.employeeMapper  = employeeMapper;

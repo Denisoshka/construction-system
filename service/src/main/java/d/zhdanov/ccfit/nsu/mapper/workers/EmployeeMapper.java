@@ -5,19 +5,29 @@ import d.zhdanov.ccfit.nsu.service.workers.dto.EmployeeInfoDTO;
 import d.zhdanov.graphql.types.Employee;
 import d.zhdanov.graphql.types.EmployeeInput;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface WorkersMapper {
+@Mapper(
+  componentModel = MappingConstants.ComponentModel.SPRING, uses = {
+  EmployeeMapperUtils.class
+}
+)
+public interface EmployeeMapper {
   Employee toEmployeeResponse(final EmployeeInfoDTO dto);
   
   Employee toEmployeeResponse(final EmployeeDTO dto);
   
   List<Employee> toEmployeeResponseList(final List<EmployeeDTO> employeesDTO);
   
+  @Mapping(
+    target = "id", qualifiedByName = {
+    "EmployeeMapperUtils", "preExecuteStringUUIDField"
+  }, source = "id"
+  )
   EmployeeInfoDTO toEmployeeInfoDTO(final EmployeeInput employee);
   
   EmployeeInfoDTO toEmployeeInfoDTO(final EmployeeDTO employee);

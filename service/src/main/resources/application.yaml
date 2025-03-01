@@ -1,6 +1,9 @@
 spring:
   application:
     name: service
+  graphql:
+    graphiql:
+      enabled: true
 logging:
   level:
     root: INFO

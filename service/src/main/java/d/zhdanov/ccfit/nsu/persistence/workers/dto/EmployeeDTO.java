@@ -5,12 +5,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Table("employees")
 public class EmployeeDTO {
   @Id
-  private Integer id;
+  private UUID id;
   
   private String    systemId;
   private String    name;

@@ -1,0 +1,22 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
+    import: ["@key"])
+
+type ConstructionManagement @key(fields: "id") {
+    id: ID!
+    name: String!
+    address: String!
+    phone: String!
+    managerId: Employee
+}
+
+type ConstructionSite @key(fields: "id") {
+    id: ID!
+    name: String!
+    address: String!
+    phone: String!
+    managementId: ID
+    siteManagerId: ID
+    management: ConstructionManagement
+    siteManager: Employee
+}
+

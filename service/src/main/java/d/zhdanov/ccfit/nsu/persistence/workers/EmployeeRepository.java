@@ -7,21 +7,23 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+@Repository
 public interface EmployeeRepository
-  extends PagingAndSortingRepository<EmployeeDTO, Long>,
-          CrudRepository<EmployeeDTO, Long> {
+  extends PagingAndSortingRepository<EmployeeDTO, UUID>,
+          CrudRepository<EmployeeDTO, UUID> {
   String UNDEFINED_POST     = "UNKNOWN";
   String UNDEFINED_POSITION = "UNKNOWN";
   String ENGINEER_POST      = "engineer";
   String WORKERS_POST       = "worker";
-  
-  EmployeeDTO findById(long id);
-  
-  EmployeeDTO findBySystemId(String systemId);
+
+//  EmployeeDTO findById(UUID id);
   
   @Query(
     "SELECT e.* FROM employees e "
@@ -41,4 +43,6 @@ public interface EmployeeRepository
   
   @Transactional
   void deleteBySystemId(@Param("system_id") String systemId);
+  
+  Optional<EmployeeDTO> findBySystemId(@Param("system_id") String systemId);
 }

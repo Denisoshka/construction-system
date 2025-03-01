@@ -1,8 +1,10 @@
 scalar Date
 @specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
+    import: ["@key"])
 
-type Employee @key(fields: "systemId"){
-    id:
+type Employee @key(fields: "id"){
+    id: ID!
     systemId: String!
     name: String!
     surname: String!
@@ -12,23 +14,14 @@ type Employee @key(fields: "systemId"){
     position: String
 }
 
-type EngineerPosition{
+type EngineerPosition @key(fields: "id"){
     id: Int!
     name : String!
 }
 
-type WorkerPosition{
+type WorkerPosition @key(fields: "id"){
     id: Int!
     name : String!
-}
-
-type Query {
-    getEmployee(systemId: String!): Employee
-    getEmployees(pagination: Pagination) : [Employee!]
-    getEngineers(pagination: Pagination) :[String!]
-    getWorkers(pagination: Pagination) : [String!]
-    getEngineerPositions(pagination: Pagination) : [EngineerPosition!]
-    getWorkersPositions(pagination: Pagination) : [WorkerPosition!]
 }
 
 input Pagination {
@@ -53,10 +46,19 @@ input EngineerPositionInput {
     name : String!
 }
 
+type Query {
+    employee(id: ID!) : Employee!
+    employees(pagination: Pagination) : [Employee!]
+    engineers(pagination: Pagination) :[String!]
+    workers(pagination: Pagination) : [String!]
+    engineerPositions(pagination: Pagination) : [EngineerPosition!]
+    workersPositions(pagination: Pagination) : [WorkerPosition!]
+}
+
 type Mutation {
     createEmployee(input: EmployeeInput!): Employee!
-    updateEmployee(input: EmployeeInput!): Employee!
-    deleteEmployee(systemId: String!) : Boolean!
+    updateEmployee(id: ID!, input: EmployeeInput!): Employee!
+    deleteEmployee(id: ID!) : Boolean!
 
     createEngineerPosition(input : EngineerPositionInput!) :EngineerPosition!
     updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPosition!

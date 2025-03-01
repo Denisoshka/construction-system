@@ -23,7 +23,7 @@ public interface WorkersMapper {
   EmployeeInfoDTO toEmployeeInfoDTO(final EmployeeDTO employee);
   
   EmployeeDTO toEmployeeDTO(final EmployeeInfoDTO employee);
-//  EmployeeDTO toEmployeeDTO(final Employee employee);
+  
   void updateEmployeeDTO(final EmployeeInput employee,
                          final @MappingTarget EmployeeDTO employeeDTO
   );

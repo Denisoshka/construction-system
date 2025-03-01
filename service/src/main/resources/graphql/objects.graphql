@@ -1,7 +1,0 @@
-type constructionManagement{
-    id : Int!
-    name: String!
-    address:String!
-    phone : String!
-    manager: Employee
-}

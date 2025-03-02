@@ -5,7 +5,7 @@ r2dbc_postgresql = "0.8.10.RELEASE"
 micrometer_prometheus = "1.9.1"
 dependency-management = "1.1.7"
 gson = "2.12.1"
-lombok = "1.18.24"
+lombok-ver = "1.18.36"
 spring_graphql = "1.0.0"
 reactor_resilience4j = "1.0.0"
 cloud-ver = "4.2.0"
@@ -47,7 +47,7 @@ spring_cloud_gateway = { group = "org.springframework.cloud", name = "spring-clo
 postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
 r2dbc_postgresql = { group = "org.postgresql", name = "r2dbc-postgresql", version.ref = "r2dbc_postgresql" }
 micrometer_prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version.ref = "micrometer_prometheus" }
-lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok-ver" }
 spring_graphql = { group = "org.springframework.graphql", name = "spring-graphql", version.ref = "spring_graphql" }
 reactor_test = { group = "io.projectreactor", name = "reactor-test", version.ref = "reactor_resilience4j" }
 spring_boot_test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "spring-boot" }

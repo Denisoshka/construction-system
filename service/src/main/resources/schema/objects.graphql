@@ -6,7 +6,7 @@ type ConstructionManagement @key(fields: "id") {
     name: String!
     address: String!
     phone: String!
-    managerId: Employee
+    manager: EmployeeInfo
 }
 
 type ConstructionSite @key(fields: "id") {
@@ -14,9 +14,28 @@ type ConstructionSite @key(fields: "id") {
     name: String!
     address: String!
     phone: String!
-    managementId: ID
-    siteManagerId: ID
     management: ConstructionManagement
-    siteManager: Employee
+    siteManager: EmployeeInfo
 }
+
+type ConstructionProject {
+    id : ID!
+    siteID : ID!
+}
+
+input ConstructionManagementInput {
+    name: String!
+    address: String!
+    phone: String!
+    managerId : ID
+}
+
+input ConstructionSiteInput{
+    name: String!
+    address: String!
+    phone: String!
+    managementId : ID,
+    siteManagerId : ID,
+}
+
 

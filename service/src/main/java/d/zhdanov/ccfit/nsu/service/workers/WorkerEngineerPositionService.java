@@ -10,6 +10,8 @@ import d.zhdanov.ccfit.nsu.service.workers.dto.EmployeeInfoDTO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
@@ -101,7 +103,8 @@ public class WorkerEngineerPositionService {
                                      final @NotNull EmployeeInfoDTO input
   ) {
     final var posInfo = engineersPositionRepository.findById(
-      input.getPosition()).orElseThrow(EngineerPositionNotFoundException::new);
+      input.getPositionId()).orElseThrow(
+      EngineerPositionNotFoundException::new);
     engineersRepository.insertEngineer(employeeId, posInfo.getId());
   }
   
@@ -109,9 +112,8 @@ public class WorkerEngineerPositionService {
   public void insertWorkerPostInfo(final UUID employeeId,
                                    final @NotNull EmployeeInfoDTO input
   ) {
-    final var posInfo = workersPositionRepository.findById(input.getPosition())
-                                                 .orElseThrow(
-                                                   WorkerPositionNotFoundException::new);
+    final var posInfo = workersPositionRepository.findById(
+      input.getPositionId()).orElseThrow(WorkerPositionNotFoundException::new);
     workersRepository.insertWorker(employeeId, posInfo.getId());
   }
   
@@ -124,12 +126,12 @@ public class WorkerEngineerPositionService {
   @Transactional
   public EmployeeInfoDTO savePostPositionInfo(final EmployeeInfoDTO dto) {
     if(EmployeeRepository.WORKERS_POST.equals(dto.getPost())) {
-      final var info = workersPositionRepository.findById(dto.getPosition())
+      final var info = workersPositionRepository.findById(dto.getPositionId())
                                                 .orElseThrow(
                                                   WorkerPositionNotFoundException::new);
       workersRepository.insertWorker(dto.getId(), info.getId());
     } else if(EmployeeRepository.ENGINEER_POST.equals(dto.getPost())) {
-      final var info = engineersPositionRepository.findById(dto.getPosition())
+      final var info = engineersPositionRepository.findById(dto.getPositionId())
                                                   .orElseThrow(
                                                     EngineerPositionNotFoundException::new);
       engineersRepository.insertEngineer(dto.getId(), info.getId());
@@ -178,5 +180,14 @@ public class WorkerEngineerPositionService {
 //    workersPositionRepository.updatePosition(current.getId(), posInfo.getId());
 //    current.setPosition(posInfo.getName());
 //    current.setPost(EmployeeRepository.WORKERS_POST);
+  }
+  
+  
+  public Page<WorkerPositionDTO> workers(Pageable paged) {
+    return workersPositionRepository.findAll(paged);
+  }
+  
+  public Page<EngineerPositionDTO> engineers(Pageable paged) {
+    return engineersPositionRepository.findAll(paged);
   }
 }

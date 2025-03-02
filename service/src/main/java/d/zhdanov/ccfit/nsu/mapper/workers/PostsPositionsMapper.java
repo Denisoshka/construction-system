@@ -3,23 +3,29 @@ package d.zhdanov.ccfit.nsu.mapper.workers;
 import d.zhdanov.ccfit.nsu.persistence.workers.dto.EngineerPositionDTO;
 import d.zhdanov.ccfit.nsu.persistence.workers.dto.WorkerPositionDTO;
 import d.zhdanov.ccfit.nsu.service.workers.dto.EmployeeInfoDTO;
-import d.zhdanov.graphql.types.EngineerPosition;
+import d.zhdanov.graphql.types.EngineerPositionInfo;
 import d.zhdanov.graphql.types.EngineerPositionInput;
-import d.zhdanov.graphql.types.WorkerPosition;
+import d.zhdanov.graphql.types.WorkerPositionInfo;
 import d.zhdanov.graphql.types.WorkerPositionInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(
+  componentModel = MappingConstants.ComponentModel.SPRING, uses = {
+  EmployeeMapperUtils.class
+}
+)
 public interface PostsPositionsMapper {
-  WorkerPosition fromWorkerPositionDTO(WorkerPositionDTO dto);
+  WorkerPositionInfo fromWorkerPositionDTO(WorkerPositionDTO dto);
   
+  @Mapping(target = "Id", ignore = true)
   WorkerPositionDTO toWorkerPositionDTO(WorkerPositionInput dto);
   
-  EngineerPosition fromEngineerPositionDTO(EngineerPositionDTO dto);
+  EngineerPositionInfo fromEngineerPositionDTO(EngineerPositionDTO dto);
   
+  @Mapping(target = "Id", ignore = true)
   EngineerPositionDTO toEngineerPositionDTO(EngineerPositionInput dto);
   
   @Mapping(target = "id", expression = "java(Id)")

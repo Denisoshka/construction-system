@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -97,6 +98,15 @@ public class EmployeeService {
   @Transactional
   public void delete(@NotNull final UUID id) {
     employeeRepository.deleteById(id);
+  }
+  
+  public List<EmployeeInfoDTO> engineers(Pageable paged, Integer positionID) {
+  
+  }
+  
+  
+  public List<EmployeeInfoDTO> workers(Pageable paged, Integer positionID) {
+  
   }
 }
 //Глава 8: Support Vector Machines  + Стохастический градиентный спуск (найти самостоятельно)

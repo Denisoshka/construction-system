@@ -1,0 +1,7 @@
+type ProjectContract{
+    id : ID!
+    projectId : ID!
+    siteId : ID!
+    dateOfCreation : Date!
+    signingDate : Date !
+}

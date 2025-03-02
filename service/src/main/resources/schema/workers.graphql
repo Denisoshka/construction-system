@@ -3,7 +3,16 @@ scalar Date
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
     import: ["@key"])
 
-type Employee @key(fields: "id"){
+interface Employee {
+    id: ID!
+    systemId: String!
+    name: String!
+    surname: String!
+    patronymic : String
+    employmentDate : Date!
+}
+
+type EmployeeInfo implements Employee @key(fields: "id"){
     id: ID!
     systemId: String!
     name: String!
@@ -14,12 +23,33 @@ type Employee @key(fields: "id"){
     positionId: Int
 }
 
-type EngineerPosition @key(fields: "id"){
+type EngineerInfo implements Employee {
+    id: ID!
+    systemId: String!
+    name: String!
+    surname: String!
+    patronymic : String
+    employmentDate : Date!
+    positionInfo : EngineerPositionInfo!
+}
+
+type WorkerInfo implements Employee {
+    id: ID!
+    systemId: String!
+    name: String!
+    surname: String!
+    patronymic : String
+    employmentDate : Date!
+    positionInfo : WorkerPositionInfo!
+}
+
+
+type EngineerPositionInfo @key(fields: "id"){
     id: Int!
     name : String!
 }
 
-type WorkerPosition @key(fields: "id"){
+type WorkerPositionInfo @key(fields: "id"){
     id: Int!
     name : String!
 }
@@ -29,7 +59,7 @@ input Pagination {
     pageSize: Int!
 }
 
-input EmployeeInput {
+input EmployeeInput   {
     systemId: String!
     name: String!
     surname: String!
@@ -47,24 +77,24 @@ input EngineerPositionInput {
 }
 
 type Query {
-    employee(id: ID!) : Employee!
-    employees(pagination: Pagination) : [Employee!]
-    engineers(pagination: Pagination) :[String!]
-    workers(pagination: Pagination) : [String!]
-    engineerPositions(pagination: Pagination) : [EngineerPosition!]
-    workersPositions(pagination: Pagination) : [WorkerPosition!]
+    employee(id: ID!) : EmployeeInfo!
+    employees(pagination: Pagination) : [EmployeeInfo!]
+    engineers(pagination: Pagination, positionID: Int) :[EmployeeInfo!]
+    workers(pagination: Pagination, positionID: Int) : [EmployeeInfo!]
+    engineerPositions(pagination: Pagination) : [EngineerPositionInfo!]
+    workersPositions(pagination: Pagination) : [WorkerPositionInfo!]
 }
 
 type Mutation {
-    createEmployee(input: EmployeeInput!): Employee!
-    updateEmployee(id: ID!, input: EmployeeInput!): Employee!
+    createEmployee(input: EmployeeInput!): EmployeeInfo!
+    updateEmployee(id: ID!, input: EmployeeInput!): EmployeeInfo!
     deleteEmployee(id: ID!) : Boolean!
 
-    createEngineerPosition(input : EngineerPositionInput!) :EngineerPosition!
-    updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPosition!
+    createEngineerPosition(input : EngineerPositionInput!) :EngineerPositionInfo!
+    updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPositionInfo!
     deleteEngineerPosition(id :Int!) : Boolean!
 
-    createWorkerPosition(input: WorkerPositionInput!) :WorkerPosition!
-    updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPosition!
+    createWorkerPosition(input: WorkerPositionInput!) :WorkerPositionInfo!
+    updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPositionInfo!
     deleteWorkerPosition(id :Int!): Boolean!
 }

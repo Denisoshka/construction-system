@@ -1,18 +1,14 @@
 package d.zhdanov.ccfit.nsu.controller.workers;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsEntityFetcher;
-import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.mapper.workers.PostsPositionsMapper;
 import d.zhdanov.ccfit.nsu.service.workers.WorkerEngineerPositionService;
-import d.zhdanov.graphql.types.EngineerPosition;
-import d.zhdanov.graphql.types.EngineerPositionInput;
-import d.zhdanov.graphql.types.WorkerPosition;
-import d.zhdanov.graphql.types.WorkerPositionInput;
+import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 
 @DgsComponent
@@ -29,40 +25,60 @@ public class WorkersEngineersRankDataFetcher {
     this.postsPositionsMapper          = postsPositionsMapper;
   }
   
+  @DgsQuery
+  public List<WorkerPositionInfo> workersPositions(
+    @InputArgument Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var rez   = workerEngineerPositionService.workers(paged);
+  }
+  
+  @DgsQuery
+  public List<EngineerPositionInfo> engineerPositions(
+    @InputArgument Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var rez   = workerEngineerPositionService.engineers(paged).toList();
+  }
+  
   @DgsMutation
-  public void deleteWorkerPosition(@InputArgument final int id) {
+  public void deleteWorkerPosition(@InputArgument Integer id) {
     workerEngineerPositionService.deleteWorkerPosition(id);
   }
   
   @DgsMutation
-  public void deleteEngineerPosition(@InputArgument final int id) {
+  public void deleteEngineerPosition(@InputArgument Integer id) {
     workerEngineerPositionService.deleteEngineerPosition(id);
   }
   
   @DgsMutation
-  public WorkerPosition createWorkerPosition(final WorkerPositionInput input) {
+  public WorkerPositionInfo createWorkerPosition(final @InputArgument WorkerPositionInput input) {
     final var dto = postsPositionsMapper.toWorkerPositionDTO(input);
     final var ret = workerEngineerPositionService.createWorkerPosition(dto);
     return postsPositionsMapper.fromWorkerPositionDTO(ret);
   }
   
   @DgsMutation
-  public EngineerPosition createEngineerPosition(final EngineerPositionInput input) {
+  public EngineerPositionInfo createEngineerPosition(final @InputArgument EngineerPositionInput input) {
     final var dto = postsPositionsMapper.toEngineerPositionDTO(input);
     final var ret = workerEngineerPositionService.createEngineerPosition(dto);
     return postsPositionsMapper.fromEngineerPositionDTO(ret);
   }
   
-  @DgsEntityFetcher(name = "EngineerPosition")
-  public EngineerPosition fetchEngineerPosition(@NotNull final Map<String, Object> values) {
+  @DgsEntityFetcher(name = "EngineerPositionInfo")
+  public EngineerPositionInfo fetchEngineerPosition(
+    @NotNull final Map<String, Object> values
+  ) {
     final int id = (int) values.get("id");
     final var position = workerEngineerPositionService.getEngineerPositionInfo(
       id);
     return postsPositionsMapper.fromEngineerPositionDTO(position);
   }
   
-  @DgsEntityFetcher(name = "WorkerPosition")
-  public WorkerPosition fetchWorkerPosition(@NotNull final Map<String, Object> values) {
+  @DgsEntityFetcher(name = "WorkerPositionInfo")
+  public WorkerPositionInfo fetchWorkerPosition(
+    @NotNull final Map<String, Object> values
+  ) {
     final int id = (int) values.get("id");
     final var position = workerEngineerPositionService.getWorkerPositionInfo(
       id);

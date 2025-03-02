@@ -1,6 +1,10 @@
 spring:
   application:
     name: service
+  datasource:
+    url: jdbc:postgresql://${CONSTRUCTION_SYSTEM_MS_SERVICE_DB_URL}
+    username: ${CONSTRUCTION_SYSTEM_POSTGRES_USER}
+    password: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD}
   graphql:
     graphiql:
       enabled: true

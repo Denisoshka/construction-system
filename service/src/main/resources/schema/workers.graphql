@@ -11,7 +11,7 @@ type Employee @key(fields: "id"){
     patronymic : String
     employmentDate : Date!
     post: String
-    position: String
+    positionId: Int
 }
 
 type EngineerPosition @key(fields: "id"){

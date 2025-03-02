@@ -52,7 +52,8 @@ public class EmployeeService {
     final var savedEmployee = employeeRepository.save(forSave);
     final var savedPostInfo =
       workerEngineerPositionService.savePostPositionInfo(input);
-    final var forRet        = employeeMapper.toEmployeeInfoDTO(savedEmployee);
+    final var forRet = employeeMapper.toEmployeeInfoDTO(savedEmployee);
+    return forRet;
   }
   
   @Transactional

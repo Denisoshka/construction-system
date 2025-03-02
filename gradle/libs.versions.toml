@@ -1,5 +1,5 @@
 [versions]
-spring-boot = "3.4.2"
+spring-boot = "3.4.3"
 postgresql = "42.7.5"
 r2dbc_postgresql = "0.8.10.RELEASE"
 micrometer_prometheus = "1.9.1"
@@ -17,6 +17,8 @@ dgs-ver = "8.5.5"
 dgs-extended-scalars-ver = "10.0.3"
 mapstruct-ver = "1.6.3"
 caffeine-ver = "3.2.0"
+graphql-java-ver = "22.1"
+graphql-java-dataloader-ver = "3.3.0"
 
 [plugins]
 spring_boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -56,8 +58,10 @@ spring-cloud-starter-netflix-eureka-server = { group = "org.springframework.clou
 spring-cloud-starter-netflix-eureka-client = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-client", version.ref = "cloud-ver" }
 spring-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose", version.ref = "spring-boot" }
 junit_platform_launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.7.2" }
-dgs = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-starter", version.ref = "dgs-ver" }
-dgs-extended-scalars = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-extended-scalars", version.ref = "dgs-extended-scalars-ver" }
+netflix-dgs = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-starter", version.ref = "dgs-ver" }
+netflix-dgs-extended-scalars = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-extended-scalars", version.ref = "dgs-extended-scalars-ver" }
 mapstruct-impl = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct-ver" }
 mapstruct-annotationprocessor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct-ver" }
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine-ver" }
+graphql-java = { group = "com.graphql-java", name = "graphql-java", version.ref = "graphql-java-ver" }
+graphql-java-dataloader = { group = "com.graphql-java", name = "java-dataloader", version.ref = "graphql-java-dataloader-ver" }

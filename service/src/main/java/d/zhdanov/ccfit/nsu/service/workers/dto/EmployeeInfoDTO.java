@@ -14,5 +14,5 @@ public class EmployeeInfoDTO {
   private String    patronymic;
   private LocalDate employmentDate;
   private String    post;
-  private String    position;
+  private Integer   position;
 }

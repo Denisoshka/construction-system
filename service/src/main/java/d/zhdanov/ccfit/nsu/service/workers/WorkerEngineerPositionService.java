@@ -100,7 +100,7 @@ public class WorkerEngineerPositionService {
   public void insertEngineerPostInfo(final UUID employeeId,
                                      final @NotNull EmployeeInfoDTO input
   ) {
-    final var posInfo = engineersPositionRepository.findByName(
+    final var posInfo = engineersPositionRepository.findById(
       input.getPosition()).orElseThrow(EngineerPositionNotFoundException::new);
     engineersRepository.insertEngineer(employeeId, posInfo.getId());
   }
@@ -109,8 +109,9 @@ public class WorkerEngineerPositionService {
   public void insertWorkerPostInfo(final UUID employeeId,
                                    final @NotNull EmployeeInfoDTO input
   ) {
-    final var posInfo = workersPositionRepository.findByName(
-      input.getPosition()).orElseThrow(WorkerPositionNotFoundException::new);
+    final var posInfo = workersPositionRepository.findById(input.getPosition())
+                                                 .orElseThrow(
+                                                   WorkerPositionNotFoundException::new);
     workersRepository.insertWorker(employeeId, posInfo.getId());
   }
   
@@ -123,12 +124,12 @@ public class WorkerEngineerPositionService {
   @Transactional
   public EmployeeInfoDTO savePostPositionInfo(final EmployeeInfoDTO dto) {
     if(EmployeeRepository.WORKERS_POST.equals(dto.getPost())) {
-      final var info = workersPositionRepository.findByName(dto.getPosition())
+      final var info = workersPositionRepository.findById(dto.getPosition())
                                                 .orElseThrow(
                                                   WorkerPositionNotFoundException::new);
       workersRepository.insertWorker(dto.getId(), info.getId());
     } else if(EmployeeRepository.ENGINEER_POST.equals(dto.getPost())) {
-      final var info = engineersPositionRepository.findByName(dto.getPosition())
+      final var info = engineersPositionRepository.findById(dto.getPosition())
                                                   .orElseThrow(
                                                     EngineerPositionNotFoundException::new);
       engineersRepository.insertEngineer(dto.getId(), info.getId());

@@ -19,13 +19,15 @@ public interface EngineersRepository
   @Modifying
   @Transactional
   @Query("INSERT INTO engineers (employee_id, position_id) VALUES (:employeeId, :positionId)")
-  void insertEngineer(@Param("employeeId") UUID employeeId,
-                      @Param("positionId") int positionId
+  void insertEngineer(
+    @Param("employeeId") UUID employeeId,
+    @Param("positionId") int positionId
   ) throws DataIntegrityViolationException;
   
   @Modifying
   @Query("UPDATE engineers SET position_id = :positionId WHERE employee_id = :employeeId")
-  void updatePosition(@Param("employeeId") UUID employeeId,
-                      @Param("positionId") Integer positionId
+  void updatePosition(
+    @Param("employeeId") UUID employeeId,
+    @Param("positionId") Integer positionId
   );
 }

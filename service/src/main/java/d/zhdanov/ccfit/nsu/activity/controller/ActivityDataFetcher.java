@@ -20,18 +20,23 @@ public class ActivityDataFetcher {
   
   @DgsMutation
   @Transactional
-  public void addSchoolProjectContract(@InputArgument ProjectContractInput input
+  public void addSchoolProjectContract(
+    @InputArgument ProjectContractInput input
   ) {
     final var siteIdUUID = UUID.fromString(input.getSiteId());
-    final var xyi        = objectsService.prepareNewProjectForSite(siteIdUUID);
+    final var constructionProjectEntity =
+      objectsService.prepareNewProjectForSite(siteIdUUID);
     
   }
   
   @DgsMutation
   @Transactional
-  public void addBridgeProjectContract(@InputArgument ProjectContractInput input
+  public void addBridgeProjectContract(
+    @InputArgument ProjectContractInput input
   ) {
     final var siteIdUUID = UUID.fromString(input.getSiteId());
-    final var xyi        = objectsService.prepareNewProjectForSite(siteIdUUID);
+    final var constructionProjectEntity =
+      objectsService.prepareNewProjectForSite(siteIdUUID);
+    
   }
 }

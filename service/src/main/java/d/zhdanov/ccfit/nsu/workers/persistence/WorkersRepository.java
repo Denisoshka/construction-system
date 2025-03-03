@@ -17,13 +17,15 @@ public interface WorkersRepository
           CrudRepository<WorkerEntity, UUID> {
   @Modifying
   @Query("INSERT INTO workers (employee_id, position_id) VALUES (:employeeId, :positionId)")
-  void insertWorker(@Param("employeeId") UUID employeeId,
-                    @Param("positionId") int positionId
+  void insertWorker(
+    @Param("employeeId") UUID employeeId,
+    @Param("positionId") int positionId
   ) throws DataIntegrityViolationException;
   
   @Modifying
   @Query("UPDATE workers SET position_id = :positionId WHERE employee_id = :employeeId")
-  void updatePosition(@Param("employeeId") UUID employeeId,
-                      @Param("positionId") int positionId
+  void updatePosition(
+    @Param("employeeId") UUID employeeId,
+    @Param("positionId") int positionId
   );
 }

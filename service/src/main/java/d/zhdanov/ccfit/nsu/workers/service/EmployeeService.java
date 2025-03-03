@@ -27,14 +27,15 @@ public class EmployeeService {
   private final WorkerEngineerPositionService workerEngineerPositionService;
   private final EmployeeMapper                employeeMapper;
   
-  public EmployeeService(@Autowired EmployeeRepository employeeRepository,
-                         @Autowired
-                         WorkersPositionRepository workersPositionRepository,
-                         @Autowired
-                         EngineersPositionRepository engineersPositionRepository,
-                         @Autowired
-                         WorkerEngineerPositionService workerEngineerPositionService,
-                         @Autowired EmployeeMapper employeeMapper
+  public EmployeeService(
+    @Autowired EmployeeRepository employeeRepository,
+    @Autowired
+    WorkersPositionRepository workersPositionRepository,
+    @Autowired
+    EngineersPositionRepository engineersPositionRepository,
+    @Autowired
+    WorkerEngineerPositionService workerEngineerPositionService,
+    @Autowired EmployeeMapper employeeMapper
   ) {
     this.workerEngineerPositionService = workerEngineerPositionService;
     this.employeeRepository            = employeeRepository;
@@ -58,8 +59,9 @@ public class EmployeeService {
   }
   
   @Transactional
-  public EmployeeInfoDTO update(@NotNull final UUID id,
-                                @NotNull final EmployeeInfoDTO input
+  public EmployeeInfoDTO update(
+    @NotNull final UUID id,
+    @NotNull final EmployeeInfoDTO input
   ) {
     final var current = employeeRepository.findById(id).orElseThrow(
       EmployeeNotFoundException::new);

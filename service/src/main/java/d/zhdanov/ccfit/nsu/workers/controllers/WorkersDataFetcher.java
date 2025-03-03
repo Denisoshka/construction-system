@@ -21,8 +21,9 @@ public class WorkersDataFetcher {
   private final EmployeeService employeeService;
   private final EmployeeMapper  employeeMapper;
   
-  public WorkersDataFetcher(@Autowired EmployeeService employeeService,
-                            @Autowired EmployeeMapper employeeMapper
+  public WorkersDataFetcher(
+    @Autowired EmployeeService employeeService,
+    @Autowired EmployeeMapper employeeMapper
   ) {
     this.employeeService = employeeService;
     this.employeeMapper  = employeeMapper;
@@ -43,16 +44,18 @@ public class WorkersDataFetcher {
   }
   
   @DgsQuery
-  public List<EmployeeInfo> engineers(@InputArgument Pagination pagination,
-                                      @InputArgument Integer positionID
+  public List<EmployeeInfo> engineers(
+    @InputArgument Pagination pagination,
+    @InputArgument Integer positionID
   ) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = employeeService.engineers(paged, positionID);
   }
   
   @DgsQuery
-  public List<EmployeeInfo> workers(@InputArgument Pagination pagination,
-                                    @InputArgument Integer positionID
+  public List<EmployeeInfo> workers(
+    @InputArgument Pagination pagination,
+    @InputArgument Integer positionID
   ) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = employeeService.workers(paged, positionID);
@@ -67,8 +70,9 @@ public class WorkersDataFetcher {
   }
   
   @DgsMutation
-  public EmployeeInfo updateEmployee(final @InputArgument String id,
-                                     final @InputArgument EmployeeInput input
+  public EmployeeInfo updateEmployee(
+    final @InputArgument String id,
+    final @InputArgument EmployeeInput input
   ) {
     final var uuid     = UUID.fromString(id);
     final var employee = employeeMapper.toEmployeeInfoDTO(input);

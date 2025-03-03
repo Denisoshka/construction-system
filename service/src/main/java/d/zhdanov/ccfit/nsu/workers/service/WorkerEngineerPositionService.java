@@ -38,7 +38,8 @@ public class WorkerEngineerPositionService {
   }
   
   @Transactional
-  public @NotNull WorkerPositionEntity createWorkerPosition(final @NotNull WorkerPositionEntity workerPosition
+  public @NotNull WorkerPositionEntity createWorkerPosition(
+    final @NotNull WorkerPositionEntity workerPosition
   ) throws WorkerPositionAlreadyExistsException {
     try {
       return workersPositionRepository.save(
@@ -49,7 +50,8 @@ public class WorkerEngineerPositionService {
   }
   
   @Transactional
-  public @NotNull EngineerPositionEntity createEngineerPosition(final @NotNull EngineerPositionEntity engineerPosition
+  public @NotNull EngineerPositionEntity createEngineerPosition(
+    final @NotNull EngineerPositionEntity engineerPosition
   ) throws WorkerPositionAlreadyExistsException {
     try {
       return engineersPositionRepository.save(
@@ -85,8 +87,9 @@ public class WorkerEngineerPositionService {
   }
   
   @Transactional
-  public void insertPostPositionInfo(final int employeeId,
-                                     final @NotNull EmployeeEntity input
+  public void insertPostPositionInfo(
+    final int employeeId,
+    final @NotNull EmployeeEntity input
   ) {
 //    todo
     /*if(EmployeeRepository.ENGINEER_POST.equals(input.getPost())) {
@@ -99,8 +102,9 @@ public class WorkerEngineerPositionService {
   }
   
   @Transactional
-  public void insertEngineerPostInfo(final UUID employeeId,
-                                     final @NotNull EmployeeInfoDTO input
+  public void insertEngineerPostInfo(
+    final UUID employeeId,
+    final @NotNull EmployeeInfoDTO input
   ) {
     final var posInfo = engineersPositionRepository.findById(
       input.getPositionId()).orElseThrow(
@@ -109,8 +113,9 @@ public class WorkerEngineerPositionService {
   }
   
   @Transactional
-  public void insertWorkerPostInfo(final UUID employeeId,
-                                   final @NotNull EmployeeInfoDTO input
+  public void insertWorkerPostInfo(
+    final UUID employeeId,
+    final @NotNull EmployeeInfoDTO input
   ) {
     final var posInfo = workersPositionRepository.findById(
       input.getPositionId()).orElseThrow(WorkerPositionNotFoundException::new);
@@ -118,8 +123,9 @@ public class WorkerEngineerPositionService {
   }
   
   @Transactional
-  public void updatePostPositionInfo(final @NotNull EmployeeInfoDTO input,
-                                     final @NotNull EmployeeEntity current
+  public void updatePostPositionInfo(
+    final @NotNull EmployeeInfoDTO input,
+    final @NotNull EmployeeEntity current
   ) {
   }
   
@@ -127,13 +133,13 @@ public class WorkerEngineerPositionService {
   public EmployeeInfoDTO savePostPositionInfo(final EmployeeInfoDTO dto) {
     if(EmployeeRepository.WORKERS_POST.equals(dto.getPost())) {
       final var info = workersPositionRepository.findById(dto.getPositionId())
-                                                .orElseThrow(
-                                                  WorkerPositionNotFoundException::new);
+        .orElseThrow(
+          WorkerPositionNotFoundException::new);
       workersRepository.insertWorker(dto.getId(), info.getId());
     } else if(EmployeeRepository.ENGINEER_POST.equals(dto.getPost())) {
       final var info = engineersPositionRepository.findById(dto.getPositionId())
-                                                  .orElseThrow(
-                                                    EngineerPositionNotFoundException::new);
+        .orElseThrow(
+          EngineerPositionNotFoundException::new);
       engineersRepository.insertEngineer(dto.getId(), info.getId());
     }
     if(!EmployeeRepository.UNDEFINED_POST.equals(dto.getPost())) {
@@ -159,24 +165,26 @@ public class WorkerEngineerPositionService {
       WorkerPositionNotFoundException::new);
   }
   
-  private void updateEngineerPosition(final String positionName,
-                                      final @NotNull EmployeeEntity current
+  private void updateEngineerPosition(
+    final String positionName,
+    final @NotNull EmployeeEntity current
   ) {
     final var posInfo = engineersPositionRepository.findByName(positionName)
-                                                   .orElseThrow(
-                                                     EmployeeNotFoundException::new);
+      .orElseThrow(
+        EmployeeNotFoundException::new);
     /*engineersPositionRepository.updatePosition(
       current.getId(), posInfo.getId());*/
 //    current.setPosition(posInfo.getName());
 //    current.setPost(EmployeeRepository.ENGINEER_POST);
   }
   
-  private void updateWorkerPosition(final String positionName,
-                                    final @NotNull EmployeeEntity current
+  private void updateWorkerPosition(
+    final String positionName,
+    final @NotNull EmployeeEntity current
   ) {
     final var posInfo = workersPositionRepository.findByName(positionName)
-                                                 .orElseThrow(
-                                                   WorkerPositionNotFoundException::new);
+      .orElseThrow(
+        WorkerPositionNotFoundException::new);
 //    workersPositionRepository.updatePosition(current.getId(), posInfo.getId());
 //    current.setPosition(posInfo.getName());
 //    current.setPost(EmployeeRepository.WORKERS_POST);

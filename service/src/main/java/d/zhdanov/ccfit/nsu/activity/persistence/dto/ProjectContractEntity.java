@@ -1,39 +1,43 @@
 package d.zhdanov.ccfit.nsu.activity.persistence.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ProjectContractEntity {
   @Id
-  private UUID   id;
+  private UUID      id;
   @NotNull
-  private UUID   projectId;
+  private UUID      projectId;
   @NotNull
-  private UUID   siteId;
+  private UUID      siteId;
   @Nullable
-  private UUID   customerOrganizationId;
+  @Column("customer_organization_id")
+  private UUID      customerId;
   @NotNull
-  private String type;
+  private String    type;
   @NotNull
-  private Date   dateOfCreation;
+  private LocalDate dateOfCreation;
   @Nullable
-  private Date   singingDate;
+  private LocalDate singingDate;
   @NotNull
-  private Date   plan_start_date;
+  private LocalDate planStartDate;
   @NotNull
-  private Date   plan_end_date;
+  private LocalDate planEndDate;
   @Nullable
-  private Date   fact_start_date;
+  private LocalDate factStartDate;
   @Nullable
-  private Date   fact_end_date;
+  private LocalDate factEndDate;
 }

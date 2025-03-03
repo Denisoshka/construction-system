@@ -9,8 +9,9 @@ public class EngineerPositionAlreadyExistsException
     super(message);
   }
   
-  public EngineerPositionAlreadyExistsException(String message,
-                                                Throwable cause
+  public EngineerPositionAlreadyExistsException(
+    String message,
+    Throwable cause
   ) {
     super(message, cause);
   }

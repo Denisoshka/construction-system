@@ -16,10 +16,10 @@ public class WorkersEngineersRankDataFetcher {
   private final WorkerEngineerPositionService workerEngineerPositionService;
   private final PostsPositionsMapper          postsPositionsMapper;
   
-  public WorkersEngineersRankDataFetcher(@Autowired @NotNull
-                                         final WorkerEngineerPositionService workerEngineerPositionService,
-                                         @Autowired @NotNull
-                                         final PostsPositionsMapper postsPositionsMapper
+  public WorkersEngineersRankDataFetcher(
+    @Autowired @NotNull
+    final WorkerEngineerPositionService workerEngineerPositionService,
+    @Autowired @NotNull final PostsPositionsMapper postsPositionsMapper
   ) {
     this.workerEngineerPositionService = workerEngineerPositionService;
     this.postsPositionsMapper          = postsPositionsMapper;

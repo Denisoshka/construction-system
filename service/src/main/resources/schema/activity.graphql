@@ -18,10 +18,11 @@ type ProjectContract{
 
 input ProjectContractInput{
   siteId: ID!
+  customerId: ID!
   objectType : String!
   signingDate : Date
-  planStartDate : Date
-  planEndDate : Date
+  planStartDate : Date!
+  planEndDate : Date!
 }
 
 interface ProjectType {
@@ -33,13 +34,29 @@ type ApartmentHouseProject implements ProjectType {
   floors : Int!
 }
 
+input ApartmentHouseProjectInput {
+  floors : Int!
+}
+
 type SchoolProject implements ProjectType {
   projectId : ID!
   classRoomCount : Int!
   floors : Int!
 }
+
+input SchoolProjectInput {
+  classRoomCount : Int!
+  floors : Int!
+}
+
 type BridgeProject implements ProjectType {
   projectId : ID!
+  span : Int!
+  width : Int!
+  trafficLanesNumber : Int!
+}
+
+input BridgeProjectInput {
   span : Int!
   width : Int!
   trafficLanesNumber : Int!

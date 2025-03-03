@@ -27,13 +27,15 @@ public interface PostsPositionsMapper {
   EngineerPositionEntity toEngineerPositionDTO(EngineerPositionInput dto);
   
   @Mapping(target = "id", expression = "java(Id)")
-  EngineerPositionEntity toEngineerPositionDTOWithID(EngineerPositionEntity dto,
-                                                     final int Id
+  EngineerPositionEntity toEngineerPositionDTOWithID(
+    EngineerPositionEntity dto,
+    final int Id
   );
   
   @Mapping(target = "id", expression = "java(Id)")
-  WorkerPositionEntity toWorkerPositionDTOWithID(WorkerPositionInput dto,
-                                                 final int Id
+  WorkerPositionEntity toWorkerPositionDTOWithID(
+    WorkerPositionInput dto,
+    final int Id
   );
   
   /*@Mapping(

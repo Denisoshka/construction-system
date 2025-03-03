@@ -1,7 +1,104 @@
+type CustomerOrganization {
+  id  :ID!
+  name : String!
+}
+
 type ProjectContract{
-    id : ID!
-    projectId : ID!
-    siteId : ID!
-    dateOfCreation : Date!
-    signingDate : Date !
+  id : ID!
+  projectId : ID!
+  siteId : ID!
+  objectType : String!
+  dateOfCreation : Date!
+  signingDate : Date
+  planStartDate : Date
+  planEndDate : Date
+  factStartDate : Date
+  factEndDate  : Date
+}
+
+input ProjectContractInput{
+  siteId: ID!
+  objectType : String!
+  signingDate : Date
+  planStartDate : Date
+  planEndDate : Date
+}
+
+interface ProjectType {
+  projectId : ID!
+}
+
+type ApartmentHouseProject implements ProjectType {
+  projectId : ID!
+  floors : Int!
+}
+
+type SchoolProject implements ProjectType {
+  projectId : ID!
+  classRoomCount : Int!
+  floors : Int!
+}
+type BridgeProject implements ProjectType {
+  projectId : ID!
+  span : Int!
+  width : Int!
+  trafficLanesNumber : Int!
+}
+
+type Material {
+  id : ID!
+  name : String!
+  cost : Int!
+}
+
+type MaterialUsage {
+  estimateID : ID!
+  materialID : ID!
+  planQuantity : Int!
+  factQuantity : Int!
+}
+
+type WorkType {
+  id : ID!
+  name : String
+}
+
+type WorkScheduleUnit{
+  id : ID!
+  work : WorkType!
+  #  contractId : ID!
+  planStartDate : Date!
+  planEndDate : Date!
+  factStartDate : Date
+  factEndDate : Date
+  planOrder : Int!
+  factOrder : Int
+}
+
+input WorkScheduleUnitInput{
+  workTypeId : ID!
+  planStartDate : Date!
+  planEndDate : Date!
+  factStartDate : Date
+  factEndDate : Date
+  planOrder : Int!
+  factOrder : Int
+}
+
+input CustomerOrganizationInput{
+  name  : String
+}
+
+extend type Mutation  {
+  addCustomerOrganization(customer : CustomerOrganizationInput!):CustomerOrganization!
+  updateCustomerOrganization(id : ID!, customer : CustomerOrganizationInput!):CustomerOrganization!
+  deleteCustomerOrganization(id : ID!) : Boolean!
+
+  addWorkScheduleUnit(input : WorkScheduleUnitInput!):WorkScheduleUnit!
+  updateWorkScheduleUnit(input : WorkScheduleUnitInput!):WorkScheduleUnit!
+  deleteWorkScheduleUnit(id:ID!) :Boolean!
+
+  addSchoolProjectContract(input:ProjectContractInput!) :ProjectContract!
+  addBridgeProjectContract(input:ProjectContractInput!) :ProjectContract!
+  addApartmentHouseProjectContract(input:ProjectContractInput!) :ProjectContract!
 }

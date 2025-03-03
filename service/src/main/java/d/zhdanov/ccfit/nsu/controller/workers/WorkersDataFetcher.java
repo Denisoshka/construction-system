@@ -16,6 +16,8 @@ import java.util.UUID;
 
 @DgsComponent
 public class WorkersDataFetcher {
+  public final static String EMPLOYEE_KEY_FIELD = "id";
+  
   private final EmployeeService employeeService;
   private final EmployeeMapper  employeeMapper;
   
@@ -85,7 +87,7 @@ public class WorkersDataFetcher {
   public EmployeeInfo fetchEmployeeInfo(
     @NotNull final Map<String, Object> values
   ) {
-    final var id  = UUID.fromString((String) values.get("id"));
+    final var id  = UUID.fromString((String) values.get(EMPLOYEE_KEY_FIELD));
     final var ent = employeeService.getById(id);
     return employeeMapper.toEmployeeResponse(ent);
   }

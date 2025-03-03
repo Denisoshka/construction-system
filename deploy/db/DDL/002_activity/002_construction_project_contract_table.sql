@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS construction_project_contract
     date_of_creation         DATE         NOT NULL CHECK (
         signing_date >= '1900-01-01'::DATE
         )                                     DEFAULT now(),
-    signing_date             DATE         NOT NULL CHECK (
+    signing_date             DATE CHECK (
         signing_date >= '1900-01-01'::DATE
         ),
     plan_start_date          DATE         NOT NULL CHECK (

@@ -1,41 +1,51 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
-    import: ["@key"])
+  import: ["@key"])
 
 type ConstructionManagement @key(fields: "id") {
-    id: ID!
-    name: String!
-    address: String!
-    phone: String!
-    manager: EmployeeInfo
+  id: ID!
+  name: String!
+  address: String!
+  phone: String!
+  manager: EmployeeInfo
 }
 
 type ConstructionSite @key(fields: "id") {
-    id: ID!
-    name: String!
-    address: String!
-    phone: String!
-    management: ConstructionManagement
-    siteManager: EmployeeInfo
+  id: ID!
+  name: String!
+  address: String!
+  phone: String!
+  management: ConstructionManagement
+  siteManager: EmployeeInfo
 }
 
 type ConstructionProject {
-    id : ID!
-    siteID : ID!
+  id : ID!
+  siteID : ID!
 }
 
 input ConstructionManagementInput {
-    name: String!
-    address: String!
-    phone: String!
-    managerId : ID
+  name: String!
+  address: String!
+  phone: String!
+  managerId : ID
 }
 
 input ConstructionSiteInput{
-    name: String!
-    address: String!
-    phone: String!
-    managementId : ID,
-    siteManagerId : ID,
+  name: String!
+  address: String!
+  phone: String!
+  managementId : ID,
+  siteManagerId : ID,
+}
+
+extend type Mutation {
+  createConstructionSite(input : ConstructionSiteInput!):ConstructionSite!
+  updateConstructionSite(input : ConstructionSiteInput!):ConstructionSite!
+  deleteConstructionSite(id :ID!):Boolean!
+
+  createConstructionManagement(input : ConstructionManagementInput!):ConstructionManagement!
+  updateConstructionManagement(input : ConstructionManagementInput!):ConstructionManagement!
+  deleteConstructionManagement(id:ID!):Boolean!
 }
 
 

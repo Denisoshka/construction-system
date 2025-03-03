@@ -1,100 +1,100 @@
 scalar Date
 @specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
-    import: ["@key"])
+  import: ["@key"])
 
 interface Employee {
-    id: ID!
-    systemId: String!
-    name: String!
-    surname: String!
-    patronymic : String
-    employmentDate : Date!
+  id: ID!
+  systemId: String!
+  name: String!
+  surname: String!
+  patronymic : String
+  employmentDate : Date!
 }
 
 type EmployeeInfo implements Employee @key(fields: "id"){
-    id: ID!
-    systemId: String!
-    name: String!
-    surname: String!
-    patronymic : String
-    employmentDate : Date!
-    post: String
-    positionId: Int
+  id: ID!
+  systemId: String!
+  name: String!
+  surname: String!
+  patronymic : String
+  employmentDate : Date!
+  post: String
+  positionId: Int
 }
 
 type EngineerInfo implements Employee {
-    id: ID!
-    systemId: String!
-    name: String!
-    surname: String!
-    patronymic : String
-    employmentDate : Date!
-    positionInfo : EngineerPositionInfo!
+  id: ID!
+  systemId: String!
+  name: String!
+  surname: String!
+  patronymic : String
+  employmentDate : Date!
+  positionInfo : EngineerPositionInfo!
 }
 
 type WorkerInfo implements Employee {
-    id: ID!
-    systemId: String!
-    name: String!
-    surname: String!
-    patronymic : String
-    employmentDate : Date!
-    positionInfo : WorkerPositionInfo!
+  id: ID!
+  systemId: String!
+  name: String!
+  surname: String!
+  patronymic : String
+  employmentDate : Date!
+  positionInfo : WorkerPositionInfo!
 }
 
 
 type EngineerPositionInfo @key(fields: "id"){
-    id: Int!
-    name : String!
+  id: Int!
+  name : String!
 }
 
 type WorkerPositionInfo @key(fields: "id"){
-    id: Int!
-    name : String!
+  id: Int!
+  name : String!
 }
 
 input Pagination {
-    page: Int!
-    pageSize: Int!
+  page: Int!
+  pageSize: Int!
 }
 
 input EmployeeInput   {
-    systemId: String!
-    name: String!
-    surname: String!
-    patronymic : String
-    post: String
-    positionId: Int
+  systemId: String!
+  name: String!
+  surname: String!
+  patronymic : String
+  post: String
+  positionId: Int
 }
 
 input WorkerPositionInput {
-    name : String!
+  name : String!
 }
 
 input EngineerPositionInput {
-    name : String!
+  name : String!
 }
 
 type Query {
-    employee(id: ID!) : EmployeeInfo!
-    employees(pagination: Pagination) : [EmployeeInfo!]
-    engineers(pagination: Pagination, positionID: Int) :[EmployeeInfo!]
-    workers(pagination: Pagination, positionID: Int) : [EmployeeInfo!]
-    engineerPositions(pagination: Pagination) : [EngineerPositionInfo!]
-    workersPositions(pagination: Pagination) : [WorkerPositionInfo!]
+  employee(id: ID!) : EmployeeInfo!
+  employees(pagination: Pagination) : [EmployeeInfo!]!
+  engineers(pagination: Pagination, positionID: Int) :[EmployeeInfo!]!
+  workers(pagination: Pagination, positionID: Int) : [EmployeeInfo!]!
+  engineerPositions(pagination: Pagination) : [EngineerPositionInfo!]!
+  workersPositions(pagination: Pagination) : [WorkerPositionInfo!]!
 }
 
 type Mutation {
-    createEmployee(input: EmployeeInput!): EmployeeInfo!
-    updateEmployee(id: ID!, input: EmployeeInput!): EmployeeInfo!
-    deleteEmployee(id: ID!) : Boolean!
+  createEmployee(input: EmployeeInput!): EmployeeInfo!
+  updateEmployee(id: ID!, input: EmployeeInput!): EmployeeInfo!
+  deleteEmployee(id: ID!) : Boolean!
 
-    createEngineerPosition(input : EngineerPositionInput!) :EngineerPositionInfo!
-    updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPositionInfo!
-    deleteEngineerPosition(id :Int!) : Boolean!
+  createEngineerPosition(input : EngineerPositionInput!) :EngineerPositionInfo!
+  updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPositionInfo!
+  deleteEngineerPosition(id :Int!) : Boolean!
 
-    createWorkerPosition(input: WorkerPositionInput!) :WorkerPositionInfo!
-    updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPositionInfo!
-    deleteWorkerPosition(id :Int!): Boolean!
+  createWorkerPosition(input: WorkerPositionInput!) :WorkerPositionInfo!
+  updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPositionInfo!
+  deleteWorkerPosition(id :Int!): Boolean!
 }

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS work_schedule
     contract_id     UUID REFERENCES construction_project_contract (id) ON DELETE
         CASCADE,
     plan_start_date DATE    NOT NULL CHECK ( plan_start_date >= '1900-01-01'::DATE),
-    plan_end_date   DATE CHECK (
+    plan_end_date   DATE    NOT NULL CHECK (
         plan_end_date >= '1900-01-01'::DATE AND plan_end_date >= plan_start_date
         ),
     fact_start_date DATE CHECK (

@@ -18,9 +18,11 @@ repositories {
 dependencies {
   implementation(libs.spring.boot.web)
   implementation(libs.netflix.dgs)
+  implementation(libs.spring.boot.graphql)
   implementation(libs.spring.boot.jdbc)
   implementation(libs.mapstruct.impl)
   implementation(libs.caffeine)
+//  implementation(libs.graphql.java)
   
   compileOnly(libs.lombok)
   
@@ -49,8 +51,7 @@ tasks.test {
 }
 
 tasks.generateJava {
-  schemaPaths.add("${projectDir}/src/main/resources/schema")  // Путь к схеме
-  // GraphQL
-  packageName = "d.zhdanov.graphql"  // Пакет для сгенерированных классов
-  generateClient = true  // Включаем генерацию клиентских классов
+  schemaPaths.add("${projectDir}/src/main/resources/schema")
+  packageName = "d.zhdanov.graphql"
+  generateClient = true
 }

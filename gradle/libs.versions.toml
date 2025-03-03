@@ -63,5 +63,5 @@ netflix-dgs-extended-scalars = { group = "com.netflix.graphql.dgs", name = "grap
 mapstruct-impl = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct-ver" }
 mapstruct-annotationprocessor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct-ver" }
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine-ver" }
-graphql-java = { group = "com.graphql-java", name = "graphql-java", version.ref = "graphql-java-ver" }
-graphql-java-dataloader = { group = "com.graphql-java", name = "java-dataloader", version.ref = "graphql-java-dataloader-ver" }
+#graphql-java = { group = "com.graphql-java", name = "graphql-java", version.ref = "graphql-java-ver" }
+#graphql-java-dataloader = { group = "com.graphql-java", name = "java-dataloader", version.ref = "graphql-java-dataloader-ver" }

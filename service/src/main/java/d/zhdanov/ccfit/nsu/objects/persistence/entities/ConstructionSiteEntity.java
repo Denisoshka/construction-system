@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.objects.persistence.dto;
+package d.zhdanov.ccfit.nsu.objects.persistence.entities;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

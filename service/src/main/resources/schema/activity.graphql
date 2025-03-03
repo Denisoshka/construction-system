@@ -112,17 +112,22 @@ input CustomerOrganizationInput{
 }
 
 extend type Mutation  {
-  addCustomerOrganization(customer : CustomerOrganizationInput!):CustomerOrganization!
-  updateCustomerOrganization(id : ID!, customer : CustomerOrganizationInput!):CustomerOrganization!
+  addCustomerOrganization(customer : CustomerOrganizationInput!)
+  :CustomerOrganization!
+  updateCustomerOrganization(id : ID!, customer : CustomerOrganizationInput!)
+  :CustomerOrganization!
   deleteCustomerOrganization(id : ID!) : Boolean!
 
   addWorkScheduleUnit(input : WorkScheduleUnitInput!):WorkScheduleUnit!
   updateWorkScheduleUnit(input : WorkScheduleUnitInput!):WorkScheduleUnit!
   deleteWorkScheduleUnit(id:ID!) :Boolean!
 
-  addSchoolProjectContract(input:ProjectContractInput!) :ProjectContract!
-  addBridgeProjectContract(input:ProjectContractInput!) :ProjectContract!
-  addApartmentHouseProjectContract(input:ProjectContractInput!) :ProjectContract!
+  addSchoolProjectContract(input:ProjectContractInput!, project : SchoolProjectInput)
+  :ProjectContract!
+  addBridgeProjectContract(input:ProjectContractInput!, project :BridgeProjectInput)
+  :ProjectContract!
+  addApartmentHouseProjectContract(input:ProjectContractInput!,project : ApartmentHouseProjectInput)
+  :ProjectContract!
 
   createMaterialType(input : MaterialInput!) : Material!
 }

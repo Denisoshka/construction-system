@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.activity.persistence.dto;
+package d.zhdanov.ccfit.nsu.activity.persistence.entities;
 
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;

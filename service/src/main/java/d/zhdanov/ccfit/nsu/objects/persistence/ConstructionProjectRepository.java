@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.objects.persistence;
 
-import d.zhdanov.ccfit.nsu.objects.persistence.dto.ConstructionProjectEntity;
+import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;

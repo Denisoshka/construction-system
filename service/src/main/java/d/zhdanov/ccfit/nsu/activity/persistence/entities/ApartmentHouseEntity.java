@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.activity.persistence.dto;
+package d.zhdanov.ccfit.nsu.activity.persistence.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,10 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-@Table("bridge")
-public class BridgeEntity {
+@Table("apartment_house")
+public class ApartmentHouseEntity {
   @Id
   private UUID    projectId;
-  private Integer span;
-  private Integer width;
-  private Integer trafficLanesNumber;
+  private Integer floors;
 }
+

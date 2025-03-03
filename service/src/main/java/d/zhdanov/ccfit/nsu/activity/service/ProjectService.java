@@ -4,10 +4,10 @@ import d.zhdanov.ccfit.nsu.activity.persistence.ApartmentHouseRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.BridgeRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.ProjectContractRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.SchoolRepository;
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.ApartmentHouseEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.BridgeEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.ProjectContractEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.SchoolEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ApartmentHouseEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.BridgeEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.SchoolEntity;
 import d.zhdanov.graphql.types.ApartmentHouseProjectInput;
 import d.zhdanov.graphql.types.BridgeProjectInput;
 import d.zhdanov.graphql.types.ProjectContractInput;
@@ -20,17 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
-public class ActivityService {
+public class ProjectService {
   private final ProjectContractRepository projectContractRepository;
   private final ApartmentHouseRepository  apartmentHouseRepository;
   private final SchoolRepository          schoolRepository;
   private final BridgeRepository          bridgeRepository;
   
-  public ActivityService(
+  public ProjectService(
     @Autowired ProjectContractRepository projectContractRepository,
+    @Autowired ApartmentHouseRepository apartmentHouseRepository,
     @Autowired SchoolRepository schoolRepository,
-    @Autowired BridgeRepository bridgeRepository,
-    @Autowired ApartmentHouseRepository apartmentHouseRepository
+    @Autowired BridgeRepository bridgeRepository
   ) {
     this.projectContractRepository = projectContractRepository;
     this.apartmentHouseRepository  = apartmentHouseRepository;
@@ -59,7 +59,7 @@ public class ActivityService {
   }
   
   @Transactional
-  ProjectContractEntity saveBridgeProjectContract(
+  public ProjectContractEntity saveBridgeProjectContract(
     final UUID projectId,
     final ProjectContractInput contractInput,
     final BridgeProjectInput bridgeInput
@@ -80,7 +80,7 @@ public class ActivityService {
   }
   
   @Transactional
-  ProjectContractEntity saveBridgeProjectContract(
+  public ProjectContractEntity saveApartmentHouseProjectContract(
     final UUID projectId,
     final ProjectContractInput contractInput,
     final ApartmentHouseProjectInput apartmentHouseInput
@@ -99,7 +99,6 @@ public class ActivityService {
   }
   
   @Transactional
-  
   public <T, R extends CrudRepository<T, UUID>> ProjectContractEntity saveProjectContract(
     final UUID projectId,
     final ProjectContractInput projectContractInput,

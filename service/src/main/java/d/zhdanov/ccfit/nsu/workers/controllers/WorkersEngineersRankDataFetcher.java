@@ -80,8 +80,8 @@ public class WorkersEngineersRankDataFetcher {
     @NotNull final Map<String, Object> values
   ) {
     final int id = (int) values.get("id");
-    final var position = workerEngineerPositionService.getWorkerPositionInfo(
-      id);
+    final var position =
+      workerEngineerPositionService.getWorkerPositionInfo(id);
     return postsPositionsMapper.fromWorkerPositionDTO(position);
   }
 }

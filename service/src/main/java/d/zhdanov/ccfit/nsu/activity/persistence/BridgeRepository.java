@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.activity.persistence;
 
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.BridgeEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.BridgeEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

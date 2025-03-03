@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.activity.persistence;
 
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.ProjectContractEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

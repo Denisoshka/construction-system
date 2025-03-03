@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.activity.persistence;
 
-import d.zhdanov.ccfit.nsu.activity.persistence.dto.ApartmentHouseEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ApartmentHouseEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

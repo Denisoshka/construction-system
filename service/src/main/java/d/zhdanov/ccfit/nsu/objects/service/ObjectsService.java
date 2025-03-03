@@ -2,7 +2,7 @@ package d.zhdanov.ccfit.nsu.objects.service;
 
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionProjectRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionSiteRepository;
-import d.zhdanov.ccfit.nsu.objects.persistence.dto.ConstructionProjectEntity;
+import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
 import d.zhdanov.graphql.types.ConstructionManagementInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -51,6 +51,11 @@ type Material {
   cost : Int!
 }
 
+input MaterialInput {
+  name : String!
+  cost : Int!
+}
+
 type MaterialUsage {
   estimateID : ID!
   materialID : ID!
@@ -101,4 +106,6 @@ extend type Mutation  {
   addSchoolProjectContract(input:ProjectContractInput!) :ProjectContract!
   addBridgeProjectContract(input:ProjectContractInput!) :ProjectContract!
   addApartmentHouseProjectContract(input:ProjectContractInput!) :ProjectContract!
+
+  createMaterialType(input : MaterialInput!) : Material!
 }

@@ -32,7 +32,7 @@ public interface EmployeeMapper {
   @Mapping(target = "positionId", ignore = true)
   EmployeeInfoDTO toEmployeeInfoDTO(final EmployeeEntity employee);
   
-  @Mapping(target ="positionId", ignore = true)
+  @Mapping(target = "positionId", ignore = true)
   EmployeeEntity toEmployeeDTO(final EmployeeInfoDTO employee);
   
   @Mapping(target = "positionId", ignore = true)

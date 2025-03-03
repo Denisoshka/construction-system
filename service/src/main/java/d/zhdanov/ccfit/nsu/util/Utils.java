@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable;
 
 @UtilityClass
 public class Utils {
-
+  
   @NotNull
   public static Pageable getPageable(Pagination pagination) {
-    if (pagination == null) {
+    if(pagination == null) {
       return Pageable.unpaged();
     }
     return PageRequest.of(pagination.getPage(), pagination.getPageSize());

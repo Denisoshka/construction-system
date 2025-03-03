@@ -1,9 +1,9 @@
 package d.zhdanov.ccfit.nsu.workers.controllers;
 
 import com.netflix.graphql.dgs.*;
+import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.ccfit.nsu.workers.mapper.PostsPositionsMapper;
 import d.zhdanov.ccfit.nsu.workers.service.WorkerEngineerPositionService;
-import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

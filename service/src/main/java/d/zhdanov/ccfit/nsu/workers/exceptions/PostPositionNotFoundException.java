@@ -4,15 +4,15 @@ public class PostPositionNotFoundException extends WorkersServiceException {
   public PostPositionNotFoundException(String message) {
     super(message);
   }
-
+  
   public PostPositionNotFoundException(String message, Throwable cause) {
     super(message, cause);
   }
-
+  
   public PostPositionNotFoundException(Throwable cause) {
     super(cause);
   }
-
+  
   public PostPositionNotFoundException() {
   }
 }

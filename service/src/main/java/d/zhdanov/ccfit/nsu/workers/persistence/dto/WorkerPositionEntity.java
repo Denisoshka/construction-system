@@ -11,5 +11,5 @@ import org.springframework.data.relational.core.mapping.Table;
 public class WorkerPositionEntity {
   @Id
   private Integer id;
-  private String name;
+  private String  name;
 }

@@ -1,9 +1,9 @@
 package d.zhdanov.ccfit.nsu.workers.controllers;
 
 import com.netflix.graphql.dgs.*;
+import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.ccfit.nsu.workers.mapper.EmployeeMapper;
 import d.zhdanov.ccfit.nsu.workers.service.EmployeeService;
-import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.graphql.types.EmployeeInfo;
 import d.zhdanov.graphql.types.EmployeeInput;
 import d.zhdanov.graphql.types.Pagination;

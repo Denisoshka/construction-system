@@ -16,6 +16,7 @@ public class ActivityService {
   private final ProjectContractRepository projectContractRepository;
   private final SchoolRepository          schoolRepository;
   private final Bridge
+  
   public ActivityService(
     @Autowired ProjectContractRepository projectContractRepository
   ) {

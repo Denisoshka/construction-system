@@ -1,6 +1,7 @@
 package d.zhdanov.ccfit.nsu.workers.exceptions;
 
-public class EngineerPositionNotFoundException extends WorkersServiceException {
+public class EngineerPositionNotFoundException extends
+                                               EmployeeServiceException {
   public EngineerPositionNotFoundException(String message) {
     super(message);
   }

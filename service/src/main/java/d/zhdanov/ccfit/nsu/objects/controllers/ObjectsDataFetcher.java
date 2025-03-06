@@ -7,6 +7,7 @@ import d.zhdanov.graphql.types.*;
 
 @DgsComponent
 public class ObjectsDataFetcher {
+  
   @DgsMutation
   public ConstructionSite createConstructionSite(
     @InputArgument ConstructionSiteInput input
@@ -29,10 +30,5 @@ public class ObjectsDataFetcher {
   @DgsMutation
   public Boolean deleteConstructionManagement(@InputArgument String id) {
     return true;
-  }
-  
-  @DgsMutation
-  public Material createMaterialType(@InputArgument MaterialInput input) {
-  
   }
 }

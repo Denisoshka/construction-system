@@ -2,6 +2,7 @@ package d.zhdanov.ccfit.nsu.objects.service;
 
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionProjectRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionSiteRepository;
+import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionManagementEntity;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
 import d.zhdanov.graphql.types.ConstructionManagementInput;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,17 @@ public class ObjectsService {
   }
   
   @Transactional
-  public createConstructionManagement(final ConstructionManagementInput input) {
+  public ConstructionManagementEntity createConstructionManagement(
+    final ConstructionManagementInput input
+  ) {
   
   }
   
   @Transactional
   public ConstructionProjectEntity prepareNewProjectForSite(final UUID siteId) {
-    return constructionProjectRepository.save(
-      new ConstructionProjectEntity(null, siteId));
+    return constructionProjectRepository.save(new ConstructionProjectEntity(
+      null,
+                                                                            siteId
+    ));
   }
 }

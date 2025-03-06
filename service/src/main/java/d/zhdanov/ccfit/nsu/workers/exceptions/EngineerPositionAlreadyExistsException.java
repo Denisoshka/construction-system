@@ -1,7 +1,7 @@
 package d.zhdanov.ccfit.nsu.workers.exceptions;
 
 public class EngineerPositionAlreadyExistsException
-  extends WorkersServiceException {
+  extends EmployeeServiceException {
   public EngineerPositionAlreadyExistsException() {
   }
   

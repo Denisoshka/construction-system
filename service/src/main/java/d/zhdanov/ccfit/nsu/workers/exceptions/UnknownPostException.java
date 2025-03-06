@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.exceptions;
 
-public class UnknownPostException extends WorkersServiceException {
+public class UnknownPostException extends EmployeeServiceException {
   public UnknownPostException(String message) {
     super(message);
   }

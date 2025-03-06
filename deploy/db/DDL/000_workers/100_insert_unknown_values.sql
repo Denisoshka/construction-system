@@ -14,11 +14,3 @@ ON CONFLICT (id) DO NOTHING;
 INSERT INTO engineer_position(id, name)
 VALUES (0, 'UNKNOWN')
 ON CONFLICT (id) DO NOTHING;
-
-INSERT INTO engineers(employee_id, position_id)
-VALUES (default_uuid(), 0)
-ON CONFLICT (employee_id) DO NOTHING;
-
-/*INSERT INTO workers(employee_id, position_id)
-VALUES (default_uuid(), 0)
-ON CONFLICT (employee_id) DO NOTHING;*/

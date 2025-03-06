@@ -65,7 +65,17 @@ public class ActivityDataFetcher {
       input,
       project,
       projectService::saveApartmentHouseProjectContract
-    )
+    );
+  }
+  
+  @DgsMutation
+  public Material createMaterialType(@InputArgument MaterialInput input) {
+  
+  }
+  
+  @DgsMutation
+  public Boolean deleteMaterialType(@InputArgument String id) {
+  
   }
   
   @Transactional

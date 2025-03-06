@@ -18,11 +18,6 @@ public class EmployeeEntity {
   private String    surname;
   private String    patronymic;
   private LocalDate employmentDate;
-  private String    post;
-//  @MappedCollection(idColumn = "employee_id")
-//  private Engineer  engineer;
-
-//  @MappedCollection(idColumn = "employee_id")
-//  private Worker worker;
+  private JobPost   post;
 }
 

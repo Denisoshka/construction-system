@@ -9,7 +9,8 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("engineers")
 public class EngineerEntity {
   @Id
-  private Integer                employeeId;
+  @MappedCollection(idColumn = "employee_id")
+  private EmployeeEntity         employeeId;
   @MappedCollection(idColumn = "position_id")
   private EngineerPositionEntity position;
 }

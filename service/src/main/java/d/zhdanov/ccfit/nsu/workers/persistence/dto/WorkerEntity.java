@@ -9,8 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("workers")
 public class WorkerEntity {
   @Id
-  @MappedCollection(idColumn = "employee_id")
-  private EmployeeEntity       employee;
+  private Integer              employeeId;
   @MappedCollection(idColumn = "position_id")
   private WorkerPositionEntity position;
 }

@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.exceptions;
 
-public class EmployeeAlreadyExistsException extends EmployeeServiceException {
+public class EmployeeAlreadyExistsException extends WorkersServiceException {
   public EmployeeAlreadyExistsException() {
   }
   

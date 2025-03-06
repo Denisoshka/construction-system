@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.exceptions;
 
-public class EmployeeNotFoundException extends EmployeeServiceException {
+public class EmployeeNotFoundException extends WorkersServiceException {
   public EmployeeNotFoundException() {
   }
   

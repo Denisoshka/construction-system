@@ -130,5 +130,4 @@ extend type Mutation  {
   :ProjectContract!
 
   createMaterialType(input : MaterialInput!) : Material!
-  deleteMaterialType(id :ID!) : Boolean!
 }

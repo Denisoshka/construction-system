@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.exceptions;
 
-public class PostPositionNotFoundException extends EmployeeServiceException {
+public class PostPositionNotFoundException extends WorkersServiceException {
   public PostPositionNotFoundException(String message) {
     super(message);
   }

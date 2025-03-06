@@ -58,8 +58,8 @@ services:
       KC_DB_USERNAME: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
       KC_DB_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
       KC_PROXY: edge
-#      JAVA_OPTS: "-Dspring.cloud.eureka.client.service-url.defaultZone=http://localhost:8761/eureka/ -Dspring.application.name=keycloak-service"
-#      EUREKA_CLIENT_SERVICEURL: http://localhost:8761/eureka
+      JAVA_OPTS: "-Dspring.cloud.eureka.client.service-url.defaultZone=http://localhost:8761/eureka/ -Dspring.application.name=keycloak-service"
+      EUREKA_CLIENT_SERVICEURL: http://localhost:8761/eureka
       SPRING_APPLICATION_NAME: keycloak
     ports:
       - "8080:8080"
@@ -69,7 +69,7 @@ services:
       - dev-net
     depends_on:
       - postgres
-#      - eureka
+      - eureka
 
   eureka:
     build:

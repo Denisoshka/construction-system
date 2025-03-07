@@ -51,7 +51,7 @@ public class WorkersEngineersRankDataFetcher {
     @InputArgument Pagination pagination
   ) {
     final var paged = Utils.getPageable(pagination);
-    final var rez   = engineersService.engineers(paged).toList();
+    final var rez   = engineersService.engineersPosition(paged).toList();
     return
   }
   

@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.WorkerPositionEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerPositionEntity;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;

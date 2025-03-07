@@ -4,6 +4,7 @@ import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.ccfit.nsu.workers.mapper.EmployeeMapper;
 import d.zhdanov.ccfit.nsu.workers.service.EmployeeService;
+import d.zhdanov.ccfit.nsu.workers.service.EngineersService;
 import d.zhdanov.graphql.types.ConstructionSite;
 import d.zhdanov.graphql.types.EmployeeInfo;
 import d.zhdanov.graphql.types.EmployeeInput;
@@ -18,22 +19,24 @@ import java.util.UUID;
 @DgsComponent
 public class EmployeeDataFetcher {
   public final static String EMPLOYEE_KEY_FIELD = "id";
-  
+  private final EngineersService engineersService;
   private final EmployeeService employeeService;
   private final EmployeeMapper  employeeMapper;
   
   public EmployeeDataFetcher(
     @Autowired EmployeeService employeeService,
-    @Autowired EmployeeMapper employeeMapper
+    @Autowired EmployeeMapper employeeMapper,
+    @Autowired EngineersService engineersService
   ) {
     this.employeeService = employeeService;
     this.employeeMapper  = employeeMapper;
+    this.engineersService = engineersService;
   }
   
   @DgsQuery
   public EmployeeInfo employee(final @InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    final var emp  = employeeService.getById(uuid);
+    final var emp  = engineersService.
     return employeeMapper.toEmployeeResponse(emp);
   }
   

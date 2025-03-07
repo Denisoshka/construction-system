@@ -1,6 +1,8 @@
-package d.zhdanov.ccfit.nsu.workers.persistence.dto;
+package d.zhdanov.ccfit.nsu.workers.persistence.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -9,6 +11,8 @@ import java.util.UUID;
 
 @Data
 @Table("employees")
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeEntity {
   @Id
   private UUID id;

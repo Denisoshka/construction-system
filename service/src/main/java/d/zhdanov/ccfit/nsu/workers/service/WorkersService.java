@@ -4,9 +4,8 @@ import d.zhdanov.ccfit.nsu.workers.exceptions.WorkerPositionAlreadyExistsExcepti
 import d.zhdanov.ccfit.nsu.workers.exceptions.WorkerPositionNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.persistence.WorkersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.WorkersRepository;
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.WorkerEntity;
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.WorkerPositionEntity;
-import d.zhdanov.ccfit.nsu.workers.service.dto.EmployeeInfoDTO;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerPositionEntity;
 import d.zhdanov.graphql.types.WorkerPositionInput;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

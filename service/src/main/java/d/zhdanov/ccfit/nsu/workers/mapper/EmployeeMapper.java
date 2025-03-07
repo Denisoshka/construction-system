@@ -1,7 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.mapper;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.EmployeeEntity;
-import d.zhdanov.ccfit.nsu.workers.service.dto.EmployeeInfoDTO;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.EmployeeEntity;
 import d.zhdanov.graphql.types.EmployeeInfo;
 import d.zhdanov.graphql.types.EmployeeInput;
 import org.mapstruct.Mapper;

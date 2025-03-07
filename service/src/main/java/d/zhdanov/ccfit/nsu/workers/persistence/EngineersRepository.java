@@ -1,6 +1,7 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.EngineerEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.utils.EngineerRowMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -30,4 +32,17 @@ public interface EngineersRepository
     @Param("employeeId") UUID employeeId,
     @Param("positionId") Integer positionId
   );
+  
+  @Query(
+    value = """
+                SELECT e.employee_id, e.position_id,
+                       emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
+                       pos.id AS position_id, pos.name AS position_name
+                FROM engineers e
+                JOIN employees emp ON e.employee_id = emp.id
+                LEFT JOIN engineer_position pos ON e.position_id = pos.id
+            """, rowMapperClass = EngineerRowMapper.class
+  )
+  List<EngineerEntity> findAllEngineers();
+  
 }

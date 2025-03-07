@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.workers.persistence.dto;
+package d.zhdanov.ccfit.nsu.workers.persistence.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

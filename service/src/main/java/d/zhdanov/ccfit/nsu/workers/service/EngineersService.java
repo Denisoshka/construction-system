@@ -4,9 +4,8 @@ import d.zhdanov.ccfit.nsu.workers.exceptions.EngineerPositionAlreadyExistsExcep
 import d.zhdanov.ccfit.nsu.workers.exceptions.EngineerPositionNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.persistence.EngineersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.EngineersRepository;
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.EngineerEntity;
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.EngineerPositionEntity;
-import d.zhdanov.ccfit.nsu.workers.service.dto.EmployeeInfoDTO;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerPositionEntity;
 import d.zhdanov.graphql.types.EngineerPositionInput;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+
 @Service
 public class EngineersService {
   private final EngineersPositionRepository engineersPositionRepository;
@@ -41,7 +41,7 @@ public class EngineersService {
     engineersRepository.insertEngineer(employeeId, posInfo.getId());
   }
   
-  public Page<EngineerPositionEntity> engineers(Pageable paged) {
+  public Page<EngineerPositionEntity> engineersPosition(Pageable paged) {
     return engineersPositionRepository.findAll(paged);
   }
   
@@ -53,9 +53,15 @@ public class EngineersService {
       EngineerPositionNotFoundException::new);
   }
   
+  public EngineerPositionEntity engineerPosition(final String name) {
+    return engineersPositionRepository.findByName(name).orElseThrow(
+      EngineerPositionNotFoundException::new);
+  }
+  
   public EngineerEntity engineerEmployeePosition(final UUID id) {
     return engineersRepository.findById(id).orElseThrow();
   }
+  
   @Transactional
   public void deleteEngineerPosition(final int id) {
     engineersPositionRepository.deleteById(id);

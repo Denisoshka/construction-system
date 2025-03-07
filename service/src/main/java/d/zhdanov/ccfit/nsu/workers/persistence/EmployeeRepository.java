@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.EmployeeEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.EmployeeEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -18,12 +18,6 @@ import java.util.UUID;
 public interface EmployeeRepository
   extends PagingAndSortingRepository<EmployeeEntity, UUID>,
           CrudRepository<EmployeeEntity, UUID> {
-  String UNDEFINED_POST     = "UNKNOWN";
-  String UNDEFINED_POSITION = "UNKNOWN";
-  String ENGINEER_POST      = "engineer";
-  String WORKERS_POST       = "worker";
-
-//  EmployeeDTO findById(UUID id);
   
   @Query(
     "SELECT e.* FROM employees e "
@@ -40,7 +34,6 @@ public interface EmployeeRepository
   )
   @NotNull List<EmployeeEntity> findWorkersByPositionId(
     @Param("positionId") long positionId, Pageable pageable);
-  
   @Transactional
   void deleteBySystemId(@Param("system_id") String systemId);
   

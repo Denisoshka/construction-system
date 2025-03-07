@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.mapper;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.dto.EngineerPositionEntity;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerPositionEntity;
 import d.zhdanov.graphql.types.EngineerPosition;
 import d.zhdanov.graphql.types.EngineerPositionInput;
 import org.mapstruct.Mapper;

@@ -11,28 +11,27 @@ import org.mapstruct.MappingTarget;
 import java.util.List;
 
 @Mapper(
-  componentModel = MappingConstants.ComponentModel.SPRING, uses = {
-  EmployeeMapperUtils.class
-}
+  componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface EmployeeMapper {
-  EmployeeInfo toEmployeeResponse(final EmployeeInfoDTO dto);
-  
   @Mapping(target = "positionId", ignore = true)
   EmployeeInfo toEmployeeResponse(final EmployeeEntity dto);
   
   //  List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeInfoDTO> employeesDTO);
-  List<EmployeeInfo> toEmployeeResponseListFromEmployeeInfoDTO(final List<EmployeeInfoDTO> employeesInfoDTO);
+  List<EmployeeInfo> toEmployeeResponseListFromEmployeeInfoDTO(final List<EmployeeInfo> employeesInfoDTO);
   
   List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeEntity> employeesDTO);
   
-  EmployeeInfoDTO toEmployeeInfoDTO(final EmployeeInput employee);
+  EmployeeInfo toEmployeeInfoDTO(final EmployeeInput employee);
+  
+  @Mapping(target = "post", defaultValue = "UNKNOWN")
+  EmployeeEntity toEmployeeEntity(final EmployeeInput employee);
   
   @Mapping(target = "positionId", ignore = true)
-  EmployeeInfoDTO toEmployeeInfoDTO(final EmployeeEntity employee);
+  EmployeeInfo toEmployeeInfoDTO(final EmployeeEntity employee);
   
   @Mapping(target = "positionId", ignore = true)
-  EmployeeEntity toEmployeeDTO(final EmployeeInfoDTO employee);
+  EmployeeEntity toEmployeeEntity(final EmployeeInfo employee);
   
   @Mapping(target = "positionId", ignore = true)
   void updateEmployeeDTO(
@@ -43,7 +42,7 @@ public interface EmployeeMapper {
   @Mapping(target = "positionId", ignore = true)
   void exchangeEmployeeDTO(
     final EmployeeEntity employee,
-    final @MappingTarget EmployeeInfoDTO employeeDTO
+    final @MappingTarget EmployeeInfo employeeDTO
   );
   
   List<EmployeeEntity> toEmployeeDTOList(final List<EmployeeInfo> employeesDTO);

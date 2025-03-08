@@ -19,6 +19,7 @@ type EmployeeInfo implements Employee @key(fields: "id"){
   surname: String!
   patronymic : String
   employmentDate : Date!
+  post : String!
 }
 
 type EngineerInfo  {
@@ -47,13 +48,28 @@ input Pagination {
   pageSize: Int!
 }
 
+input Sort {
+  field : String!
+  sortAsc : Boolean!
+}
+
+input EngineerFilter{
+  posId : Int
+}
+
+input WorkerFilter{
+  posId : Int
+}
+
+input EmployeeFilter{
+  post : String
+}
+
 input EmployeeInput   {
   systemId: String!
   name: String!
   surname: String!
   patronymic : String
-  post: String
-  positionId: Int
 }
 
 input WorkerPositionInput {
@@ -65,30 +81,34 @@ input EngineerPositionInput {
 }
 
 type Query {
-  employee(id : ID!) : EmployeeInfo!
-  employees(pagination : Pagination) : [EmployeeInfo!]!
+  employee(id: ID!) : EmployeeInfo!
+  employees(pagination: Pagination, employeeFilter: EmployeeFilter):
+  [EmployeeInfo!]!
 
-  engineer(id : ID!) : EngineerInfo!
-  engineers(pagination : Pagination, positionID: Int) : [EngineerInfo!]!
-  engineerPosition(id : Int!) : EngineerPosition!
-  engineersPositions(pagination : Pagination) : [EngineerPosition!]!
+  engineer(id: ID!): EngineerInfo!
+  engineers(pagination: Pagination, engineerFilter: EngineerFilter):
+  [EngineerInfo!]!
+  engineerPosition(id: Int!): EngineerPosition!
+  engineerPositionByName(name: String!): EngineerPosition!
+  engineersPositions(pagination: Pagination): [EngineerPosition!]!
 
   worker(id :ID!) : WorkerInfo!
-  workers(pagination : Pagination, positionID: Int) : [WorkerInfo!]!
-  workerPosition(id : Int!) : WorkerPosition!
-  workersPositions(pagination : Pagination) : [WorkerPosition!]!
+  workers(pagination : Pagination, filter: WorkerFilter): [WorkerInfo!]!
+  workerPosition(id : Int!): WorkerPosition!
+  workersPositions(pagination : Pagination): [WorkerPosition!]!
 }
 
 type Mutation {
-  createEmployee(input: EmployeeInput!) : EmployeeInfo!
+  createEmployee(input: EmployeeInput!): EmployeeInfo!
   updateEmployee(id: ID!, input: EmployeeInput!): EmployeeInfo!
   deleteEmployee(id: ID!) : Boolean!
 
-  createEngineerPosition(input : EngineerPositionInput!) :EngineerPosition!
-  updateEngineerPosition(id :Int!,input: EngineerPositionInput!): EngineerPosition!
+  createEngineerPosition(input : EngineerPositionInput!): EngineerPosition!
+  updateEngineerPosition(id :Int!,input : EngineerPositionInput!):
+  EngineerPosition!
   deleteEngineerPosition(id :Int!) : Boolean!
 
-  createWorkerPosition(input: WorkerPositionInput!) :WorkerPosition!
+  createWorkerPosition(input : WorkerPositionInput!): WorkerPosition!
   updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPosition!
   deleteWorkerPosition(id :Int!): Boolean!
 }

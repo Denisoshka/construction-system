@@ -1,58 +1,52 @@
 package d.zhdanov.ccfit.nsu.workers.service;
 
+import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.ccfit.nsu.workers.exceptions.WorkerPositionAlreadyExistsException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.WorkerPositionNotFoundException;
+import d.zhdanov.ccfit.nsu.workers.mapper.WorkersMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.WorkersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.WorkersRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerEntity;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerPositionEntity;
-import d.zhdanov.graphql.types.WorkerPositionInput;
+import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class WorkersService {
   private final WorkersPositionRepository workersPositionRepository;
   private final WorkersRepository         workersRepository;
+  private final WorkersMapper             workersMapper;
   
   public WorkersService(
     @Autowired WorkersPositionRepository workersPositionRepository,
-    @Autowired WorkersRepository workersRepository
+    @Autowired WorkersRepository workersRepository,
+    @Autowired WorkersMapper workersMapper
   ) {
     this.workersPositionRepository = workersPositionRepository;
     this.workersRepository         = workersRepository;
+    this.workersMapper             = workersMapper;
   }
   
   @Transactional
-  public @NotNull WorkerPositionEntity createWorkerPosition(
+  public @NotNull WorkerPosition createWorkerPosition(
     final @NotNull WorkerPositionInput workerPosition
   ) throws WorkerPositionAlreadyExistsException {
     try {
-      return workersPositionRepository.save(new WorkerPositionEntity(
+      final var ret = workersPositionRepository.save(new WorkerPositionEntity(
         null,
-                                                                     workerPosition.getName()
+        workerPosition.getName()
       ));
+      return workersMapper.fromWorkerPositionEntity(ret);
     } catch(DataIntegrityViolationException _) {
       throw new WorkerPositionAlreadyExistsException();
     }
-  }
-  
-  @Transactional
-  public void insertWorkerPostInfo(
-    final UUID employeeId,
-    final @NotNull EmployeeInfoDTO input
-  ) {
-    final var posInfo =
-      workersPositionRepository.findById(input.getPositionId()).orElseThrow(
-        WorkerPositionNotFoundException::new);
-    workersRepository.insertWorker(employeeId, posInfo.getId());
   }
   
   @Transactional
@@ -60,16 +54,29 @@ public class WorkersService {
     workersPositionRepository.deleteById(id);
   }
   
-  public WorkerPositionEntity workerPosition(final Integer id) {
-    return workersPositionRepository.findById(id).orElseThrow(
+  public WorkerPosition workerPosition(final Integer id) {
+    final var ret = workersPositionRepository.findById(id).orElseThrow(
       WorkerPositionNotFoundException::new);
-  }
-  
-  public Page<WorkerPositionEntity> workers(Pageable paged) {
-    return workersPositionRepository.findAll(paged);
+    return workersMapper.fromWorkerPositionEntity(ret);
   }
   
   public WorkerEntity workerEmployeePosition(final UUID id) {
     return workersRepository.findById(id).orElseThrow();
+  }
+  
+  public List<WorkerInfo> workers(
+    Pagination pagination,
+    WorkerFilter workerFilter
+  ) {
+    final var paged  = Utils.getPageable(pagination);
+    final var filter = Utils.getRepositoryWorkerFilter(workerFilter);
+    final var ret    = workersRepository.findAllWorkers(paged, filter);
+    return workersMapper.fromWorkerEntityList(ret);
+  }
+  
+  public List<WorkerPosition> workersPositions(Pagination pagination) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret   = workersPositionRepository.findAll(paged).toList();
+    return workersMapper.fromWorkerPositionEntityList(ret);
   }
 }

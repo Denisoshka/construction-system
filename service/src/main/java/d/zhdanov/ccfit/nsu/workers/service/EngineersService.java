@@ -1,61 +1,59 @@
 package d.zhdanov.ccfit.nsu.workers.service;
 
+import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.workers.exceptions.EmployeeNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.EngineerPositionAlreadyExistsException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.EngineerPositionNotFoundException;
+import d.zhdanov.ccfit.nsu.workers.mapper.EngineersMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.EngineersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.EngineersRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerEntity;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerPositionEntity;
-import d.zhdanov.graphql.types.EngineerPositionInput;
+import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class EngineersService {
   private final EngineersPositionRepository engineersPositionRepository;
   private final EngineersRepository         engineersRepository;
+  private final EngineersMapper             engineersMapper;
   
   public EngineersService(
     @Autowired EngineersPositionRepository engineersPositionRepository,
-    @Autowired EngineersRepository engineersRepository
+    @Autowired EngineersRepository engineersRepository,
+    @Autowired EngineersMapper engineersMapper
   ) {
     this.engineersPositionRepository = engineersPositionRepository;
     this.engineersRepository         = engineersRepository;
+    this.engineersMapper             = engineersMapper;
   }
   
-  @Transactional
-  public void insertEngineerPostInfo(
-    final UUID employeeId,
-    final @NotNull EmployeeInfoDTO input
-  ) {
-    final var posInfo =
-      engineersPositionRepository.findById(input.getPositionId()).orElseThrow(
-        EngineerPositionNotFoundException::new);
-    engineersRepository.insertEngineer(employeeId, posInfo.getId());
-  }
-  
-  public Page<EngineerPositionEntity> engineersPosition(Pageable paged) {
-    return engineersPositionRepository.findAll(paged);
+  public List<EngineerPosition> engineersPositions(Pagination pagination) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret   = engineersPositionRepository.findAll(paged).toList();
+    return engineersMapper.fromEngineerPositionEntityList(ret);
   }
   
   /**
    * @throws EngineerPositionNotFoundException
    */
-  public EngineerPositionEntity engineerPosition(final Integer id) {
-    return engineersPositionRepository.findById(id).orElseThrow(
+  public EngineerPosition engineerPosition(final Integer id) {
+    final var ret = engineersPositionRepository.findById(id).orElseThrow(
       EngineerPositionNotFoundException::new);
+    return engineersMapper.fromEngineerPositionEntity(ret);
   }
   
-  public EngineerPositionEntity engineerPosition(final String name) {
-    return engineersPositionRepository.findByName(name).orElseThrow(
+  public EngineerPosition engineerPosition(final String name) {
+    final var ret = engineersPositionRepository.findByName(name).orElseThrow(
       EngineerPositionNotFoundException::new);
+    return engineersMapper.fromEngineerPositionEntity(ret);
   }
   
   public EngineerEntity engineerEmployeePosition(final UUID id) {
@@ -68,16 +66,34 @@ public class EngineersService {
   }
   
   @Transactional
-  public @NotNull EngineerPositionEntity createEngineerPosition(
+  public @NotNull EngineerPosition createEngineerPosition(
     final @NotNull EngineerPositionInput engineerPosition
   ) throws EngineerPositionAlreadyExistsException {
     try {
-      return engineersPositionRepository.save(new EngineerPositionEntity(
-        null,
-        engineerPosition.getName()
-      ));
+      final var ret =
+        engineersPositionRepository.save(new EngineerPositionEntity(
+          null,
+          engineerPosition.getName()
+        ));
+      return engineersMapper.fromEngineerPositionEntity(ret);
     } catch(DataIntegrityViolationException _) {
       throw new EngineerPositionAlreadyExistsException();
     }
+  }
+  
+  public EngineerInfo find(final UUID id) {
+    final var ret = engineersRepository.findById(id).orElseThrow(
+      EmployeeNotFoundException::new);
+    return engineersMapper.fromEngineerEntity(ret);
+  }
+  
+  public List<EngineerInfo> findAll(
+    Pagination pagination,
+    EngineerFilter engineerFilter
+  ) {
+    final var paged  = Utils.getPageable(pagination);
+    final var filter = Utils.getRepositoryEngineerFilter(engineerFilter);
+    final var ret    = engineersRepository.findAllEngineers(paged, filter);
+    return engineersMapper.fromEngineerEntityList(ret);
   }
 }

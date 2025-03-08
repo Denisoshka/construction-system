@@ -1,19 +1,22 @@
 package d.zhdanov.ccfit.nsu.workers.service;
 
+import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.ccfit.nsu.workers.exceptions.EmployeeAlreadyExistsException;
+import d.zhdanov.ccfit.nsu.workers.exceptions.EmployeeNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.mapper.EmployeeMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.EmployeeRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.EngineersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.WorkersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EmployeeEntity;
+import d.zhdanov.graphql.types.EmployeeFilter;
 import d.zhdanov.graphql.types.EmployeeInput;
+import d.zhdanov.graphql.types.Pagination;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -26,26 +29,41 @@ public class EmployeeService {
   
   public EmployeeService(
     @Autowired EmployeeRepository employeeRepository,
-    @Autowired
-    WorkersPositionRepository workersPositionRepository,
-    @Autowired
-    EngineersPositionRepository engineersPositionRepository,
+    @Autowired WorkersPositionRepository workersPositionRepository,
+    @Autowired EngineersPositionRepository engineersPositionRepository,
     @Autowired EmployeeMapper employeeMapper
   ) {
     this.employeeRepository = employeeRepository;
     this.employeeMapper     = employeeMapper;
   }
   
+  public EmployeeEntity find(@NotNull final UUID id) {
+    return employeeRepository.findById(id)
+      .orElseThrow(EmployeeNotFoundException::new);
+  }
+  
+  public List<EmployeeEntity> getAll(
+    final Pagination pagination,
+    final EmployeeFilter employeeFilter
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var filter = Utils.getRepositoryEmployeeFilter(employeeFilter);
+    
+    if(filter.getPost() != null) {
+      return employeeRepository.findAllByPost(filter.getPost(), paged);
+    }
+    return employeeRepository.findAll(paged).toList();
+  }
+  
   @Transactional
-  public EmployeeInfoDTO create(final @NotNull EmployeeInput input) {
+  public EmployeeEntity create(final @NotNull EmployeeInput input) {
     final var cur = employeeRepository.findBySystemId(input.getSystemId());
     if(cur.isPresent()) {
       throw new EmployeeAlreadyExistsException();
     }
-  }
-  
-  public Page<EmployeeEntity> getAll(Pageable pageable) {
-    return employeeRepository.findAll(pageable);
+    final var entity = employeeMapper.toEmployeeEntity(input);
+    
+    return employeeRepository.save(entity);
   }
   
   @Transactional

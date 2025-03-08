@@ -11,5 +11,5 @@ import java.util.UUID;
 public class SiteTeamEntity {
   @Id
   private UUID id;
-  private UUID    siteHeadId;
+  private UUID siteHeadId;
 }

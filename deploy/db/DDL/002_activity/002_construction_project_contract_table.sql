@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS construction_project_contract
     project_id               UUID         NOT NULL,
     site_id                  UUID         NOT NULL,
     customer_organization_id UUID         NOT NULL REFERENCES customer_organization
-        (id) ON DELETE SET NULL,
+        (id) ON DELETE CASCADE,
     type                     VARCHAR(150) NOT NULL REFERENCES object_types
         (type) ON DELETE RESTRICT,
     date_of_creation         DATE         NOT NULL CHECK (

@@ -5,10 +5,13 @@ import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.objects.service.ObjectsService;
 import d.zhdanov.ccfit.nsu.workers.service.EmployeeService;
-import d.zhdanov.graphql.types.*;
+import d.zhdanov.graphql.types.ConstructionManagement;
+import d.zhdanov.graphql.types.ConstructionManagementInput;
+import d.zhdanov.graphql.types.ConstructionSite;
+import d.zhdanov.graphql.types.ConstructionSiteInput;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -27,16 +30,35 @@ public class ObjectsDataFetcher {
   }
   
   @DgsMutation
+  @Transactional
   public ConstructionSite createConstructionSite(
     @InputArgument ConstructionSiteInput input
   ) {
-    EmployeeInfo employee = fetchEmployeeInfo(input.getSiteManagerId());
-    if(employee != null) {
-      input.setSiteManagerId(employee.getId());
-    }
+    final var uuid        = UUID.fromString(input.getSiteManagerId());
+    final var siteManager = employeeService.getEmployee(uuid);
     
     final var ret = objectsService.createConstructionSite(input);
-    ret.setSiteManager(employee);
+    
+    ret.setSiteManager(siteManager);
+    return ret;
+  }
+  
+  @DgsMutation
+  public ConstructionManagement updateConstructionSite(
+    @InputArgument String id,
+    @InputArgument
+    ConstructionSiteInput input
+  ) {
+    final var siteUUID            = UUID.fromString(id);
+    final var employeeUUID        = UUID.fromString(input.getSiteManagerId());
+    final var constructionManager = employeeService.getEmployee(employeeUUID);
+    
+    final var ret = objectsService.updateConstructionManagement(
+      siteUUID,
+      input
+    );
+    ret.setManager(constructionManager);
+    
     return ret;
   }
   
@@ -47,46 +69,39 @@ public class ObjectsDataFetcher {
   }
   
   @DgsMutation
+  @Transactional
   public ConstructionManagement createConstructionManagement(
     @InputArgument ConstructionManagementInput input
   ) {
-    EmployeeInfo employee = fetchEmployeeInfo(input.getManagerId());
-    if(employee != null) {
-      input.setManagerId(employee.getId());
-    }
+    final var employeeUUID        = UUID.fromString(input.getManagerId());
+    final var constructionManager = employeeService.getEmployee(employeeUUID);
     
     final var ret = objectsService.createConstructionManagement(input);
-    ret.setManager(employee);
+    
+    ret.setManager(constructionManager);
     return ret;
   }
   
-  @Nullable
-  private EmployeeInfo fetchEmployeeInfo(String id) {
-    EmployeeInfo employee = null;
-    if(id != null) {
-      try {
-        final var uuid = UUID.fromString(id);
-        employee = employeeService.getEmployee(uuid);
-      } catch(Exception e) {
-        log.error("failed to get manager", e);
-      }
-    }
-    
-    return employee;
-  }
-  
   @DgsMutation
-  public ConstructionManagement updateConstructionSite(
+  @Transactional
+  public ConstructionManagement updateConstructionManagement(
     @InputArgument String id,
-    @InputArgument
-    ConstructionSiteInput input
+    @InputArgument ConstructionManagementInput input
   ) {
-    final var uuid = UUID.fromString(id);
-    return objectsService.updateConstructionManagement(uuid, input);
+    final var managementUUID      = UUID.fromString(id);
+    final var constructionManager = employeeService.getEmployee(managementUUID);
+    final var ret = objectsService.updateConstructionManagement(
+      managementUUID,
+      input
+    );
+    ret.setManager(constructionManager);
+    return ret;
   }
   
   @DgsMutation
   public Boolean deleteConstructionManagement(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    objectsService.deleteConstructionManagement(uuid);
     return true;
   }
 }

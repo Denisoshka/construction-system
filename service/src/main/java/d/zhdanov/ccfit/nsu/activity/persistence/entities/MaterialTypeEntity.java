@@ -13,6 +13,8 @@ public class MaterialTypeEntity {
   @Id
   private UUID    id;
   @NotNull
+  private UUID    manufacturerId;
+  @NotNull
   private String  name;
   @NotNull
   private Integer cost;

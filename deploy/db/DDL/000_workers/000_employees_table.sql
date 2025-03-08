@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS employees
     system_id       VARCHAR(100) UNIQUE NOT NULL,
     name            VARCHAR(100)        NOT NULL,
     surname         VARCHAR(100)        NOT NULL,
-    patronymic      VARCHAR(100)        NOT NULL,
+    patronymic      VARCHAR(100),
     employment_date DATE                NOT NULL,
     post            job_post            NOT NULL DEFAULT 'UNKNOWN'
 );

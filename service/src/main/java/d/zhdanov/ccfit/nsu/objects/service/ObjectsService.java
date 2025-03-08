@@ -7,7 +7,10 @@ import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionProjectRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionSiteRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionManagementEntity;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
-import d.zhdanov.graphql.types.*;
+import d.zhdanov.graphql.types.ConstructionManagement;
+import d.zhdanov.graphql.types.ConstructionManagementInput;
+import d.zhdanov.graphql.types.ConstructionSite;
+import d.zhdanov.graphql.types.ConstructionSiteInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,25 +56,27 @@ public class ObjectsService {
     ));
   }
   
+  @Transactional
   public Boolean deleteConstructionSite(UUID uuid) {
     constructionSiteRepository.deleteById(uuid);
     return true;
   }
   
   public ConstructionSite createConstructionSite(ConstructionSiteInput input) {
-    EmployeeInfo employee;
-    if(input.getSiteManagerId() != null) {
-      employee =
-    }
   }
   
   @Transactional
   public ConstructionManagement updateConstructionManagement(
-    UUID uuid,
-    ConstructionSiteInput input
+    final UUID uuid,
+    final ConstructionManagementInput input
   ) {
     final var saved = constructionSiteRepository.findById(uuid).orElseThrow(
       ConstructionSiteAbsent::new);
     
+  }
+  
+  public void deleteConstructionManagement(final UUID uuid) {
+  
+  
   }
 }

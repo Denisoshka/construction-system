@@ -1,100 +1,106 @@
 type CustomerOrganization {
-  id  :ID!
-  name : String!
+  id : ID!
+  name: String!
 }
 
 type ProjectContract{
-  id : ID!
-  projectId : ID!
-  siteId : ID!
-  objectType : String!
-  dateOfCreation : Date!
-  signingDate : Date
-  planStartDate : Date
-  planEndDate : Date
-  factStartDate : Date
-  factEndDate  : Date
+  id: ID!
+  projectId: ID!
+  siteId: ID!
+  objectType: String!
+  dateOfCreation: Date!
+  signingDate: Date
+  planStartDate: Date
+  planEndDate: Date
+  factStartDate: Date
+  factEndDate: Date
 }
 
 input ProjectContractInput{
   siteId: ID!
   customerId: ID!
-  objectType : String!
-  signingDate : Date
-  planStartDate : Date!
-  planEndDate : Date!
+  objectType: String!
+  signingDate: Date
+  planStartDate: Date!
+  planEndDate: Date!
 }
 
 interface ProjectType {
-  projectId : ID!
+  projectId: ID!
 }
 
 type ApartmentHouseProject implements ProjectType {
-  projectId : ID!
-  floors : Int!
+  projectId: ID!
+  floors: Int!
 }
 
 input ApartmentHouseProjectInput {
-  floors : Int!
+  floors: Int!
 }
 
 type SchoolProject implements ProjectType {
-  projectId : ID!
-  classRoomCount : Int!
-  floors : Int!
+  projectId: ID!
+  classRoomCount: Int!
+  floors: Int!
 }
 
 input SchoolProjectInput {
-  classRoomCount : Int!
-  floors : Int!
+  classRoomCount: Int!
+  floors: Int!
 }
 
 type BridgeProject implements ProjectType {
-  projectId : ID!
-  span : Int!
-  width : Int!
-  trafficLanesNumber : Int!
+  projectId: ID!
+  span: Int!
+  width: Int!
+  trafficLanesNumber: Int!
 }
 
 input BridgeProjectInput {
-  span : Int!
-  width : Int!
-  trafficLanesNumber : Int!
+  span: Int!
+  width: Int!
+  trafficLanesNumber: Int!
 }
 
 type Material {
-  id : ID!
-  name : String!
-  cost : Int!
+  id: ID!
+  name: String!
+  cost: Int!
 }
 
 input MaterialInput {
-  name : String!
-  cost : Int!
+  manufacturer: ID!
+  name: String!
+  cost: Int!
+}
+
+input Manufacturer {
+  id: ID!
+  manufacturer: String!
 }
 
 type MaterialUsage {
-  estimateID : ID!
-  materialID : ID!
-  planQuantity : Int!
-  factQuantity : Int!
+  estimateID: ID!
+  materialID: ID!
+  planQuantity: Int!
+  factQuantity: Int!
 }
 
 type WorkType {
-  id : ID!
-  name : String
+  id: ID!
+  name: String
 }
 
 type WorkScheduleUnit{
-  id : ID!
-  work : WorkType!
+  id: ID!
+  work: WorkType!
   #  contractId : ID!
-  planStartDate : Date!
-  planEndDate : Date!
-  factStartDate : Date
-  factEndDate : Date
-  planOrder : Int!
-  factOrder : Int
+  planStartDate: Date!
+  planEndDate: Date!
+  factStartDate: Date
+  factEndDate: Date
+  planOrder: Int!
+  factOrder: Int
 }
 
 input WorkScheduleUnitInput{
@@ -130,5 +136,6 @@ extend type Mutation  {
   :ProjectContract!
 
   createMaterialType(input : MaterialInput!) : Material!
+
   deleteMaterialType(id :ID!) : Boolean!
 }

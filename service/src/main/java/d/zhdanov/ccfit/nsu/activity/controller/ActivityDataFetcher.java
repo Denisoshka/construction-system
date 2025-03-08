@@ -80,7 +80,8 @@ public class ActivityDataFetcher {
   
   @Transactional
   public <T> ProjectContract commonAddProjectContractAction(
-    ProjectContractInput input, T project, // Теперь этот параметр обобщённый
+    ProjectContractInput input,
+    T project,
     TriFunction<UUID, ProjectContractInput, T, ProjectContractEntity> contractSaver
   ) {
     final var siteIdUUID = UUID.fromString(input.getSiteId());

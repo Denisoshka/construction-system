@@ -80,14 +80,16 @@ input EngineerPositionInput {
   name : String!
 }
 
-type Query {
+extend type Query {
   employee(id: ID!) : EmployeeInfo!
-  employees(pagination: Pagination, employeeFilter: EmployeeFilter):
-  [EmployeeInfo!]!
+  employees(
+    pagination: Pagination, employeeFilter: EmployeeFilter
+  ): [EmployeeInfo!]!
 
   engineer(id: ID!): EngineerInfo!
-  engineers(pagination: Pagination, engineerFilter: EngineerFilter):
-  [EngineerInfo!]!
+  engineers(
+    pagination: Pagination, engineerFilter: EngineerFilter
+  ): [EngineerInfo!]!
   engineerPosition(id: Int!): EngineerPosition!
   engineerPositionByName(name: String!): EngineerPosition!
   engineersPositions(pagination: Pagination): [EngineerPosition!]!
@@ -105,8 +107,9 @@ type Mutation {
   deleteEmployee(id: ID!) : Boolean!
 
   createEngineerPosition(input : EngineerPositionInput!): EngineerPosition!
-  updateEngineerPosition(id :Int!,input : EngineerPositionInput!):
-  EngineerPosition!
+  updateEngineerPosition(
+    id :Int!,input : EngineerPositionInput!
+  ): EngineerPosition!
   deleteEngineerPosition(id :Int!) : Boolean!
 
   createWorkerPosition(input : WorkerPositionInput!): WorkerPosition!

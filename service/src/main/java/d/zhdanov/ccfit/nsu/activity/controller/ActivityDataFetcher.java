@@ -68,15 +68,7 @@ public class ActivityDataFetcher {
     );
   }
   
-  @DgsMutation
-  public Material createMaterialType(@InputArgument MaterialInput input) {
   
-  }
-  
-  @DgsMutation
-  public Boolean deleteMaterialType(@InputArgument String id) {
-  
-  }
   
   @Transactional
   public <T> ProjectContract commonAddProjectContractAction(

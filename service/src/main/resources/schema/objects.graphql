@@ -40,14 +40,17 @@ input ConstructionSiteInput{
 
 extend type Mutation {
   createConstructionSite(input: ConstructionSiteInput!): ConstructionSite!
-  updateConstructionSite(id: ID!, input: ConstructionSiteInput!):
-  ConstructionSite!
+  updateConstructionSite(
+    id: ID!, input: ConstructionSiteInput!
+  ): ConstructionSite!
   deleteConstructionSite(id: ID!): Boolean!
 
-  createConstructionManagement(input: ConstructionManagementInput!):
-  ConstructionManagement!
-  updateConstructionManagement(id: ID!, input: ConstructionManagementInput!)
-  :ConstructionManagement!
+  createConstructionManagement(
+    input: ConstructionManagementInput!
+  ): ConstructionManagement!
+  updateConstructionManagement(
+    id: ID!, input: ConstructionManagementInput!
+  ): ConstructionManagement!
   deleteConstructionManagement(id: ID!):Boolean!
 }
 

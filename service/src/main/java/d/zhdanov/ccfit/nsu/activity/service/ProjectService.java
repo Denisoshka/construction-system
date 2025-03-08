@@ -98,7 +98,7 @@ public class ProjectService {
     );
   }
   
-  @Transactional
+//  @Transactional
   public <T, R extends CrudRepository<T, UUID>> ProjectContractEntity saveProjectContract(
     final UUID projectId,
     final ProjectContractInput projectContractInput,

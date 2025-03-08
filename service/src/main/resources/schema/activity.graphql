@@ -64,6 +64,7 @@ input BridgeProjectInput {
 
 type Material {
   id: ID!
+  manufacturer: ID!
   name: String!
   cost: Int!
 }
@@ -74,8 +75,12 @@ input MaterialInput {
   cost: Int!
 }
 
-input Manufacturer {
+type Manufacturer {
   id: ID!
+  manufacturer: String!
+}
+
+input ManufacturerInput {
   manufacturer: String!
 }
 
@@ -117,25 +122,41 @@ input CustomerOrganizationInput{
   name  : String
 }
 
+type Query {
+  manufacturer(id: ID!): Manufacturer!
+  manufacturers(pagination: Pagination): [Manufacturer!]!
+
+  materialType(id: ID!): Material!
+  materialTypes(pagination: Pagination): [Material!]!
+}
+
 extend type Mutation  {
-  addCustomerOrganization(customer : CustomerOrganizationInput!)
-  :CustomerOrganization!
-  updateCustomerOrganization(id : ID!, customer : CustomerOrganizationInput!)
-  :CustomerOrganization!
+  addCustomerOrganization(
+    customer : CustomerOrganizationInput!
+  ):CustomerOrganization!
+  updateCustomerOrganization(
+    id : ID!, customer: CustomerOrganizationInput!
+  ): CustomerOrganization!
   deleteCustomerOrganization(id : ID!) : Boolean!
 
-  addWorkScheduleUnit(input : WorkScheduleUnitInput!):WorkScheduleUnit!
-  updateWorkScheduleUnit(input : WorkScheduleUnitInput!):WorkScheduleUnit!
+  addWorkScheduleUnit(input : WorkScheduleUnitInput!): WorkScheduleUnit!
+  updateWorkScheduleUnit(input : WorkScheduleUnitInput!): WorkScheduleUnit!
   deleteWorkScheduleUnit(id:ID!) :Boolean!
 
-  addSchoolProjectContract(input:ProjectContractInput!, project : SchoolProjectInput)
-  :ProjectContract!
-  addBridgeProjectContract(input:ProjectContractInput!, project :BridgeProjectInput)
-  :ProjectContract!
-  addApartmentHouseProjectContract(input:ProjectContractInput!,project : ApartmentHouseProjectInput)
-  :ProjectContract!
+  addSchoolProjectContract(
+    input: ProjectContractInput!,project: SchoolProjectInput
+  ): ProjectContract!
+  addBridgeProjectContract(
+    input:ProjectContractInput!, project: BridgeProjectInput
+  ): ProjectContract!
+  addApartmentHouseProjectContract(
+    input:ProjectContractInput!, project: ApartmentHouseProjectInput
+  ): ProjectContract!
 
-  createMaterialType(input : MaterialInput!) : Material!
+  createManufacturer(input: ManufacturerInput!): Manufacturer!
+  deleteManufacturer(id: ID!): Boolean!
 
-  deleteMaterialType(id :ID!) : Boolean!
+  createMaterialType(input : MaterialInput!): Material!
+  deleteMaterialType(id :ID!): Boolean!
+
 }

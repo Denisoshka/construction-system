@@ -61,6 +61,21 @@ public class EngineersService {
   }
   
   @Transactional
+  public EngineerPosition updateEngineerPosition(
+    final Integer id,
+    final @NotNull EngineerPositionInput input
+  ) {
+    engineersPositionRepository.findById(id).orElseThrow(
+      EngineerPositionNotFoundException::new);
+    final var forSave = engineersMapper.toEngineerPositionEntityWithID(
+      input,
+      id
+    );
+    final var ret = engineersPositionRepository.save(forSave);
+    return engineersMapper.fromEngineerPositionEntity(ret);
+  }
+  
+  @Transactional
   public void deleteEngineerPosition(final int id) {
     engineersPositionRepository.deleteById(id);
   }
@@ -73,7 +88,7 @@ public class EngineersService {
       final var ret =
         engineersPositionRepository.save(new EngineerPositionEntity(
           null,
-          engineerPosition.getName()
+                                                                    engineerPosition.getName()
         ));
       return engineersMapper.fromEngineerPositionEntity(ret);
     } catch(DataIntegrityViolationException _) {
@@ -81,19 +96,19 @@ public class EngineersService {
     }
   }
   
-  public EngineerInfo find(final UUID id) {
-    final var ret = engineersRepository.findById(id).orElseThrow(
+  public EngineerInfo getAllEngineers(final UUID id) {
+    final var ret = engineersRepository.findEngineer(id).orElseThrow(
       EmployeeNotFoundException::new);
-    return engineersMapper.fromEngineerEntity(ret);
+    return engineersMapper.fromEngineerEntityWithAdditionalData(ret);
   }
   
   public List<EngineerInfo> findAll(
     Pagination pagination,
     EngineerFilter engineerFilter
   ) {
-    final var paged  = Utils.getPageable(pagination);
+    final var paged = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryEngineerFilter(engineerFilter);
-    final var ret    = engineersRepository.findAllEngineers(paged, filter);
+    final var ret = engineersRepository.findAllEngineers(paged, filter);
     return engineersMapper.fromEngineerEntityList(ret);
   }
 }

@@ -1,6 +1,7 @@
 package d.zhdanov.ccfit.nsu.workers.service;
 
 import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.workers.exceptions.EmployeeNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.WorkerPositionAlreadyExistsException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.WorkerPositionNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.mapper.WorkersMapper;
@@ -39,14 +40,25 @@ public class WorkersService {
     final @NotNull WorkerPositionInput workerPosition
   ) throws WorkerPositionAlreadyExistsException {
     try {
-      final var ret = workersPositionRepository.save(new WorkerPositionEntity(
-        null,
-        workerPosition.getName()
+      final var ret = workersPositionRepository.save(new WorkerPositionEntity(null,
+                                                                              workerPosition.getName()
       ));
       return workersMapper.fromWorkerPositionEntity(ret);
     } catch(DataIntegrityViolationException _) {
       throw new WorkerPositionAlreadyExistsException();
     }
+  }
+  
+  @Transactional
+  public WorkerPosition updateWorkerPosition(
+    final Integer id,
+    final @NotNull WorkerPositionInput input
+  ) {
+    workersPositionRepository.findById(id).orElseThrow(
+      WorkerPositionNotFoundException::new);
+    final var forSave = workersMapper.toWorkerPositionEntityWithID(input, id);
+    final var ret = workersPositionRepository.save(forSave);
+    return workersMapper.fromWorkerPositionEntity(ret);
   }
   
   @Transactional
@@ -60,18 +72,30 @@ public class WorkersService {
     return workersMapper.fromWorkerPositionEntity(ret);
   }
   
+  public WorkerPosition workerPosition(final String name) {
+    final var ret = workersPositionRepository.findByName(name).orElseThrow(
+      WorkerPositionNotFoundException::new);
+    return workersMapper.fromWorkerPositionEntity(ret);
+  }
+  
   public WorkerEntity workerEmployeePosition(final UUID id) {
     return workersRepository.findById(id).orElseThrow();
   }
   
-  public List<WorkerInfo> workers(
+  public List<WorkerInfo> getAllWorkers(
     Pagination pagination,
     WorkerFilter workerFilter
   ) {
-    final var paged  = Utils.getPageable(pagination);
+    final var paged = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryWorkerFilter(workerFilter);
-    final var ret    = workersRepository.findAllWorkers(paged, filter);
+    final var ret = workersRepository.findAllWorkers(paged, filter);
     return workersMapper.fromWorkerEntityList(ret);
+  }
+  
+  public WorkerInfo getWorker(UUID uuid) {
+    final var ret = workersRepository.findWorker(uuid).orElseThrow(
+      EmployeeNotFoundException::new);
+    return workersMapper.fromWorkerEntityWithAdditionalData(ret);
   }
   
   public List<WorkerPosition> workersPositions(Pagination pagination) {

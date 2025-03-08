@@ -15,17 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class WorkersDataFetcher {
   private final WorkersService workersService;
-  private final WorkersMapper  workersMapper;
   
   public WorkersDataFetcher(
     @Autowired WorkersService workersService,
     @Autowired WorkersMapper workersMapper
   ) {
     this.workersService = workersService;
-    this.workersMapper  = workersMapper;
   }
   
   @DgsEntityFetcher(name = "WorkerPosition")
@@ -37,16 +36,31 @@ public class WorkersDataFetcher {
   }
   
   @DgsQuery
+  public WorkerInfo worker(@InputArgument String id) {
+    return workersService.getWorker(UUID.fromString(id));
+  }
+  
+  @DgsQuery
   public List<WorkerInfo> workers(
     @InputArgument Pagination pagination,
     @InputArgument WorkerFilter filter
   ) {
-    return workersService.workers(pagination, filter);
+    return workersService.getAllWorkers(pagination, filter);
   }
   
   @DgsMutation
   public void deleteWorkerPosition(@InputArgument Integer id) {
     workersService.deleteWorkerPosition(id);
+  }
+  
+  @DgsQuery
+  public WorkerPosition workerPosition(@InputArgument Integer id) {
+    return workersService.workerPosition(id);
+  }
+  
+  @DgsQuery
+  public WorkerPosition workerPositionByName(@InputArgument String name) {
+    return workersService.workerPosition(name);
   }
   
   @DgsQuery

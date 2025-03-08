@@ -16,7 +16,7 @@ import java.util.List;
 )
 public interface WorkersMapper {
   @Mapping(target = "employee", source = "employee")
-  WorkerInfo fromWorkerEntity(final WorkerEntity workerEntity);
+  WorkerInfo fromWorkerEntityWithAdditionalData(final WorkerEntity workerEntity);
   
   List<WorkerInfo> fromWorkerEntityList(final List<WorkerEntity> workerEntities);
   
@@ -30,7 +30,7 @@ public interface WorkersMapper {
   WorkerPositionEntity toWorkerPositionEntity(final WorkerPositionInput input);
   
   @Mapping(target = "id", expression = "java(Id)")
-  WorkerPositionEntity toWorkerPositionDTOWithID(
+  WorkerPositionEntity toWorkerPositionEntityWithID(
     final WorkerPositionInput dto,
     final int Id
   );

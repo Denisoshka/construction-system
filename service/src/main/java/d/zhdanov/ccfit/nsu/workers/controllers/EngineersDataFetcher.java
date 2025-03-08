@@ -3,10 +3,7 @@ package d.zhdanov.ccfit.nsu.workers.controllers;
 import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.workers.mapper.EngineersMapper;
 import d.zhdanov.ccfit.nsu.workers.service.EngineersService;
-import d.zhdanov.graphql.types.EngineerFilter;
-import d.zhdanov.graphql.types.EngineerInfo;
-import d.zhdanov.graphql.types.EngineerPosition;
-import d.zhdanov.graphql.types.Pagination;
+import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,7 +40,7 @@ public class EngineersDataFetcher {
   
   @DgsQuery
   public EngineerInfo engineer(@InputArgument String id) {
-    return engineersService.find(UUID.fromString(id));
+    return engineersService.getAllEngineers(UUID.fromString(id));
   }
   
   @DgsQuery
@@ -56,6 +53,25 @@ public class EngineersDataFetcher {
   @DgsQuery
   public EngineerPosition engineerPositionByName(@InputArgument String name) {
     return engineersService.engineerPosition(name);
+  }
+  
+  @DgsQuery
+  public EngineerPosition engineerPosition(@InputArgument Integer id) {
+    return engineersService.engineerPosition(id);
+  }
+  
+  @DgsMutation
+  public EngineerPosition createEngineerPosition(final @InputArgument EngineerPositionInput input) {
+    return engineersService.createEngineerPosition(input);
+  }
+  
+  @DgsMutation
+  public EngineerPosition updateEngineerPosition(
+    @InputArgument Integer id,
+    @InputArgument
+    EngineerPositionInput input
+  ) {
+    return engineersService.updateEngineerPosition(id, input);
   }
   
   @DgsMutation

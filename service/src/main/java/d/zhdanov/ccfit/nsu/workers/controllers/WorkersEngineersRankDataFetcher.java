@@ -26,10 +26,7 @@ public class WorkersEngineersRankDataFetcher {
     this.engineersService              = engineersService;
   }
   
-  @DgsQuery
-  public EngineerPosition engineerPosition(@InputArgument Integer id) {
-    return engineersService.engineerPosition(id);
-  }
+ 
   
   
   @DgsMutation
@@ -37,11 +34,7 @@ public class WorkersEngineersRankDataFetcher {
     return workersService.createWorkerPosition(input);
   }
   
-  @DgsMutation
-  public EngineerPosition createEngineerPosition(final @InputArgument EngineerPositionInput input) {
-    final var ret = engineersService.createEngineerPosition(input);
-    return postsPositionsMapper.fromEngineerPositionEntity(ret);
-  }
+  
   
   
   @DgsData(parentType = "EngineerInfo", field = "EngineerPosition")

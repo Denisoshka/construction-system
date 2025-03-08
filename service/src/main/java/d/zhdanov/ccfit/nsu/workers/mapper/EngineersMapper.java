@@ -16,18 +16,20 @@ import java.util.List;
 )
 public interface EngineersMapper {
   @Mapping(target = "employee", source = "employee")
-  EngineerInfo fromEngineerEntity(final EngineerEntity dto);
+  EngineerInfo fromEngineerEntityWithAdditionalData(final EngineerEntity dto);
   
   List<EngineerInfo> fromEngineerEntityList(final List<EngineerEntity> dtoList);
   
   EngineerPosition fromEngineerPositionEntity(final EngineerPositionEntity entity);
+  
   List<EngineerPosition> fromEngineerPositionEntityList(final List<EngineerPositionEntity> dtoList);
+  
   @Mapping(target = "id", ignore = true)
   EngineerPositionEntity toEngineerPositionEntity(final EngineerPositionInput input);
   
-  @Mapping(target = "id", expression = "java(Id)")
-  EngineerPositionEntity toEngineerPositionDTOWithID(
-    final EngineerPositionEntity dto,
-    final int Id
+  @Mapping(target = "id", expression = "java(id)")
+  EngineerPositionEntity toEngineerPositionEntityWithID(
+    final EngineerPositionInput dto,
+    final int id
   );
 }

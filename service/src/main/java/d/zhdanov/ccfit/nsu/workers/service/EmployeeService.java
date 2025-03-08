@@ -9,6 +9,7 @@ import d.zhdanov.ccfit.nsu.workers.persistence.EngineersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.WorkersPositionRepository;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EmployeeEntity;
 import d.zhdanov.graphql.types.EmployeeFilter;
+import d.zhdanov.graphql.types.EmployeeInfo;
 import d.zhdanov.graphql.types.EmployeeInput;
 import d.zhdanov.graphql.types.Pagination;
 import org.jetbrains.annotations.NotNull;
@@ -37,16 +38,17 @@ public class EmployeeService {
     this.employeeMapper     = employeeMapper;
   }
   
-  public EmployeeEntity find(@NotNull final UUID id) {
-    return employeeRepository.findById(id)
+  public EmployeeInfo getEmployee(@NotNull final UUID id) {
+    final var ret = employeeRepository.findById(id)
       .orElseThrow(EmployeeNotFoundException::new);
+    return employeeMapper.toEmployeeInfo(ret);
   }
   
-  public List<EmployeeEntity> getAll(
+  public List<EmployeeEntity> getAllEmployees(
     final Pagination pagination,
     final EmployeeFilter employeeFilter
   ) {
-    final var paged = Utils.getPageable(pagination);
+    final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryEmployeeFilter(employeeFilter);
     
     if(filter.getPost() != null) {

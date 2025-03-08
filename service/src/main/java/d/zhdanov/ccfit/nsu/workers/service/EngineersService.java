@@ -65,13 +65,12 @@ public class EngineersService {
     final Integer id,
     final @NotNull EngineerPositionInput input
   ) {
-    engineersPositionRepository.findById(id).orElseThrow(
+    final var saved = engineersPositionRepository.findById(id).orElseThrow(
       EngineerPositionNotFoundException::new);
-    final var forSave = engineersMapper.toEngineerPositionEntityWithID(
-      input,
-      id
+    engineersMapper.updateEngineerPositionEntity(
+      saved, input
     );
-    final var ret = engineersPositionRepository.save(forSave);
+    final var ret = engineersPositionRepository.save(saved);
     return engineersMapper.fromEngineerPositionEntity(ret);
   }
   
@@ -88,7 +87,7 @@ public class EngineersService {
       final var ret =
         engineersPositionRepository.save(new EngineerPositionEntity(
           null,
-                                                                    engineerPosition.getName()
+          engineerPosition.getName()
         ));
       return engineersMapper.fromEngineerPositionEntity(ret);
     } catch(DataIntegrityViolationException _) {
@@ -96,7 +95,7 @@ public class EngineersService {
     }
   }
   
-  public EngineerInfo getAllEngineers(final UUID id) {
+  public EngineerInfo getEngineer(final UUID id) {
     final var ret = engineersRepository.findEngineer(id).orElseThrow(
       EmployeeNotFoundException::new);
     return engineersMapper.fromEngineerEntityWithAdditionalData(ret);
@@ -106,9 +105,9 @@ public class EngineersService {
     Pagination pagination,
     EngineerFilter engineerFilter
   ) {
-    final var paged = Utils.getPageable(pagination);
+    final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryEngineerFilter(engineerFilter);
-    final var ret = engineersRepository.findAllEngineers(paged, filter);
+    final var ret    = engineersRepository.findAllEngineers(paged, filter);
     return engineersMapper.fromEngineerEntityList(ret);
   }
 }

@@ -40,7 +40,7 @@ public class EngineersDataFetcher {
   
   @DgsQuery
   public EngineerInfo engineer(@InputArgument String id) {
-    return engineersService.getAllEngineers(UUID.fromString(id));
+    return engineersService.getEngineer(UUID.fromString(id));
   }
   
   @DgsQuery

@@ -14,7 +14,7 @@ type ConstructionSite @key(fields: "id") {
   name: String!
   address: String!
   phone: String!
-  management: ConstructionManagement
+  management: ConstructionManagement!
   siteManager: EmployeeInfo
 }
 
@@ -39,12 +39,15 @@ input ConstructionSiteInput{
 }
 
 extend type Mutation {
-  createConstructionSite(input : ConstructionSiteInput!):ConstructionSite!
-  updateConstructionSite(input : ConstructionSiteInput!):ConstructionSite!
+  createConstructionSite(input : ConstructionSiteInput!): ConstructionSite!
+  updateConstructionSite(id :ID!, input : ConstructionSiteInput!):
+  ConstructionSite!
   deleteConstructionSite(id :ID!):Boolean!
 
-  createConstructionManagement(input : ConstructionManagementInput!):ConstructionManagement!
-  updateConstructionManagement(input : ConstructionManagementInput!):ConstructionManagement!
+  createConstructionManagement(input : ConstructionManagementInput!):
+  ConstructionManagement!
+  updateConstructionManagement(input : ConstructionManagementInput!)
+  :ConstructionManagement!
   deleteConstructionManagement(id:ID!):Boolean!
 }
 

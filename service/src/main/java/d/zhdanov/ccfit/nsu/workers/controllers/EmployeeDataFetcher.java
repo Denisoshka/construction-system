@@ -32,8 +32,7 @@ public class EmployeeDataFetcher {
   @DgsQuery
   public EmployeeInfo employee(final @InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    final var emp  = employeeService.find(uuid);
-    return employeeMapper.toEmployeeResponse(emp);
+    return employeeService.getEmployee(uuid);
   }
   
   @DgsQuery
@@ -41,14 +40,17 @@ public class EmployeeDataFetcher {
     final @InputArgument Pagination pagination,
     final @InputArgument EmployeeFilter employeeFilter
   ) {
-    final var employees = employeeService.getAll(pagination, employeeFilter);
+    final var employees = employeeService.getAllEmployees(
+      pagination,
+      employeeFilter
+    );
     return employeeMapper.toEmployeeResponseList(employees);
   }
   
   @DgsMutation
   public EmployeeInfo createEmployee(final @InputArgument EmployeeInput input) {
-    final var ret      = employeeService.create(input);
-    return employeeMapper.toEmployeeResponse(ret);
+    final var ret = employeeService.create(input);
+    return employeeMapper.toEmployeeInfo(ret);
   }
   
   @DgsMutation
@@ -59,7 +61,7 @@ public class EmployeeDataFetcher {
     final var uuid     = UUID.fromString(id);
     final var employee = employeeMapper.toEmployeeInfoDTO(input);
     final var ret      = employeeService.update(uuid, employee);
-    return employeeMapper.toEmployeeResponse(ret);
+    return employeeMapper.toEmployeeInfo(ret);
   }
   
   @DgsMutation
@@ -75,7 +77,7 @@ public class EmployeeDataFetcher {
   ) {
     final var id  = UUID.fromString((String) values.get(EMPLOYEE_KEY_FIELD));
     final var ent = employeeService.getById(id);
-    return employeeMapper.toEmployeeResponse(ent);
+    return employeeMapper.toEmployeeInfo(ent);
   }
   
   @DgsData(parentType = "ConstructionSite", field = "EmployeeInfo")

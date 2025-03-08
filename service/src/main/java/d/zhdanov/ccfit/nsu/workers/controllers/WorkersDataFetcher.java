@@ -6,10 +6,7 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.workers.mapper.WorkersMapper;
 import d.zhdanov.ccfit.nsu.workers.service.WorkersService;
-import d.zhdanov.graphql.types.Pagination;
-import d.zhdanov.graphql.types.WorkerFilter;
-import d.zhdanov.graphql.types.WorkerInfo;
-import d.zhdanov.graphql.types.WorkerPosition;
+import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,6 +43,20 @@ public class WorkersDataFetcher {
     @InputArgument WorkerFilter filter
   ) {
     return workersService.getAllWorkers(pagination, filter);
+  }
+  
+  @DgsMutation
+  public WorkerPosition createWorkerPosition(final @InputArgument WorkerPositionInput input) {
+    return workersService.createWorkerPosition(input);
+  }
+  
+  @DgsMutation
+  public WorkerPosition updateWorkerPosition(
+    @InputArgument Integer id,
+    @InputArgument
+    WorkerPositionInput input
+  ) {
+    return workersService.updateWorkerPosition(id, input);
   }
   
   @DgsMutation

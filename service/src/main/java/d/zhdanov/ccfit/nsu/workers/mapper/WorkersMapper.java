@@ -8,6 +8,7 @@ import d.zhdanov.graphql.types.WorkerPositionInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -26,12 +27,8 @@ public interface WorkersMapper {
     final List<WorkerPositionEntity> workerPositionEntities
   );
   
-  @Mapping(target = "id", ignore = true)
-  WorkerPositionEntity toWorkerPositionEntity(final WorkerPositionInput input);
-  
-  @Mapping(target = "id", expression = "java(Id)")
-  WorkerPositionEntity toWorkerPositionEntityWithID(
-    final WorkerPositionInput dto,
-    final int Id
+  void updateWorkerPositionEntity(
+    @MappingTarget final WorkerPositionEntity entity,
+    final WorkerPositionInput input
   );
 }

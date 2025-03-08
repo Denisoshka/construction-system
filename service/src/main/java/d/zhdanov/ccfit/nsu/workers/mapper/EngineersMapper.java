@@ -8,6 +8,7 @@ import d.zhdanov.graphql.types.EngineerPositionInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -24,12 +25,8 @@ public interface EngineersMapper {
   
   List<EngineerPosition> fromEngineerPositionEntityList(final List<EngineerPositionEntity> dtoList);
   
-  @Mapping(target = "id", ignore = true)
-  EngineerPositionEntity toEngineerPositionEntity(final EngineerPositionInput input);
-  
-  @Mapping(target = "id", expression = "java(id)")
-  EngineerPositionEntity toEngineerPositionEntityWithID(
-    final EngineerPositionInput dto,
-    final int id
+  void updateEngineerPositionEntity(
+    @MappingTarget final EngineerPositionEntity entity,
+    final EngineerPositionInput input
   );
 }

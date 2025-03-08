@@ -15,7 +15,7 @@ import java.util.List;
 )
 public interface EmployeeMapper {
   @Mapping(target = "positionId", ignore = true)
-  EmployeeInfo toEmployeeResponse(final EmployeeEntity dto);
+  EmployeeInfo toEmployeeInfo(final EmployeeEntity dto);
   
   //  List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeInfoDTO> employeesDTO);
   List<EmployeeInfo> toEmployeeResponseListFromEmployeeInfoDTO(final List<EmployeeInfo> employeesInfoDTO);

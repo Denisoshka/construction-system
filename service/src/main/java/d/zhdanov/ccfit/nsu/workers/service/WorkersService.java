@@ -40,8 +40,9 @@ public class WorkersService {
     final @NotNull WorkerPositionInput workerPosition
   ) throws WorkerPositionAlreadyExistsException {
     try {
-      final var ret = workersPositionRepository.save(new WorkerPositionEntity(null,
-                                                                              workerPosition.getName()
+      final var ret = workersPositionRepository.save(new WorkerPositionEntity(
+        null,
+        workerPosition.getName()
       ));
       return workersMapper.fromWorkerPositionEntity(ret);
     } catch(DataIntegrityViolationException _) {
@@ -54,10 +55,10 @@ public class WorkersService {
     final Integer id,
     final @NotNull WorkerPositionInput input
   ) {
-    workersPositionRepository.findById(id).orElseThrow(
+    final var saved = workersPositionRepository.findById(id).orElseThrow(
       WorkerPositionNotFoundException::new);
-    final var forSave = workersMapper.toWorkerPositionEntityWithID(input, id);
-    final var ret = workersPositionRepository.save(forSave);
+    workersMapper.updateWorkerPositionEntity(saved, input);
+    final var ret = workersPositionRepository.save(saved);
     return workersMapper.fromWorkerPositionEntity(ret);
   }
   
@@ -86,9 +87,9 @@ public class WorkersService {
     Pagination pagination,
     WorkerFilter workerFilter
   ) {
-    final var paged = Utils.getPageable(pagination);
+    final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryWorkerFilter(workerFilter);
-    final var ret = workersRepository.findAllWorkers(paged, filter);
+    final var ret    = workersRepository.findAllWorkers(paged, filter);
     return workersMapper.fromWorkerEntityList(ret);
   }
   

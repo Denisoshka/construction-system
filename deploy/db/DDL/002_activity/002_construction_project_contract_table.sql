@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS construction_project_contract
     site_id                  UUID    NOT NULL,
     customer_organization_id UUID    NOT NULL REFERENCES customer_organization
         (id) ON DELETE CASCADE,
-    type                     INTEGER NOT NULL REFERENCES object_types
-        (type) ON DELETE RESTRICT,
+    type                     INTEGER NOT NULL REFERENCES object_types (id)
+        ON DELETE RESTRICT,
     date_of_creation         DATE    NOT NULL CHECK (
         signing_date >= '1900-01-01'::DATE
         )                                     DEFAULT now(),

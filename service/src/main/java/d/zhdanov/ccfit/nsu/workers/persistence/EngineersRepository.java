@@ -38,26 +38,26 @@ public interface EngineersRepository
   
   @Query(
     value = """
-                SELECT e.employee_id, e.employee_id,
-                       emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
-                       pos.id AS position_id, pos.name AS position_name
-                FROM engineers e
-                JOIN employees emp ON e.employee_id = emp.id
-                LEFT JOIN engineer_position pos ON e.position_id = pos.id
+            SELECT e.employee_id, e.employee_id,
+                   emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
+                   pos.id AS position_id, pos.name AS position_name
+            FROM engineers e
+            JOIN employees emp ON e.employee_id = emp.id
+            LEFT JOIN engineer_position pos ON e.position_id = pos.id
             """, rowMapperClass = EngineerRowMapper.class
   )
   List<EngineerEntity> findAllEngineers();
   
   @Query(
     value = """
-                SELECT e.employee_id, e.employee_id,
-                       emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
-                       pos.id AS position_id, pos.name AS position_name
-                FROM engineers e
-                JOIN employees emp ON e.employee_id = emp.id
-                LEFT JOIN engineer_position pos ON e.employee_id = pos.id
-                WHERE (:#{#filter.position} IS NULL OR e.position_id = :#{#filter.position})
-                LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
+            SELECT e.employee_id, e.employee_id,
+                   emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
+                   pos.id AS position_id, pos.name AS position_name
+            FROM engineers e
+            JOIN employees emp ON e.employee_id = emp.id
+            LEFT JOIN engineer_position pos ON e.employee_id = pos.id
+            WHERE (:#{#filter.position} IS NULL OR e.position_id = :#{#filter.position})
+            LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
             """, rowMapperClass = EngineerRowMapper.class
   )
   List<EngineerEntity> findAllEngineers(

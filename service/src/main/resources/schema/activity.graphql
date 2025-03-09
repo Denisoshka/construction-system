@@ -34,6 +34,11 @@ type ApartmentHouseProject implements ProjectType {
   floors: Int!
 }
 
+type ApartmentHouseProjectContract {
+  contract: ProjectContract!
+  project: ApartmentHouseProject!
+}
+
 input ApartmentHouseProjectInput {
   floors: Int!
 }
@@ -42,6 +47,11 @@ type SchoolProject implements ProjectType {
   projectId: ID!
   classRoomCount: Int!
   floors: Int!
+}
+
+type SchoolProjectContract {
+  contract: ProjectContract!
+  project: SchoolProject!
 }
 
 input SchoolProjectInput {
@@ -54,6 +64,11 @@ type BridgeProject implements ProjectType {
   span: Int!
   width: Int!
   trafficLanesNumber: Int!
+}
+
+type BridgeProjectContract {
+  contract: ProjectContract!
+  project: BridgeProject!
 }
 
 input BridgeProjectInput {
@@ -126,16 +141,18 @@ input ContractFilter {
   projectType : String
 }
 
+#union Contract = BridgeProjectContract | SchoolProjectContract | ApartmentHouseProjectContract
+
 type Query {
   customerOrganization(id : ID!): CustomerOrganization!
   customerOrganizations(pagination: Pagination): [CustomerOrganization!]!
 
   projectContracts(
     pagination : Pagination, filter : ContractFilter
-  ): [ProjectContract!]!
-  schoolProjectContract(id : ID): SchoolProject!
-  apartmentHouseProjectContract(id: ID): ApartmentHouseProject!
-  bridgeProjectContract(id: ID!): BridgeProject!
+  ): [Contract!]!
+  schoolProjectContract(id : ID): SchoolProjectContract!
+  apartmentHouseProjectContract(id: ID): ApartmentHouseProjectContract!
+  bridgeProjectContract(id: ID!): BridgeProjectContract!
 
   manufacturer(id: ID!): Manufacturer!
   manufacturers(pagination: Pagination): [Manufacturer!]!

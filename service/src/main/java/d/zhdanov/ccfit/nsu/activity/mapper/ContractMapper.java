@@ -27,6 +27,4 @@ public interface ContractMapper {
   CustomerOrganisationEntity toCustomerOrganisationEntity(final CustomerOrganizationInput input);
   
   CustomerOrganisationEntity toCustomerOrganisation(final CustomerOrganization entity);
-  
-  
 }

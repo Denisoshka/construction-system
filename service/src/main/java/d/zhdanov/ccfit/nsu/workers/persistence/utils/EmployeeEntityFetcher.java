@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 public class EmployeeEntityFetcher {
+  protected EmployeeEntityFetcher() {
+  }
+  
   public static EmployeeEntity of(final ResultSet rs, final UUID employeeId)
   throws SQLException {
     return new EmployeeEntity(

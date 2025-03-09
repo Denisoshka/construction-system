@@ -43,6 +43,8 @@ public class ContractService {
     return contractMapper.toCustomerOrganizationList(ret);
   }
   
+  public
+  
   @Transactional
   public CustomerOrganization createCustomerOrganization(final CustomerOrganizationInput input) {
     try {

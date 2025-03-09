@@ -64,7 +64,7 @@ public class Utils {
     private static final EmployeeRepositoryFilter emptyFilter =
       new EmployeeRepositoryFilter(null);
     
-    private final JobPost post;
+    final JobPost post;
     
     protected EmployeeRepositoryFilter(JobPost post) {
       this.post = post;
@@ -82,7 +82,8 @@ public class Utils {
   public static class WorkerRepositoryFilter {
     private static final WorkerRepositoryFilter repositoryFilter =
       new WorkerRepositoryFilter(null);
-    final                Integer                position;
+    
+    final Integer position;
     
     protected WorkerRepositoryFilter(Integer position) {
       this.position = position;

@@ -3,7 +3,7 @@ package d.zhdanov.ccfit.nsu.activity.controller;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.InputArgument;
-import d.zhdanov.ccfit.nsu.activity.mapper.ActivityMapper;
+import d.zhdanov.ccfit.nsu.activity.mapper.ContractMapper;
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
 import d.zhdanov.ccfit.nsu.activity.service.ProjectService;
 import d.zhdanov.ccfit.nsu.objects.service.ObjectsService;
@@ -17,16 +17,16 @@ import java.util.UUID;
 public class ActivityDataFetcher {
   private final ObjectsService objectsService;
   private final ProjectService projectService;
-  private final ActivityMapper activityMapper;
+  private final ContractMapper contractMapper;
   
   public ActivityDataFetcher(
     @Autowired ObjectsService objectsService,
     @Autowired ProjectService projectService,
-    @Autowired ActivityMapper activityMapper
+    @Autowired ContractMapper contractMapper
   ) {
     this.objectsService = objectsService;
     this.projectService = projectService;
-    this.activityMapper = activityMapper;
+    this.contractMapper = contractMapper;
   }
   
   @DgsMutation
@@ -85,7 +85,7 @@ public class ActivityDataFetcher {
       input,
       project
     );
-    return activityMapper.toProjectContract(contract);
+    return contractMapper.toProjectContract(contract);
   }
   
   @FunctionalInterface

@@ -122,7 +122,21 @@ input CustomerOrganizationInput{
   name  : String
 }
 
+input ContractFilter {
+  projectType : String
+}
+
 type Query {
+  customerOrganization(id : ID!): CustomerOrganization!
+  customerOrganizations(pagination: Pagination): [CustomerOrganization!]!
+
+  projectContracts(
+    pagination : Pagination, filter : ContractFilter
+  ): [ProjectContract!]!
+  schoolProjectContract(id : ID): SchoolProject!
+  apartmentHouseProjectContract(id: ID): ApartmentHouseProject!
+  bridgeProjectContract(id: ID!): BridgeProject!
+
   manufacturer(id: ID!): Manufacturer!
   manufacturers(pagination: Pagination): [Manufacturer!]!
 
@@ -131,7 +145,7 @@ type Query {
 }
 
 extend type Mutation  {
-  addCustomerOrganization(
+  createCustomerOrganization(
     customer : CustomerOrganizationInput!
   ):CustomerOrganization!
   updateCustomerOrganization(

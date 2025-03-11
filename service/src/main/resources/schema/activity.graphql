@@ -7,13 +7,23 @@ type ProjectContract{
   id: ID!
   projectId: ID!
   siteId: ID!
-  objectType: String!
+  objectType: Int!
   dateOfCreation: Date!
   signingDate: Date
   planStartDate: Date
   planEndDate: Date
   factStartDate: Date
   factEndDate: Date
+}
+
+type ObjectType {
+  id: Int!
+  type: String!
+}
+
+type ProjectContractInfo {
+  contract: ProjectContract!
+  objectType: ObjectType!
 }
 
 input ProjectContractInput{
@@ -163,10 +173,10 @@ type Query {
 
 extend type Mutation  {
   createCustomerOrganization(
-    customer : CustomerOrganizationInput!
+    input : CustomerOrganizationInput!
   ):CustomerOrganization!
   updateCustomerOrganization(
-    id : ID!, customer: CustomerOrganizationInput!
+    id : ID!, input: CustomerOrganizationInput!
   ): CustomerOrganization!
   deleteCustomerOrganization(id : ID!) : Boolean!
 
@@ -189,5 +199,4 @@ extend type Mutation  {
 
   createMaterialType(input : MaterialInput!): Material!
   deleteMaterialType(id :ID!): Boolean!
-
 }

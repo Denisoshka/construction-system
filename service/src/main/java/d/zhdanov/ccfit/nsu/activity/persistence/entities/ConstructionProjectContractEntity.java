@@ -29,6 +29,7 @@ public class ConstructionProjectContractEntity {
   private LocalDate factStartDate;
   private LocalDate factEndDate;
   
+  @Deprecated
   @Transient
   private ObjectTypeEntity objectTypeEntity;
 }

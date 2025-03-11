@@ -39,8 +39,8 @@ public class EmployeeService {
   }
   
   public EmployeeInfo getEmployee(@NotNull final UUID id) {
-    final var ret = employeeRepository.findById(id)
-      .orElseThrow(EmployeeNotFoundException::new);
+    final var ret = employeeRepository.findById(id).orElseThrow(
+      EmployeeNotFoundException::new);
     return employeeMapper.toEmployeeInfo(ret);
   }
   
@@ -58,14 +58,30 @@ public class EmployeeService {
   }
   
   @Transactional
-  public EmployeeEntity create(final @NotNull EmployeeInput input) {
+  public EmployeeInfo create(final @NotNull EmployeeInput input) {
     final var cur = employeeRepository.findBySystemId(input.getSystemId());
     if(cur.isPresent()) {
       throw new EmployeeAlreadyExistsException();
     }
-    final var entity = employeeMapper.toEmployeeEntity(input);
     
-    return employeeRepository.save(entity);
+    final var entity = employeeMapper.toEmployeeEntity(input);
+    final var ret    = employeeRepository.save(entity);
+    
+    return employeeMapper.toEmployeeInfo(ret);
+  }
+  
+  @Transactional
+  public EmployeeInfo update(
+    final UUID id,
+    final @NotNull EmployeeInput input
+  ) {
+    final var cur = employeeRepository.findById(id).orElseThrow(
+      EmployeeNotFoundException::new);
+    
+    employeeMapper.updateEmployeeEntity(cur, input);
+    final var ret = employeeRepository.save(cur);
+    
+    return employeeMapper.toEmployeeInfo(ret);
   }
   
   @Transactional

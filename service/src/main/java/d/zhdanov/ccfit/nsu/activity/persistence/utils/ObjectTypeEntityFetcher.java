@@ -12,8 +12,8 @@ public class ObjectTypeEntityFetcher {
   public static ObjectTypeEntity of(final ResultSet rs)
   throws SQLException {
     return new ObjectTypeEntity(
-      rs.getInt("type_id"),
-      rs.getString("type_name")
+      rs.getInt("object_type_type_id"),
+      rs.getString("object_type_type_name")
     );
   }
 }

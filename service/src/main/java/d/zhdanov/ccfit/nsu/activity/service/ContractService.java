@@ -31,19 +31,17 @@ public class ContractService {
     this.contractMapper                 = contractMapper;
   }
   
-  public CustomerOrganization getCustomerOrganization(final UUID id) {
+  public CustomerOrganization findCustomerOrganization(final UUID id) {
     final var ret = customerOrganizationRepository.findById(id).orElseThrow(
       CustomerOrganizationAbsent::new);
     return contractMapper.toCustomerOrganization(ret);
   }
   
-  public List<CustomerOrganization> getAllCustomerOrganizations(Pagination pagination) {
+  public List<CustomerOrganization> findAllCustomerOrganizations(Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = customerOrganizationRepository.findAll(paged).toList();
     return contractMapper.toCustomerOrganizationList(ret);
   }
-  
-  public
   
   @Transactional
   public CustomerOrganization createCustomerOrganization(final CustomerOrganizationInput input) {
@@ -60,5 +58,19 @@ public class ContractService {
   @Transactional
   public void deleteCustomerOrganization(final UUID id) {
     customerOrganizationRepository.deleteById(id);
+  }
+  
+  @Transactional
+  public CustomerOrganization updateCustomerOrganization(
+    UUID uuid,
+    CustomerOrganizationInput input
+  ) {
+    final var saved = customerOrganizationRepository.findById(uuid).orElseThrow(
+      CustomerOrganizationAbsent::new);
+    
+    contractMapper.updateCustomerOrganisation(saved, input);
+    final var ret = customerOrganizationRepository.save(saved);
+    
+    return contractMapper.toCustomerOrganization(ret);
   }
 }

@@ -33,16 +33,14 @@ public interface EmployeeMapper {
   @Mapping(target = "positionId", ignore = true)
   EmployeeEntity toEmployeeEntity(final EmployeeInfo employee);
   
-  @Mapping(target = "positionId", ignore = true)
-  void updateEmployeeDTO(
-    final EmployeeInput employee,
-    final @MappingTarget EmployeeEntity employeeEntity
+  void updateEmployeeEntity(
+    final @MappingTarget EmployeeEntity employee,
+    final EmployeeInfo info
   );
   
-  @Mapping(target = "positionId", ignore = true)
-  void exchangeEmployeeDTO(
-    final EmployeeEntity employee,
-    final @MappingTarget EmployeeInfo employeeDTO
+  void updateEmployeeEntity(
+    final @MappingTarget EmployeeEntity employee,
+    final EmployeeInput info
   );
   
   List<EmployeeEntity> toEmployeeDTOList(final List<EmployeeInfo> employeesDTO);

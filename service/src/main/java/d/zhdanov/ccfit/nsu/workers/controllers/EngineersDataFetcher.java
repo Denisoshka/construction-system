@@ -3,6 +3,7 @@ package d.zhdanov.ccfit.nsu.workers.controllers;
 import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.workers.mapper.EngineersMapper;
 import d.zhdanov.ccfit.nsu.workers.service.EngineersService;
+import d.zhdanov.graphql.DgsConstants;
 import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,11 @@ public class EngineersDataFetcher {
     this.engineersService = engineersService;
   }
   
-  @DgsEntityFetcher(name = "EngineerPosition")
+  @DgsEntityFetcher(name = DgsConstants.ENGINEERPOSITION.TYPE_NAME)
   public EngineerPosition fetchEngineerPosition(
     @NotNull final Map<String, Object> values
   ) {
-    final var id = (Integer) values.get("id");
+    final var id = (Integer) values.get(DgsConstants.ENGINEERPOSITION.Id);
     return engineersService.engineerPosition(id);
   }
   

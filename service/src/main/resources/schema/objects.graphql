@@ -6,7 +6,8 @@ type ConstructionManagement @key(fields: "id") {
   name: String!
   address: String!
   phone: String!
-  manager: EmployeeInfo
+  constructionManagerID : ID!
+  manager: EmployeeInfo!
 }
 
 type ConstructionSite @key(fields: "id") {
@@ -14,7 +15,9 @@ type ConstructionSite @key(fields: "id") {
   name: String!
   address: String!
   phone: String!
+  management_id: ID!
   management: ConstructionManagement!
+  site_manager_id: ID!
   siteManager: EmployeeInfo
 }
 
@@ -36,6 +39,14 @@ input ConstructionSiteInput{
   phone: String!
   managementId : ID,
   siteManagerId : ID,
+}
+
+extend type Query {
+  constructionSite(id : ID!): ConstructionSite!
+  constructionSites(pagination: Pagination): [ConstructionSite!]!
+
+  constructionManagement(id : ID!): ConstructionManagement!
+  constructionManagements(pagination: Pagination): [ConstructionManagement!]!
 }
 
 extend type Mutation {

@@ -10,14 +10,24 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(
   componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface ConstructionObjectsMapper {
-  ConstructionSite fromConstructionSiteEntity(ConstructionSiteEntity constructionSiteEntity);
+  ConstructionSite toConstructionSite(ConstructionSiteEntity constructionSiteEntity);
   
-  ConstructionManagement fromConstructionManagementEntity(
+  List<ConstructionSite> toConstructionSiteList(
+    List<ConstructionSiteEntity> constructionSiteEntities
+  );
+  
+  ConstructionManagement toConstructionManagement(
     ConstructionManagementEntity constructionManagementEntity
+  );
+  
+  List<ConstructionManagement> toConstructionManagementList(
+    List<ConstructionManagementEntity> constructionManagementEntities
   );
   
   void updateConstructionSiteEntity(

@@ -8,6 +8,7 @@ import d.zhdanov.graphql.types.ProjectContract;
 import d.zhdanov.graphql.types.ProjectContractInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -27,4 +28,9 @@ public interface ContractMapper {
   CustomerOrganisationEntity toCustomerOrganisationEntity(final CustomerOrganizationInput input);
   
   CustomerOrganisationEntity toCustomerOrganisation(final CustomerOrganization entity);
+  
+  void updateCustomerOrganisation(
+    @MappingTarget final CustomerOrganisationEntity entity,
+    final CustomerOrganizationInput input
+  );
 }

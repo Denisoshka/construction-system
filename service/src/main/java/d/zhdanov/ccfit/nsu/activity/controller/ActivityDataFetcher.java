@@ -6,7 +6,7 @@ import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.activity.mapper.ContractMapper;
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
 import d.zhdanov.ccfit.nsu.activity.service.ProjectService;
-import d.zhdanov.ccfit.nsu.objects.service.ObjectsService;
+import d.zhdanov.ccfit.nsu.objects.service.ConstructionSiteService;
 import d.zhdanov.graphql.types.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,18 +15,18 @@ import java.util.UUID;
 
 @DgsComponent
 public class ActivityDataFetcher {
-  private final ObjectsService objectsService;
-  private final ProjectService projectService;
-  private final ContractMapper contractMapper;
+  private final ConstructionSiteService constructionSiteService;
+  private final ProjectService          projectService;
+  private final ContractMapper          contractMapper;
   
   public ActivityDataFetcher(
-    @Autowired ObjectsService objectsService,
+    @Autowired ConstructionSiteService constructionSiteService,
     @Autowired ProjectService projectService,
     @Autowired ContractMapper contractMapper
   ) {
-    this.objectsService = objectsService;
-    this.projectService = projectService;
-    this.contractMapper = contractMapper;
+    this.constructionSiteService = constructionSiteService;
+    this.projectService          = projectService;
+    this.contractMapper          = contractMapper;
   }
   
   @DgsMutation
@@ -68,8 +68,6 @@ public class ActivityDataFetcher {
     );
   }
   
-  
-  
   @Transactional
   public <T> ProjectContract commonAddProjectContractAction(
     ProjectContractInput input,
@@ -78,7 +76,7 @@ public class ActivityDataFetcher {
   ) {
     final var siteIdUUID = UUID.fromString(input.getSiteId());
     final var constructionProjectEntity =
-      objectsService.prepareNewProjectForSite(siteIdUUID);
+      constructionSiteService.prepareNewProjectForSite(siteIdUUID);
     
     final var contract = contractSaver.apply(
       constructionProjectEntity.getId(),

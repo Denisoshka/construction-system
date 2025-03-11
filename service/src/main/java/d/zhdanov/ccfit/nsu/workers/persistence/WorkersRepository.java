@@ -4,7 +4,6 @@ import d.zhdanov.ccfit.nsu.util.Utils;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerEntity;
 import d.zhdanov.ccfit.nsu.workers.persistence.utils.WorkerRowMapper;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -47,21 +46,21 @@ public interface WorkersRepository
                 LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
             """, rowMapperClass = WorkerRowMapper.class
   )
-  List<WorkerEntity> findAllWorkers(
+  List<WorkerEntity> findAllWorkersWithPositionEntity(
     Pageable pageable,
     Utils.WorkerRepositoryFilter filter
   );
   
   @Query(
-    """
-        SELECT w.employee_id, w.position_id,
-               emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
-               pos.id AS position_id, pos.name AS position_name
-        FROM workers w
-        JOIN employees emp ON w.employee_id = emp.id
-        LEFT JOIN engineer_position pos ON w.position_id = pos.id
-        WHERE w.employee_id = :id
-    """
+    value = """
+                SELECT w.employee_id, w.position_id,
+                       emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
+                       pos.id AS position_id, pos.name AS position_name
+                FROM workers w
+                JOIN employees emp ON w.employee_id = emp.id
+                LEFT JOIN engineer_position pos ON w.position_id = pos.id
+                WHERE w.employee_id = :id
+            """, rowMapperClass = WorkerRowMapper.class
   )
-  Optional<WorkerEntity> findWorker(UUID id);
+  Optional<WorkerEntity> findWorkerWithPositionEntity(UUID id);
 }

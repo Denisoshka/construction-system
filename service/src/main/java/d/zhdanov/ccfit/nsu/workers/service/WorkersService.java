@@ -89,12 +89,12 @@ public class WorkersService {
   ) {
     final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryWorkerFilter(workerFilter);
-    final var ret    = workersRepository.findAllWorkers(paged, filter);
+    final var ret    = workersRepository.findAllWorkersWithPositionEntity(paged, filter);
     return workersMapper.fromWorkerEntityList(ret);
   }
   
   public WorkerInfo getWorker(UUID uuid) {
-    final var ret = workersRepository.findWorker(uuid).orElseThrow(
+    final var ret = workersRepository.findWorkerWithPositionEntity(uuid).orElseThrow(
       EmployeeNotFoundException::new);
     return workersMapper.fromWorkerEntityWithAdditionalData(ret);
   }

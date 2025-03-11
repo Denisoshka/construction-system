@@ -67,9 +67,7 @@ public class EngineersService {
   ) {
     final var saved = engineersPositionRepository.findById(id).orElseThrow(
       EngineerPositionNotFoundException::new);
-    engineersMapper.updateEngineerPositionEntity(
-      saved, input
-    );
+    engineersMapper.updateEngineerPositionEntity(saved, input);
     final var ret = engineersPositionRepository.save(saved);
     return engineersMapper.fromEngineerPositionEntity(ret);
   }
@@ -96,8 +94,9 @@ public class EngineersService {
   }
   
   public EngineerInfo getEngineer(final UUID id) {
-    final var ret = engineersRepository.findEngineer(id).orElseThrow(
-      EmployeeNotFoundException::new);
+    final var ret =
+      engineersRepository.findEngineerWithPositionEntity(id).orElseThrow(
+        EmployeeNotFoundException::new);
     return engineersMapper.fromEngineerEntityWithAdditionalData(ret);
   }
   
@@ -107,7 +106,8 @@ public class EngineersService {
   ) {
     final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryEngineerFilter(engineerFilter);
-    final var ret    = engineersRepository.findAllEngineers(paged, filter);
+    final var ret =
+      engineersRepository.findAllEngineersWithPositionEntity(paged, filter);
     return engineersMapper.fromEngineerEntityList(ret);
   }
 }

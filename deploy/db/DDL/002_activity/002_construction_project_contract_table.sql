@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS construction_project_contract
 (
     id                       UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    project_id               UUID    NOT NULL,
+    project_id               UUID    NOT NULL DEFAULT gen_random_uuid(),
     site_id                  UUID    NOT NULL,
     customer_organization_id UUID    NOT NULL REFERENCES customer_organization
         (id) ON DELETE CASCADE,

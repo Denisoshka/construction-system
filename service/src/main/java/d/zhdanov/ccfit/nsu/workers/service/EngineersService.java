@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.service;
 
-import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.ccfit.nsu.workers.exceptions.EmployeeNotFoundException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.EngineerPositionAlreadyExistsException;
 import d.zhdanov.ccfit.nsu.workers.exceptions.EngineerPositionNotFoundException;

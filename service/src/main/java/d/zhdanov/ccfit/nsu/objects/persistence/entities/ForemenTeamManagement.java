@@ -7,12 +7,10 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Data
-@Table("construction_site")
-public class ConstructionSiteEntity {
+@Table("foremen_team_management")
+public class ForemenTeamManagement {
   @Id
-  private UUID   id;
-  private String name;
-  private String description;
-  private String phone;
-  private UUID   siteManagerId;
+  private UUID teamId;
+  @Id
+  private UUID workerId;
 }

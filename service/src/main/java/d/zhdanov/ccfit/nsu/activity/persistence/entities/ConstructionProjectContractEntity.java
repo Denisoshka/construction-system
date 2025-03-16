@@ -11,12 +11,12 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@Table("construction_project_contract")
 @AllArgsConstructor
 @NoArgsConstructor
+@Table("construction_project_contract")
 public class ConstructionProjectContractEntity {
+//  private UUID      id;
   @Id
-  private UUID      id;
   private UUID      projectId;
   private UUID      siteId;
   private UUID      customerOrganizationId;

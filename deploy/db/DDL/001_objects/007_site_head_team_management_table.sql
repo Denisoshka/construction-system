@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS site_team_management_table
+CREATE TABLE IF NOT EXISTS site_team_management
 (
     teamId     UUID NOT NULL REFERENCES construction_site (id) ON
         DELETE CASCADE,

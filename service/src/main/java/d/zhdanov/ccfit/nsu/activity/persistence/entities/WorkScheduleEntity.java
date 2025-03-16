@@ -2,7 +2,7 @@ package d.zhdanov.ccfit.nsu.activity.persistence.entities;
 
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import java.util.UUID;
 @Table("work_schedule")
 public class WorkScheduleEntity {
   @NotNull
+  @Id
   private UUID      id;
   @NotNull
   private UUID      brigadeId;
@@ -20,15 +21,9 @@ public class WorkScheduleEntity {
   @NotNull
   private UUID      contractId;
   @NotNull
-  private LocalDate plan_start_date;
+  private LocalDate planStartDate;
   @NotNull
-  private LocalDate plan_end_date;
-  @Nullable
-  private LocalDate fact_start_date;
-  @Nullable
-  private LocalDate fact_end_date;
+  private LocalDate planEndDate;
   @NotNull
-  private LocalDate plan_order;
-  @Nullable
-  private LocalDate fact_order;
+  private LocalDate planOrder;
 }

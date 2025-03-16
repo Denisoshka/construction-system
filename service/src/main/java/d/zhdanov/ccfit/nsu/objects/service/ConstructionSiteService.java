@@ -7,7 +7,7 @@ import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionProjectRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionSiteRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionSiteEntity;
-import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.ConstructionSite;
 import d.zhdanov.graphql.types.ConstructionSiteInput;
 import d.zhdanov.graphql.types.Pagination;

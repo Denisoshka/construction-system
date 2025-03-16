@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.activity.persistence.utils;
+package d.zhdanov.ccfit.nsu.utils.persistence.activity;
 
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ObjectTypeEntity;
 

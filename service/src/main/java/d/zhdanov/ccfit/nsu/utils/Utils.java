@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.util;
+package d.zhdanov.ccfit.nsu.utils;
 
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.JobPost;
 import d.zhdanov.graphql.types.EmployeeFilter;

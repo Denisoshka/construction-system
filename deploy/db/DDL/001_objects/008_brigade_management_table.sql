@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS foremen_team_management_table
+CREATE TABLE IF NOT EXISTS brigade_management
 (
     teamId   UUID NOT NULL REFERENCES brigade (id) ON DELETE CASCADE,
     workerId UUID NOT NULL REFERENCES workers (employee_id) ON DELETE CASCADE,

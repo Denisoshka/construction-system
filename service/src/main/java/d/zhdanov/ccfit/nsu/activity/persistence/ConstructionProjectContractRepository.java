@@ -1,14 +1,10 @@
 package d.zhdanov.ccfit.nsu.activity.persistence;
 
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ConstructionProjectContractEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.utils.ConstructionProjectContractWithTypeRowMapper;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository

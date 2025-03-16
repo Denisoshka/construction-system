@@ -1,6 +1,7 @@
 package d.zhdanov.ccfit.nsu.workers.controllers;
 
 import com.netflix.graphql.dgs.*;
+import d.zhdanov.ccfit.nsu.objects.dto.ConstructionSiteDTO;
 import d.zhdanov.ccfit.nsu.workers.mapper.EngineersMapper;
 import d.zhdanov.ccfit.nsu.workers.service.EngineersService;
 import d.zhdanov.graphql.DgsConstants;
@@ -78,5 +79,15 @@ public class EngineersDataFetcher {
   @DgsMutation
   public void deleteEngineerPosition(@InputArgument Integer id) {
     engineersService.deleteEngineerPosition(id);
+  }
+  
+  @DgsData(
+    parentType = DgsConstants.CONSTRUCTIONSITE.TYPE_NAME, field = DgsConstants.CONSTRUCTIONSITE.SiteManager
+  )
+  public EngineerInfo getConstructionSiteEmployeeInfo(
+    DgsDataFetchingEnvironment dfe
+  ) {
+    ConstructionSiteDTO site = dfe.getSource();
+    return engineer(site.getSiteManagerId().toString());
   }
 }

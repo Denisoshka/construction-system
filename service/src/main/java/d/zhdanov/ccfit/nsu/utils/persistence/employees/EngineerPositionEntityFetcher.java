@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.workers.persistence.utils;
+package d.zhdanov.ccfit.nsu.utils.persistence.employees;
 
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerPositionEntity;
 
@@ -13,7 +13,7 @@ public class EngineerPositionEntityFetcher {
   throws SQLException {
     return new EngineerPositionEntity(
       positionId,
-      rs.getString("position_name")
+      rs.getString("engineer_position_name")
     );
   }
 }

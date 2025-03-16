@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.workers.persistence.entities;
+package d.zhdanov.ccfit.nsu.objects.persistence.entities;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -7,8 +7,8 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.UUID;
 
 @Data
-@Table("site_head_team_management_table")
-public class SiteHeadTeamManagementEntity {
+@Table("site_team_management")
+public class SiteTeamManagement {
   @Id
   private UUID teamId;
   @Id

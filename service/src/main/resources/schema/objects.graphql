@@ -1,36 +1,18 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
   import: ["@key"])
 
-type ConstructionManagement @key(fields: "id") {
-  id: ID!
-  name: String!
-  address: String!
-  phone: String!
-  constructionManagerID : ID!
-  manager: EmployeeInfo!
-}
 
 type ConstructionSite @key(fields: "id") {
   id: ID!
   name: String!
   address: String!
   phone: String!
-  management_id: ID!
-  management: ConstructionManagement!
-  site_manager_id: ID!
-  siteManager: EmployeeInfo
+  siteManager: EngineerInfo
 }
 
 type ConstructionProject {
   id : ID!
   siteID : ID!
-}
-
-input ConstructionManagementInput {
-  name: String!
-  address: String!
-  phone: String!
-  managerId : ID
 }
 
 input ConstructionSiteInput{
@@ -41,28 +23,31 @@ input ConstructionSiteInput{
   siteManagerId : ID,
 }
 
+type Brigade {
+  id: ID!
+  foreman: WorkerInfo!
+  siteInfo: ConstructionSite!
+}
+
+input BrigadeInput {
+  foremanId : ID!
+  siteTeamID : ID!
+}
+
 extend type Query {
   constructionSite(id : ID!): ConstructionSite!
-  constructionSites(pagination: Pagination): [ConstructionSite!]!
 
-  constructionManagement(id : ID!): ConstructionManagement!
-  constructionManagements(pagination: Pagination): [ConstructionManagement!]!
+  brigades(pagination : Pagination): [Brigade!]!
+  brigade(id: ID!): Brigade!
+  brigadeWorkers(
+    id: ID!, pagination: Pagination, workerFilter: WorkerFilter
+  ): [WorkerInfo!]!
 }
 
 extend type Mutation {
-  createConstructionSite(input: ConstructionSiteInput!): ConstructionSite!
   updateConstructionSite(
     id: ID!, input: ConstructionSiteInput!
   ): ConstructionSite!
-  deleteConstructionSite(id: ID!): Boolean!
-
-  createConstructionManagement(
-    input: ConstructionManagementInput!
-  ): ConstructionManagement!
-  updateConstructionManagement(
-    id: ID!, input: ConstructionManagementInput!
-  ): ConstructionManagement!
-  deleteConstructionManagement(id: ID!):Boolean!
 }
 
 

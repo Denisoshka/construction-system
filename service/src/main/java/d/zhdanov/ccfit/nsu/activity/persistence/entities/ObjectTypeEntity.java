@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("object_types")
 @AllArgsConstructor
+@Table("object_type")
 public class ObjectTypeEntity {
   @Id
   private Integer id;

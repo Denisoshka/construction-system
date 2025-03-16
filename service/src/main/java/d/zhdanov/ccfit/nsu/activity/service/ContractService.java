@@ -4,7 +4,7 @@ import d.zhdanov.ccfit.nsu.activity.exceptions.CustomerOrganizationAbsent;
 import d.zhdanov.ccfit.nsu.activity.exceptions.CustomerOrganizationCreationException;
 import d.zhdanov.ccfit.nsu.activity.mapper.ContractMapper;
 import d.zhdanov.ccfit.nsu.activity.persistence.CustomerOrganizationRepository;
-import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.CustomerOrganization;
 import d.zhdanov.graphql.types.CustomerOrganizationInput;
 import d.zhdanov.graphql.types.Pagination;

@@ -1,9 +1,7 @@
 package d.zhdanov.ccfit.nsu.workers.controllers;
 
-import com.netflix.graphql.dgs.DgsEntityFetcher;
-import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.DgsQuery;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
+import d.zhdanov.ccfit.nsu.objects.dto.BrigadeDTO;
 import d.zhdanov.ccfit.nsu.workers.mapper.WorkersMapper;
 import d.zhdanov.ccfit.nsu.workers.service.WorkersService;
 import d.zhdanov.graphql.DgsConstants;
@@ -80,5 +78,18 @@ public class WorkersDataFetcher {
     @InputArgument Pagination pagination
   ) {
     return workersService.workersPositions(pagination);
+  }
+  
+  @DgsData(
+    parentType = DgsConstants.BRIGADE.TYPE_NAME, field = DgsConstants.BRIGADE.Foreman
+  )
+  public BrigadeDTO brigadeWorkerInfo(
+    DgsDataFetchingEnvironment dfe
+  ) {
+    final BrigadeDTO brigadeDTO = dfe.getSource();
+    
+    final var worker = worker(brigadeDTO.getForemanId().toString());
+    brigadeDTO.setForeman(worker);
+    return brigadeDTO;
   }
 }

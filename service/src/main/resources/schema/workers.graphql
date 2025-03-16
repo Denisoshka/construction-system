@@ -12,7 +12,7 @@ interface Employee {
   employmentDate : Date!
 }
 
-type EmployeeInfo implements Employee @key(fields: "id"){
+type EmployeeInfo implements Employee @key(fields: "id") {
   id: ID!
   systemId: String!
   name: String!
@@ -22,12 +22,12 @@ type EmployeeInfo implements Employee @key(fields: "id"){
   post : String!
 }
 
-type EngineerInfo  {
+type EngineerInfo {
   employee: EmployeeInfo!
   positionInfo : EngineerPosition!
 }
 
-type WorkerInfo  {
+type WorkerInfo {
   employee: EmployeeInfo!
   positionInfo : WorkerPosition!
 }
@@ -41,16 +41,6 @@ type EngineerPosition @key(fields: "id"){
 type WorkerPosition @key(fields: "id"){
   id: Int!
   name : String!
-}
-
-type Brigade {
-  id: ID!
-  foremanId : ID!
-  siteTeamID : ID!
-}
-input BrigadeInput {
-  foremanId : ID!
-  siteTeamID : ID!
 }
 
 input Pagination {
@@ -91,10 +81,10 @@ input EngineerPositionInput {
 }
 
 extend type Query {
-#  employee(id: ID!) : EmployeeInfo!
-#  employees(
-#    pagination: Pagination, employeeFilter: EmployeeFilter
-#  ): [EmployeeInfo!]!
+  employee(id: ID!) : EmployeeInfo!
+  employees(
+    pagination: Pagination, employeeFilter: EmployeeFilter
+  ): [EmployeeInfo!]!
 
   engineer(id: ID!): EngineerInfo!
   engineers(
@@ -109,8 +99,6 @@ extend type Query {
   workerPosition(id : Int!): WorkerPosition!
   workerPositionByName(name: String!): EngineerPosition!
   workersPositions(pagination : Pagination): [WorkerPosition!]!
-
-  brigades(pagination : Pagination) : [Brigade!]!
 }
 
 type Mutation {

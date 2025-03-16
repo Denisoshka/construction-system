@@ -1,8 +1,8 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
-import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.utils.Utils;
+import d.zhdanov.ccfit.nsu.utils.persistence.employees.WorkerRowMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerEntity;
-import d.zhdanov.ccfit.nsu.workers.persistence.utils.WorkerRowMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
@@ -37,8 +37,11 @@ public interface WorkersRepository
   @Query(
     value = """
                 SELECT w.employee_id, w.position_id,
-                       emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
-                       pos.id AS position_id, pos.name AS position_name
+                       emp.system_id, emp.name,
+                       emp.surname, emp.patronymic,
+                       emp.employment_date, emp.post,
+                       pos.id AS worker_position_id,
+                       pos.name AS worker_position_name
                 FROM workers w
                 JOIN employees emp ON w.employee_id = emp.id
                 LEFT JOIN worker_position pos ON w.position_id = pos.id
@@ -54,8 +57,11 @@ public interface WorkersRepository
   @Query(
     value = """
                 SELECT w.employee_id, w.position_id,
-                       emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
-                       pos.id AS position_id, pos.name AS position_name
+                       emp.system_id, emp.name,
+                       emp.surname, emp.patronymic,
+                       emp.employment_date, emp.post,
+                       pos.id AS worker_position_id,
+                       pos.name AS worker_position_name
                 FROM workers w
                 JOIN employees emp ON w.employee_id = emp.id
                 LEFT JOIN engineer_position pos ON w.position_id = pos.id
@@ -63,4 +69,20 @@ public interface WorkersRepository
             """, rowMapperClass = WorkerRowMapper.class
   )
   Optional<WorkerEntity> findWorkerWithPositionEntity(UUID id);
+  
+  @Query(
+    """
+        SELECT w.employee_id, w.position_id,
+               emp.system_id, emp.name,
+               emp.surname, emp.patronymic,
+               emp.employment_date, emp.post,
+               pos.id AS worker_position_id,
+               pos.name AS worker_position_name
+        FROM workers w
+        JOIN employees emp ON w.employee_id = emp.id
+        LEFT JOIN worker_position pos ON w.position_id = pos.id
+        WHERE w.employee_id IN (:workerIds)
+    """
+  )
+  List<WorkerEntity> findWorkersByIds(@Param("workerIds") List<UUID> workerIds);
 }

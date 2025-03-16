@@ -74,16 +74,6 @@ public class EmployeeDataFetcher {
   }
   
   @DgsData(
-    parentType = DgsConstants.CONSTRUCTIONSITE.TYPE_NAME, field = DgsConstants.CONSTRUCTIONSITE.SiteManager
-  )
-  public EmployeeInfo getConstructionSiteEmployeeInfo(
-    DgsDataFetchingEnvironment dfe
-  ) {
-    ConstructionSite site = dfe.getSource();
-    return employee(site.getId());
-  }
-  
-  @DgsData(
     parentType = DgsConstants.CONSTRUCTIONMANAGEMENT.TYPE_NAME, field = DgsConstants.CONSTRUCTIONMANAGEMENT.Manager
   )
   public EmployeeInfo getConstructionManagementEmployeeInfo(

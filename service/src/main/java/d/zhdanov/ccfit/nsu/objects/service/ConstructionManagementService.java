@@ -6,7 +6,7 @@ import d.zhdanov.ccfit.nsu.objects.exceptions.ConstructionSiteAbsent;
 import d.zhdanov.ccfit.nsu.objects.mappers.ConstructionObjectsMapper;
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionManagementRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionManagementEntity;
-import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.ConstructionManagement;
 import d.zhdanov.graphql.types.ConstructionManagementInput;
 import d.zhdanov.graphql.types.Pagination;

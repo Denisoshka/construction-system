@@ -5,7 +5,7 @@ import d.zhdanov.ccfit.nsu.activity.persistence.ManufacturerRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.MaterialTypeRepository;
 import d.zhdanov.ccfit.nsu.objects.exceptions.ManufacturerAbsent;
 import d.zhdanov.ccfit.nsu.objects.exceptions.MaterialTypeAbsent;
-import d.zhdanov.ccfit.nsu.util.Utils;
+import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

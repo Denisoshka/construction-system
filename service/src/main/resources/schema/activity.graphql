@@ -114,7 +114,14 @@ input ManufacturerInput {
 }
 
 type MaterialUsage {
-  estimateID: ID!
+  workUnitId: ID!
+  materialID: ID!
+  planQuantity: Int!
+  factQuantity: Int!
+}
+
+input MaterialUsageInput {
+  workUnitId: ID!
   materialID: ID!
   planQuantity: Int!
   factQuantity: Int!
@@ -128,23 +135,22 @@ type WorkType {
 type WorkScheduleUnit{
   id: ID!
   work: WorkType!
-  #  contractId : ID!
+  brigadeId: ID!
+  contractId : ID!
+  planStartDate: Date!
+  planEndDate: Date!
+  planOrder: Int!
+}
+
+input WorkScheduleUnitInput{
+  workTypeId: ID!
+  brigadeId: ID!
   planStartDate: Date!
   planEndDate: Date!
   factStartDate: Date
   factEndDate: Date
   planOrder: Int!
   factOrder: Int
-}
-
-input WorkScheduleUnitInput{
-  workTypeId : ID!
-  planStartDate : Date!
-  planEndDate : Date!
-  factStartDate : Date
-  factEndDate : Date
-  planOrder : Int!
-  factOrder : Int
 }
 
 input CustomerOrganizationInput{
@@ -173,6 +179,10 @@ type Query {
 
   materialType(id: ID!): Material!
   materialTypes(pagination: Pagination): [Material!]!
+
+  workSchedule(projectID: ID!, pagination: Pagination!): [WorkScheduleUnit!]!
+  workScheduleUnit(id: ID!): WorkScheduleUnit!
+  workMaterials(id: ID!, pagination: Pagination!): [MaterialUsage!]!
 }
 
 extend type Mutation  {

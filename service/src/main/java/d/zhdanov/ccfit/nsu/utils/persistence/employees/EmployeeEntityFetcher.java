@@ -1,4 +1,4 @@
-package d.zhdanov.ccfit.nsu.workers.persistence.utils;
+package d.zhdanov.ccfit.nsu.utils.persistence.employees;
 
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EmployeeEntity;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.JobPost;

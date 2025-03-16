@@ -36,53 +36,65 @@ public interface WorkersRepository
   
   @Query(
     value = """
-                SELECT w.employee_id, w.position_id,
-                       emp.system_id, emp.name,
-                       emp.surname, emp.patronymic,
-                       emp.employment_date, emp.post,
-                       pos.id AS worker_position_id,
-                       pos.name AS worker_position_name
-                FROM workers w
-                JOIN employees emp ON w.employee_id = emp.id
-                LEFT JOIN worker_position pos ON w.position_id = pos.id
-                WHERE (:#{#filter.position} IS NULL OR w.position_id = :#{#filter.position})
-                LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
+            SELECT w.employee_id, w.position_id,
+                   emp.system_id, emp.name,
+                   emp.surname, emp.patronymic,
+                   emp.employment_date, emp.post,
+                   pos.id AS worker_position_id,
+                   pos.name AS worker_position_name
+            FROM workers w
+            JOIN employees emp ON w.employee_id = emp.id
+            LEFT JOIN worker_position pos ON w.position_id = pos.id
+            WHERE (:#{#filter.position} IS NULL OR w.position_id = :#{#filter.position})
+            LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
             """, rowMapperClass = WorkerRowMapper.class
   )
-  List<WorkerEntity> findAllWorkersWithPositionEntity(
+  List<WorkerEntity> findAllWorkersWithInfo(
     Pageable pageable,
     Utils.WorkerRepositoryFilter filter
   );
   
   @Query(
     value = """
-                SELECT w.employee_id, w.position_id,
-                       emp.system_id, emp.name,
-                       emp.surname, emp.patronymic,
-                       emp.employment_date, emp.post,
-                       pos.id AS worker_position_id,
-                       pos.name AS worker_position_name
-                FROM workers w
-                JOIN employees emp ON w.employee_id = emp.id
-                LEFT JOIN engineer_position pos ON w.position_id = pos.id
-                WHERE w.employee_id = :id
+            SELECT w.employee_id, emp.system_id,
+                   emp.name, emp.surname,
+                   emp.patronymic, emp.employment_date,
+                   emp.post,
+                   pos.id AS worker_position_id,
+                   pos.name AS worker_position_name
+            FROM workers w
+            JOIN employees emp ON w.employee_id = emp.id
+            LEFT JOIN engineer_position pos ON w.position_id = pos.id
+            WHERE w.employee_id = :id
             """, rowMapperClass = WorkerRowMapper.class
   )
-  Optional<WorkerEntity> findWorkerWithPositionEntity(UUID id);
+  Optional<WorkerEntity> findWorkerWithInfo(UUID id);
   
   @Query(
-    """
-        SELECT w.employee_id, w.position_id,
-               emp.system_id, emp.name,
-               emp.surname, emp.patronymic,
-               emp.employment_date, emp.post,
-               pos.id AS worker_position_id,
-               pos.name AS worker_position_name
-        FROM workers w
-        JOIN employees emp ON w.employee_id = emp.id
-        LEFT JOIN worker_position pos ON w.position_id = pos.id
-        WHERE w.employee_id IN (:workerIds)
-    """
+    value = """
+            WITH brigade_workers AS (
+                SELECT w.employee_id
+                FROM workers w
+                JOIN brigade b ON w.employee_id = b.foreman_id OR w.employee_id IN (
+                    SELECT employee_id FROM workers WHERE site_id = b.site_id
+                )
+                WHERE b.id = :brigadeId
+            )
+            SELECT
+                w.employee_id, emp.system_id,
+                emp.name, emp.surname,
+                emp.patronymic, emp.employment_date,
+                emp.post,
+                pos.id AS worker_position_id,
+                pos.name AS worker_position_name
+            FROM workers w
+            JOIN employees emp ON w.employee_id = emp.id
+            LEFT JOIN worker_position pos ON w.position_id = pos.id
+            WHERE w.employee_id IN (SELECT employee_id FROM brigade_workers)
+            LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
+            """, rowMapperClass = WorkerRowMapper.class
   )
-  List<WorkerEntity> findWorkersByIds(@Param("workerIds") List<UUID> workerIds);
+  List<WorkerEntity> findWorkersWithInfoByBrigadeId(
+    @Param("brigadeId") UUID brigadeId, Pageable pageable
+  );
 }

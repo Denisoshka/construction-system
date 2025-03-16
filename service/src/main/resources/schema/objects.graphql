@@ -40,7 +40,7 @@ extend type Query {
   brigades(pagination : Pagination): [Brigade!]!
   brigade(id: ID!): Brigade!
   brigadeWorkers(
-    id: ID!, pagination: Pagination, workerFilter: WorkerFilter
+    id: ID!, pagination: Pagination
   ): [WorkerInfo!]!
 }
 

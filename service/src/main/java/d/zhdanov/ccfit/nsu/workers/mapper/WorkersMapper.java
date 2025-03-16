@@ -19,7 +19,7 @@ public interface WorkersMapper {
   @Mapping(target = "employee", source = "employee")
   WorkerInfo fromWorkerEntityWithAdditionalData(final WorkerEntity workerEntity);
   
-  List<WorkerInfo> fromWorkerEntityList(final List<WorkerEntity> workerEntities);
+  List<WorkerInfo> toWorkersInfo(final List<WorkerEntity> workerEntities);
   
   WorkerPosition fromWorkerPositionEntity(final WorkerPositionEntity entity);
   

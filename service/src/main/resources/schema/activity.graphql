@@ -7,7 +7,7 @@ interface ProjectContract{
   id: ID!
   projectId: ID!
   siteId: ID!
-  objectType: Int!
+  objectType: String!
   dateOfCreation: Date!
   signingDate: Date
   planStartDate: Date
@@ -58,7 +58,7 @@ type SchoolProjectContract implements ProjectContract {
   id: ID!
   projectId: ID!
   siteId: ID!
-  objectType: Int!
+  objectType: String!
   dateOfCreation: Date!
   signingDate: Date
   planStartDate: Date
@@ -161,8 +161,6 @@ input ContractFilter {
   projectType : String
 }
 
-union Contract = BridgeProjectContract | SchoolProjectContract | ApartmentHouseProjectContract
-
 type Query {
   customerOrganization(id : ID!): CustomerOrganization!
   customerOrganizations(pagination: Pagination): [CustomerOrganization!]!
@@ -180,9 +178,12 @@ type Query {
   materialType(id: ID!): Material!
   materialTypes(pagination: Pagination): [Material!]!
 
-  workSchedule(projectID: ID!, pagination: Pagination!): [WorkScheduleUnit!]!
+  projectWorkSchedule(projectId: ID!, pagination: Pagination!): [WorkScheduleUnit!]!
+  brigadeWorkSchedule(
+    brigadeId: ID!, pagination: Pagination!
+  ): [WorkScheduleUnit!]!
   workScheduleUnit(id: ID!): WorkScheduleUnit!
-  workMaterials(id: ID!, pagination: Pagination!): [MaterialUsage!]!
+  workMaterials(scheduleUnitID: ID!, pagination: Pagination!): [MaterialUsage!]!
 }
 
 extend type Mutation  {
@@ -213,4 +214,6 @@ extend type Mutation  {
 
   createMaterialType(input : MaterialInput!): Material!
   deleteMaterialType(id :ID!): Boolean!
+
+  addWOrkScheduleUnit(input: WorkScheduleUnitInput!): WorkScheduleUnit!
 }

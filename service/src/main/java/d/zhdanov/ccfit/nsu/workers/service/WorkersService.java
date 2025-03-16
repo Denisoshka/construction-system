@@ -90,7 +90,7 @@ public class WorkersService {
     final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryWorkerFilter(workerFilter);
     final var ret    = workersRepository.findAllWorkersWithInfo(paged, filter);
-    return workersMapper.fromWorkerEntityList(ret);
+    return workersMapper.toWorkersInfo(ret);
   }
   
   public WorkerInfo getWorker(UUID uuid) {
@@ -103,5 +103,15 @@ public class WorkersService {
     final var paged = Utils.getPageable(pagination);
     final var ret   = workersPositionRepository.findAll(paged).toList();
     return workersMapper.fromWorkerPositionEntityList(ret);
+  }
+  
+  public List<WorkerInfo> findAllWorkersInBrigade(
+    final UUID brigadeId,
+    final Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret =
+      workersRepository.findWorkersWithInfoByBrigadeId(brigadeId, paged);
+    return workersMapper.toWorkersInfo(ret);
   }
 }

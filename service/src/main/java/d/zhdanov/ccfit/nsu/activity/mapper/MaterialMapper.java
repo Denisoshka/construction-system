@@ -2,10 +2,8 @@ package d.zhdanov.ccfit.nsu.activity.mapper;
 
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ManufacturerEntity;
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialTypeEntity;
-import d.zhdanov.graphql.types.Manufacturer;
-import d.zhdanov.graphql.types.ManufacturerInput;
-import d.zhdanov.graphql.types.Material;
-import d.zhdanov.graphql.types.MaterialInput;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialUsageEntity;
+import d.zhdanov.graphql.types.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
@@ -26,4 +24,8 @@ public interface MaterialMapper {
   Manufacturer fromManufacturerEntity(ManufacturerEntity manufacturerEntity);
   
   List<Manufacturer> fromManufacturerEntityList(List<ManufacturerEntity> manufacturerEntities);
+  
+  MaterialUsage toMaterialUsage(MaterialUsageEntity entity);
+  
+  List<MaterialUsage> fromMaterialUsageEntityList(List<MaterialUsageEntity> materialUsageEntities);
 }

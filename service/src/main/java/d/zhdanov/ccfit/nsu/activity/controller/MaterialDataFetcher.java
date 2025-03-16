@@ -21,12 +21,12 @@ public class MaterialDataFetcher {
   @DgsQuery
   public Material materialType(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    return materialService.getMaterialType(uuid);
+    return materialService.findMaterialType(uuid);
   }
   
   @DgsQuery
   public List<Material> materialTypes(@InputArgument Pagination pagination) {
-    return materialService.getAllMaterialTypes(pagination);
+    return materialService.findAllMaterialTypes(pagination);
   }
   
   @DgsMutation
@@ -44,14 +44,14 @@ public class MaterialDataFetcher {
   @DgsQuery
   public Manufacturer manufacturer(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    return materialService.getManufacturer(uuid);
+    return materialService.findManufacturer(uuid);
   }
   
   @DgsQuery
   public List<Manufacturer> manufacturers(
     @InputArgument Pagination pagination
   ) {
-    return materialService.getAllManufacturers(pagination);
+    return materialService.findAllManufacturers(pagination);
   }
   
   @DgsMutation
@@ -66,5 +66,14 @@ public class MaterialDataFetcher {
     final var uuid = UUID.fromString(id);
     materialService.deleteManufacturer(uuid);
     return true;
+  }
+  
+  @DgsQuery
+  public List<MaterialUsage> workMaterials(
+    @InputArgument String scheduleUnitID,
+    @InputArgument Pagination pagination
+  ) {
+    final var uuid = UUID.fromString(scheduleUnitID);
+    return materialService.findAllMaterialUsageByScheduleUnit(uuid, pagination);
   }
 }

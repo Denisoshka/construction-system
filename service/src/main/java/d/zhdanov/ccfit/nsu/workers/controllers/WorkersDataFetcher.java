@@ -92,4 +92,13 @@ public class WorkersDataFetcher {
     brigadeDTO.setForeman(worker);
     return brigadeDTO;
   }
+  
+  @DgsQuery
+  public List<WorkerInfo> brigadeWorkers(
+    @InputArgument String id,
+    @InputArgument Pagination pagination
+  ) {
+    final var uuid = UUID.fromString(id);
+    return workersService.findAllWorkersInBrigade(uuid, pagination);
+  }
 }

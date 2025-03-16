@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS work_schedule
 (
-    id              UUID PRIMARY KEY,
+    id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     brigade_id      UUID    NOT NULL REFERENCES brigade (id) ON DELETE CASCADE,
     work_type_id    UUID    NOT NULL REFERENCES work_type (id) ON DELETE CASCADE,
     contract_id     UUID    NOT NULL REFERENCES construction_project_contract (id)

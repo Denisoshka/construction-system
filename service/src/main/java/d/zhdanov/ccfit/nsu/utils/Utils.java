@@ -10,6 +10,7 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @UtilityClass
 public class Utils {
@@ -20,6 +21,14 @@ public class Utils {
       return Pageable.unpaged();
     }
     return PageRequest.of(pagination.getPage(), pagination.getPageSize());
+  }
+  
+  @NotNull
+  public static Pageable getPageable(Pagination pagination, Sort sort) {
+    if(pagination == null) {
+      return Pageable.unpaged(sort);
+    }
+    return PageRequest.of(pagination.getPage(), pagination.getPageSize(), sort);
   }
   
   public static EngineerRepositoryFilter getRepositoryEngineerFilter(

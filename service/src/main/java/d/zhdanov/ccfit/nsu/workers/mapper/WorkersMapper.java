@@ -17,6 +17,7 @@ import java.util.List;
 )
 public interface WorkersMapper {
   @Mapping(target = "employee", source = "employee")
+//  @Mapping(target = "positionInfo", ignore = true)
   WorkerInfo fromWorkerEntityWithAdditionalData(final WorkerEntity workerEntity);
   
   List<WorkerInfo> toWorkersInfo(final List<WorkerEntity> workerEntities);
@@ -27,6 +28,7 @@ public interface WorkersMapper {
     final List<WorkerPositionEntity> workerPositionEntities
   );
   
+  @Mapping(target = "id", ignore = true)
   void updateWorkerPositionEntity(
     @MappingTarget final WorkerPositionEntity entity,
     final WorkerPositionInput input

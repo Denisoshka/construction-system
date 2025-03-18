@@ -25,5 +25,5 @@ public class WorkScheduleEntity {
   @NotNull
   private LocalDate planEndDate;
   @NotNull
-  private LocalDate planOrder;
+  private Integer   planOrder;
 }

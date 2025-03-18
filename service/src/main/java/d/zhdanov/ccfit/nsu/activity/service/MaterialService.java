@@ -88,7 +88,10 @@ public class MaterialService {
     final Pagination pagination
   ) {
     final var paged = Utils.getPageable(pagination);
-    final var ret = materialUsageRepository.findByWorkUnitId(workUnitId, paged);
+    final var ret   = materialUsageRepository.findByWorkUnitId(
+      workUnitId,
+      paged
+    );
     return materialMapper.fromMaterialUsageEntityList(ret);
   }
   

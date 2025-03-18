@@ -31,7 +31,7 @@ public class ProjectContractEntity {
   @NotNull
   private LocalDate dateOfCreation;
   @Nullable
-  private LocalDate singingDate;
+  private LocalDate signingDate;
   @NotNull
   private LocalDate planStartDate;
   @NotNull

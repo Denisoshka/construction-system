@@ -1,4 +1,4 @@
 package d.zhdanov.ccfit.nsu.objects.exceptions;
 
-public class MaterialTypeAbsent extends ObjectServiceException{
+public class MaterialTypeAbsent extends ObjectServiceException {
 }

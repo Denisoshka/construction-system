@@ -18,5 +18,5 @@ public class WorkerEntity {
   @Transient
   private EmployeeEntity       employee;
   @Transient
-  private WorkerPositionEntity workerPosition;
+  private WorkerPositionEntity positionInfo;
 }

@@ -13,7 +13,7 @@ public class WorkerRowMapper implements RowMapper<WorkerEntity> {
   
   @Override
   public WorkerEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
-    UUID employeeId    = rs.getObject("employee_id", UUID.class);
+    UUID    employeeId = rs.getObject("employee_id", UUID.class);
     Integer positionId = rs.getObject("position", Integer.class);
     
     EmployeeEntity employee = EmployeeEntityFetcher.of(rs, employeeId);

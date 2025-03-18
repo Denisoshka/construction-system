@@ -1,4 +1,4 @@
 package d.zhdanov.ccfit.nsu.objects.exceptions;
 
-public class BrigadeAbsent extends ObjectServiceException{
+public class BrigadeAbsent extends ObjectServiceException {
 }

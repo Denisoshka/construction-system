@@ -1,8 +1,6 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerPositionEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;

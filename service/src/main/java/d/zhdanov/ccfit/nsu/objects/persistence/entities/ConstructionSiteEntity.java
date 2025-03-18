@@ -12,7 +12,7 @@ public class ConstructionSiteEntity {
   @Id
   private UUID   id;
   private String name;
-  private String description;
+  private String address;
   private String phone;
   private UUID   siteManagerId;
 }

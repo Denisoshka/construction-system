@@ -3,7 +3,7 @@ type CustomerOrganization {
   name: String!
 }
 
-interface ProjectContract{
+type ProjectContract{
   id: ID!
   projectId: ID!
   siteId: ID!
@@ -54,7 +54,7 @@ type SchoolProject implements ProjectType {
   floors: Int!
 }
 
-type SchoolProjectContract implements ProjectContract {
+type SchoolProjectContract  {
   id: ID!
   projectId: ID!
   siteId: ID!
@@ -134,7 +134,7 @@ type WorkType {
 
 type WorkScheduleUnit{
   id: ID!
-  work: WorkType!
+  workTypeId: ID!
   brigadeId: ID!
   contractId : ID!
   planStartDate: Date!

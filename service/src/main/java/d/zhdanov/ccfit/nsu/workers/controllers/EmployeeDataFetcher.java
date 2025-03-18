@@ -4,7 +4,10 @@ import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.workers.mapper.EmployeeMapper;
 import d.zhdanov.ccfit.nsu.workers.service.EmployeeService;
 import d.zhdanov.graphql.DgsConstants;
-import d.zhdanov.graphql.types.*;
+import d.zhdanov.graphql.types.EmployeeFilter;
+import d.zhdanov.graphql.types.EmployeeInfo;
+import d.zhdanov.graphql.types.EmployeeInput;
+import d.zhdanov.graphql.types.Pagination;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -71,25 +74,5 @@ public class EmployeeDataFetcher {
     final var id =
       UUID.fromString((String) values.get(DgsConstants.EMPLOYEEINFO.Id));
     return employeeService.getEmployee(id);
-  }
-  
-  @DgsData(
-    parentType = DgsConstants.CONSTRUCTIONMANAGEMENT.TYPE_NAME, field = DgsConstants.CONSTRUCTIONMANAGEMENT.Manager
-  )
-  public EmployeeInfo getConstructionManagementEmployeeInfo(
-    DgsDataFetchingEnvironment dfe
-  ) {
-    ConstructionSite site = dfe.getSource();
-    return employee(site.getId());
-  }
-  
-  @DgsData(
-    parentType = DgsConstants.CONSTRUCTIONMANAGEMENT.TYPE_NAME, field = DgsConstants.CONSTRUCTIONMANAGEMENT.Manager
-  )
-  public EmployeeInfo findManager(
-    DgsDataFetchingEnvironment dfe
-  ) {
-    ConstructionManagement management = dfe.getSource();
-    return employee(management.getId());
   }
 }

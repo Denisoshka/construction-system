@@ -15,7 +15,8 @@ public class ConstructionProjectContractWithTypeRowMapper
     int rowNum
   )
   throws SQLException {
-    final var entity = ConstructionProjectContractEntityFetcher.of(rs);
+    final var entity           =
+      ConstructionProjectContractEntityFetcher.of(rs);
     final var objectTypeEntity = ObjectTypeEntityFetcher.of(rs);
     entity.setObjectTypeEntity(objectTypeEntity);
     return entity;

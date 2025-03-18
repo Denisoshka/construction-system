@@ -15,9 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table("construction_project_contract")
 public class ConstructionProjectContractEntity {
-//  private UUID      id;
   @Id
-  private UUID      projectId;
+  private UUID      id;
   private UUID      siteId;
   private UUID      customerOrganizationId;
   private Integer   objectType;

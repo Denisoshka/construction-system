@@ -50,7 +50,9 @@ public class ContractDataFetcher {
   
   @DgsQuery
   public List<ProjectContract> projectContracts(
-    @InputArgument Pagination pagination, @InputArgument ContractFilter filter){
-    
+    @InputArgument Pagination pagination,
+    @InputArgument ContractFilter filter
+  ) {
+    throw new UnsupportedOperationException();
   }
 }

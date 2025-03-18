@@ -17,7 +17,6 @@ public class ConstructionProjectContractEntityFetcher {
       new ConstructionProjectContractEntity();
     
     contract.setId(rs.getObject("id", UUID.class));
-    contract.setProjectId(rs.getObject("project_id", UUID.class));
     contract.setSiteId(rs.getObject("site_id", UUID.class));
     contract.setCustomerOrganizationId(rs.getObject(
       "customer_organization_id",
@@ -37,5 +36,7 @@ public class ConstructionProjectContractEntityFetcher {
     contract.setPlanEndDate(rs.getObject("plan_end_date", LocalDate.class));
     contract.setFactStartDate(rs.getObject("fact_start_date", LocalDate.class));
     contract.setFactEndDate(rs.getObject("fact_end_date", LocalDate.class));
+    
+    return contract;
   }
 }

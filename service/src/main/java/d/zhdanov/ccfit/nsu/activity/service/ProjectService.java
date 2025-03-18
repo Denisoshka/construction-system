@@ -110,7 +110,7 @@ public class ProjectService {
       .customerId(UUID.fromString(projectContractInput.getCustomerId()))
       .siteId(UUID.fromString(projectContractInput.getSiteId()))
       .type(projectContractInput.getObjectType())
-      .singingDate(projectContractInput.getSigningDate())
+      .signingDate(projectContractInput.getSigningDate())
       .planStartDate(projectContractInput.getPlanStartDate())
       .planEndDate(projectContractInput.getPlanEndDate())
       .build();

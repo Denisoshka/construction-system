@@ -16,15 +16,17 @@ import java.util.List;
   componentModel = MappingConstants.ComponentModel.SPRING, uses = EmployeeMapper.class
 )
 public interface EngineersMapper {
-  @Mapping(target = "employee", source = "employee")
+  //  @Mapping(target = "employee", source = "employee")
   EngineerInfo fromEngineerEntityWithAdditionalData(final EngineerEntity dto);
-//  Engineer
+  
+  //  Engineer
   List<EngineerInfo> fromEngineerEntityList(final List<EngineerEntity> dtoList);
   
   EngineerPosition fromEngineerPositionEntity(final EngineerPositionEntity entity);
   
   List<EngineerPosition> fromEngineerPositionEntityList(final List<EngineerPositionEntity> dtoList);
   
+  @Mapping(target = "id", ignore = true)
   void updateEngineerPositionEntity(
     @MappingTarget final EngineerPositionEntity entity,
     final EngineerPositionInput input

@@ -14,23 +14,19 @@ import java.util.List;
   componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface EmployeeMapper {
-  @Mapping(target = "positionId", ignore = true)
   EmployeeInfo toEmployeeInfo(final EmployeeEntity dto);
   
+  @Mapping(target = "id", ignore = true)
+  EmployeeInfo toEmployeeInfo(final EmployeeInput employee);
   //  List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeInfoDTO> employeesDTO);
+  
   List<EmployeeInfo> toEmployeeResponseListFromEmployeeInfoDTO(final List<EmployeeInfo> employeesInfoDTO);
   
   List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeEntity> employeesDTO);
   
-  EmployeeInfo toEmployeeInfoDTO(final EmployeeInput employee);
-  
-  @Mapping(target = "post", defaultValue = "UNKNOWN")
+  @Mapping(target = "id", ignore = true)
   EmployeeEntity toEmployeeEntity(final EmployeeInput employee);
   
-  @Mapping(target = "positionId", ignore = true)
-  EmployeeInfo toEmployeeInfoDTO(final EmployeeEntity employee);
-  
-  @Mapping(target = "positionId", ignore = true)
   EmployeeEntity toEmployeeEntity(final EmployeeInfo employee);
   
   void updateEmployeeEntity(
@@ -38,6 +34,7 @@ public interface EmployeeMapper {
     final EmployeeInfo info
   );
   
+  @Mapping(target = "id", ignore = true)
   void updateEmployeeEntity(
     final @MappingTarget EmployeeEntity employee,
     final EmployeeInput info

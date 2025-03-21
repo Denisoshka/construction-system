@@ -1,7 +1,5 @@
 scalar Date
 @specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
-  import: ["@key"])
 
 enum JobPost {
   UNKNOWN
@@ -19,7 +17,7 @@ interface Employee {
   employmentDate : Date!
 }
 
-type EmployeeInfo implements Employee @key(fields: "id") {
+type EmployeeInfo implements Employee {
   id: ID!
   systemId: String!
   name: String!
@@ -40,12 +38,12 @@ type WorkerInfo {
 }
 
 
-type EngineerPosition @key(fields: "id"){
+type EngineerPosition {
   id: Int!
   name : String!
 }
 
-type WorkerPosition @key(fields: "id"){
+type WorkerPosition {
   id: Int!
   name : String!
 }

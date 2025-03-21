@@ -14,7 +14,7 @@ public class EngineerRowMapper implements RowMapper<EngineerEntity> {
   @Override
   public EngineerEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
     UUID    employeeId = rs.getObject("employee_id", UUID.class);
-    Integer positionId = rs.getObject("position", Integer.class);
+    Integer positionId = rs.getObject("engineer_position_id", Integer.class);
     
     EmployeeEntity employee = EmployeeEntityFetcher.of(rs, employeeId);
     

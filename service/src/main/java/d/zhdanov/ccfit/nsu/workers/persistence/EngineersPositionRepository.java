@@ -17,8 +17,6 @@ public interface EngineersPositionRepository
           CrudRepository<EngineerPositionEntity, Integer> {
   Optional<EngineerPositionEntity> findByName(String name);
   
-  List<EngineerPositionEntity> findAll(Integer id);
-  
   @Modifying
   void deleteByName(String name);
   

@@ -2,12 +2,14 @@ spring:
   application:
     name: service
   datasource:
-    url: jdbc:postgresql://${CONSTRUCTION_SYSTEM_MS_SERVICE_DB_URL}
+    url: ${CONSTRUCTION_SYSTEM_MS_SERVICE_DB_URL}
     username: ${CONSTRUCTION_SYSTEM_POSTGRES_USER}
     password: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   graphql:
     graphiql:
       enabled: true
+
 logging:
   level:
     root: INFO

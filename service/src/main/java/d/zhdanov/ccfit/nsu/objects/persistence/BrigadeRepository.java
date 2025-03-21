@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface BrigadeRepository
   extends PagingAndSortingRepository<BrigadeEntity, UUID>,
-          CrudRepository<BrigadeEntity, UUID> {
-}
+          CrudRepository<BrigadeEntity, UUID> {}

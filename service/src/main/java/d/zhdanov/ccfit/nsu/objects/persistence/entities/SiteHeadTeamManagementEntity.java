@@ -10,7 +10,6 @@ import java.util.UUID;
 @Table("site_head_team_management_table")
 public class SiteHeadTeamManagementEntity {
   @Id
-  private UUID teamId;
-  @Id
   private UUID engineerId;
+  private UUID teamId;
 }

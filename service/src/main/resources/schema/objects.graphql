@@ -1,8 +1,4 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.3",
-  import: ["@key"])
-
-
-type ConstructionSite @key(fields: "id") {
+type ConstructionSite  {
   id: ID!
   name: String!
   address: String!

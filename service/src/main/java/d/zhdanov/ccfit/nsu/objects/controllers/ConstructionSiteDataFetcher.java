@@ -26,22 +26,6 @@ public class ConstructionSiteDataFetcher {
     return constructionSiteService.findConstructionSite(uuid);
   }
   
-  @DgsQuery
-  public List<ConstructionSite> constructionSites(
-    @InputArgument Pagination pagination
-  ) {
-    return constructionSiteService.findAllConstructionSites(pagination);
-  }
-  
-  @DgsMutation
-  @Transactional
-  public ConstructionSite createConstructionSite(
-    @InputArgument ConstructionSiteInput input
-  ) {
-    throw new UnsupportedOperationException();
-//    return constructionSiteService.createConstructionSite(input);
-  }
-  
   @DgsMutation
   public ConstructionSite updateConstructionSite(
     @InputArgument String id,
@@ -51,13 +35,6 @@ public class ConstructionSiteDataFetcher {
     throw new UnsupportedOperationException();
 //    final var uuid = UUID.fromString(id);
 //    return constructionSiteService.updateConstructionSite(uuid, input);
-  }
-  
-  @DgsMutation
-  public Boolean deleteConstructionSite(@InputArgument String id) {
-    throw new UnsupportedOperationException();
-//    final var uuid = UUID.fromString(id);
-//    return constructionSiteService.deleteConstructionSite(uuid);
   }
   
   @DgsData(

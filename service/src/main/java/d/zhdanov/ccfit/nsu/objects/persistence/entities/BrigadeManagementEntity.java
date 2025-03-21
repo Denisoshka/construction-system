@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @Table
 public class BrigadeManagementEntity {
-  @Id
   private UUID teamId;
   @Id
   private UUID workerId;

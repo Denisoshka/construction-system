@@ -8,7 +8,4 @@ pluginManagement {
   }
 }
 
-include(":gateway")
-include(":router")
-include(":report")
 include(":service")

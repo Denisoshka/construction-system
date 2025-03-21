@@ -20,11 +20,19 @@ public interface EmployeeMapper {
   EmployeeInfo toEmployeeInfo(final EmployeeInput employee);
   //  List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeInfoDTO> employeesDTO);
   
-  List<EmployeeInfo> toEmployeeResponseListFromEmployeeInfoDTO(final List<EmployeeInfo> employeesInfoDTO);
+  List<EmployeeInfo> toEmployeeResponseListFromEmployeeInfoDTO(
+    final List<EmployeeInfo> employeesInfoDTO
+  );
   
-  List<EmployeeInfo> toEmployeeResponseList(final List<EmployeeEntity> employeesDTO);
+  @Mapping(target = "employmentDate", ignore = true)
+  @Mapping(target = "post", ignore = true)
+  List<EmployeeInfo> toEmployeeResponseList(
+    final List<EmployeeEntity> employeesDTO
+  );
   
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "employmentDate", ignore = true)
+  @Mapping(target = "post", ignore = true)
   EmployeeEntity toEmployeeEntity(final EmployeeInput employee);
   
   EmployeeEntity toEmployeeEntity(final EmployeeInfo employee);

@@ -38,8 +38,9 @@ public interface EngineersRepository
   
   @Query(
     value = """
-            SELECT e.employee_id, e.employee_id,
-                   emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
+            SELECT e.employee_id, emp.system_id,
+                   emp.name, emp.surname,
+                   emp.patronymic, emp.employment_date, emp.post,
                    pos.id AS engineer_position_id, pos.name AS engineer_position_name
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
@@ -50,8 +51,10 @@ public interface EngineersRepository
   
   @Query(
     value = """
-            SELECT e.employee_id, e.employee_id,
-                   emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
+            SELECT e.employee_id, e.position_id,
+                   emp.id, emp.system_id,
+                   emp.name, emp.surname,
+                   emp.patronymic, emp.employment_date, emp.post,
                    pos.id AS engineer_position_id, pos.name AS engineer_position_name
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
@@ -68,8 +71,11 @@ public interface EngineersRepository
   @Query(
     value = """
                 SELECT e.employee_id, e.position_id,
-                       emp.id AS emp_id, emp.system_id, emp.name, emp.surname, emp.patronymic, emp.employment_date, emp.post,
-                       pos.id AS engineer_position_id, pos.name AS engineer_position_name
+                       emp.id, emp.system_id,
+                       emp.name, emp.surname,
+                       emp.patronymic, emp.employment_date, emp.post,
+                       pos.id AS engineer_position_id,
+                       pos.name AS engineer_position_name
                 FROM engineers e
                 JOIN employees emp ON e.employee_id = emp.id
                 LEFT JOIN engineer_position pos ON e.position_id = pos.id

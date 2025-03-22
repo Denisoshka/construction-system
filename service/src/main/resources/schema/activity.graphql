@@ -93,7 +93,7 @@ input BridgeProjectInput {
 
 type Material {
   id: ID!
-  manufacturer: ID!
+  manufacturerId: ID!
   name: String!
   cost: Int!
 }

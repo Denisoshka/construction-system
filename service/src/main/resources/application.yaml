@@ -16,5 +16,5 @@ logging:
     org.springframework.web: DEBUG
     d.zhdanov.ccfit.nsu: DEBUG
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n"

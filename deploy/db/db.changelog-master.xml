@@ -7,4 +7,5 @@
   <includeAll path="/DDL/001_objects/"/>
   <includeAll path="/DDL/002_activity/"/>
   <includeAll path="/DML/000_workers"/>
+  <includeAll path="/DML/002_activity"/>
 </databaseChangeLog>

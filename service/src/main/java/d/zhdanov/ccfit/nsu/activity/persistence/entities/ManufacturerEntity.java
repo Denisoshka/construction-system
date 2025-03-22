@@ -17,5 +17,5 @@ public class ManufacturerEntity {
   @Id
   private UUID   id;
   @NotNull
-  private String manufacturerId;
+  private String manufacturer;
 }

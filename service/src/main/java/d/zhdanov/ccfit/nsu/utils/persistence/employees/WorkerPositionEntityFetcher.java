@@ -13,7 +13,7 @@ public class WorkerPositionEntityFetcher {
   throws SQLException {
     return new WorkerPositionEntity(
       positionId,
-      rs.getString("worker_position_id")
+      rs.getString("worker_position_name")
     );
   }
 }

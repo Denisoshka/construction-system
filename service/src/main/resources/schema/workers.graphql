@@ -91,6 +91,12 @@ extend type Query {
     pagination: Pagination, employeeFilter: EmployeeFilter
   ): [EmployeeInfo!]!
 
+  worker(id :ID!) : WorkerInfo!
+  workers(pagination : Pagination, filter: WorkerFilter): [WorkerInfo!]!
+  workerPosition(id : Int!): WorkerPosition!
+  workerPositionByName(name: String!): EngineerPosition!
+  workersPositions(pagination : Pagination): [WorkerPosition!]!
+
   engineer(id: ID!): EngineerInfo!
   engineers(
     pagination: Pagination, engineerFilter: EngineerFilter
@@ -98,12 +104,6 @@ extend type Query {
   engineerPosition(id: Int!): EngineerPosition!
   engineerPositionByName(name: String!): EngineerPosition!
   engineersPositions(pagination: Pagination): [EngineerPosition!]!
-
-  worker(id :ID!) : WorkerInfo!
-  workers(pagination : Pagination, filter: WorkerFilter): [WorkerInfo!]!
-  workerPosition(id : Int!): WorkerPosition!
-  workerPositionByName(name: String!): EngineerPosition!
-  workersPositions(pagination : Pagination): [WorkerPosition!]!
 }
 
 type Mutation {

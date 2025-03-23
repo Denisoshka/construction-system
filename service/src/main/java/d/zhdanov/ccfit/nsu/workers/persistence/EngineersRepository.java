@@ -1,10 +1,8 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
-import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.ccfit.nsu.utils.persistence.employees.EngineerRowMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.EngineerEntity;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -41,7 +39,8 @@ public interface EngineersRepository
             SELECT e.employee_id, emp.system_id,
                    emp.name, emp.surname,
                    emp.patronymic, emp.employment_date, emp.post,
-                   pos.id AS engineer_position_id, pos.name AS engineer_position_name
+                   pos.id AS engineer_position_id,
+                   pos.name AS engineer_position_name
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
             LEFT JOIN engineer_position pos ON e.position_id = pos.id
@@ -51,21 +50,20 @@ public interface EngineersRepository
   
   @Query(
     value = """
-            SELECT e.employee_id, e.position_id,
-                   emp.id, emp.system_id,
+            SELECT e.employee_id, emp.system_id,
                    emp.name, emp.surname,
                    emp.patronymic, emp.employment_date, emp.post,
-                   pos.id AS engineer_position_id, pos.name AS engineer_position_name
+                   pos.id AS engineer_position_id,
+                   pos.name AS engineer_position_name
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
-            LEFT JOIN engineer_position pos ON e.employee_id = pos.id
-            WHERE (:#{#filter.position} IS NULL OR e.position_id = :#{#filter.position})
-            LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
+            LEFT JOIN engineer_position pos ON e.position_id = pos.id
+            LIMIT :limit OFFSET :offset
             """, rowMapperClass = EngineerRowMapper.class
   )
   List<EngineerEntity> findAllEngineersWithPositionEntity(
-    Pageable pageable,
-    Utils.EngineerRepositoryFilter filter
+    long offset,
+    int limit
   );
   
   @Query(

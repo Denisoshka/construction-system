@@ -66,6 +66,10 @@ public class Utils {
       }
       return new EngineerRepositoryFilter(engineerFilter.getPosId());
     }
+    
+    public Integer getPosition() {
+      return position;
+    }
   }
   
   @Data

@@ -37,12 +37,12 @@ public class EngineersDataFetcher {
     @InputArgument Pagination pagination,
     @InputArgument EngineerFilter engineerFilter
   ) {
-    return engineersService.findAll(pagination, engineerFilter);
+    return engineersService.findAllEngineers(pagination, engineerFilter);
   }
   
   @DgsQuery
   public EngineerInfo engineer(@InputArgument String id) {
-    return engineersService.getEngineer(UUID.fromString(id));
+    return engineersService.findEngineer(UUID.fromString(id));
   }
   
   @DgsQuery

@@ -45,13 +45,12 @@ public interface WorkersRepository
             FROM workers w
             JOIN employees emp ON w.employee_id = emp.id
             LEFT JOIN worker_position pos ON w.position_id = pos.id
-            WHERE (:#{#filter.position} IS NULL OR w.position_id = :#{#filter.position})
-            LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
+            LIMIT :limit OFFSET :offset
             """, rowMapperClass = WorkerRowMapper.class
   )
   List<WorkerEntity> findAllWorkersWithInfo(
-    Pageable pageable,
-    Utils.WorkerRepositoryFilter filter
+    long offset,
+    int limit
   );
   
   @Query(
@@ -95,6 +94,6 @@ public interface WorkersRepository
             """, rowMapperClass = WorkerRowMapper.class
   )
   List<WorkerEntity> findWorkersWithInfoByBrigadeId(
-    @Param("brigadeId") UUID brigadeId, Pageable pageable
+    @Param("brigadeId") UUID brigadeId, @Param("pageable") Pageable pageable
   );
 }

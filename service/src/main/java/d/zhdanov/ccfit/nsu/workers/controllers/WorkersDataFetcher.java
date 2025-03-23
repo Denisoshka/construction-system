@@ -6,6 +6,7 @@ import d.zhdanov.ccfit.nsu.workers.mapper.WorkersMapper;
 import d.zhdanov.ccfit.nsu.workers.service.WorkersService;
 import d.zhdanov.graphql.DgsConstants;
 import d.zhdanov.graphql.types.*;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Slf4j
+@DgsComponent
 public class WorkersDataFetcher {
   private final WorkersService workersService;
   
@@ -33,7 +36,7 @@ public class WorkersDataFetcher {
   
   @DgsQuery
   public WorkerInfo worker(@InputArgument String id) {
-    return workersService.getWorker(UUID.fromString(id));
+    return workersService.findWorker(UUID.fromString(id));
   }
   
   @DgsQuery
@@ -41,11 +44,13 @@ public class WorkersDataFetcher {
     @InputArgument Pagination pagination,
     @InputArgument WorkerFilter filter
   ) {
-    return workersService.getAllWorkers(pagination, filter);
+    return workersService.findAllWorkers(pagination, filter);
   }
   
   @DgsMutation
-  public WorkerPosition createWorkerPosition(final @InputArgument WorkerPositionInput input) {
+  public WorkerPosition createWorkerPosition(
+    final @InputArgument WorkerPositionInput input
+  ) {
     return workersService.createWorkerPosition(input);
   }
   

@@ -2,7 +2,6 @@ import React, {createContext, useContext, useState} from 'react';
 import {ReactKeycloakProvider} from '@react-keycloak/web';
 import {ApolloProvider} from '@apollo/client';
 import client from '../graphql/client.ts';
-import {useNavigate} from 'react-router-dom';
 import {keycloak} from "./Keycloak.ts";
 
 type AuthProviderProps = {
@@ -37,7 +36,6 @@ export const useAuth = () => {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const navigate = useNavigate();
 
   const updateUserInfo = () => {
     const roles = keycloak.tokenParsed?.realm_access?.roles || [];
@@ -56,14 +54,17 @@ const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     }
     if (event === 'onAuthLogout') {
       setUserInfo(null);
-      navigate('/');
     }
   };
-
   return (
     <ReactKeycloakProvider
       authClient={keycloak}
       onEvent={handleOnEvent}
+      initOptions={{
+        onLoad: 'check-sso', // Важно! Не 'login-required'
+        checkLoginIframe: false,
+        pkceMethod: 'S256'
+      }}
     >
       <ApolloProvider client={client}>
         <AuthContext.Provider value={{

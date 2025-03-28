@@ -98,6 +98,21 @@ public class ProjectService {
     );
   }
   
+  public Boolean deleteSchoolProjectContract(UUID id) {
+    schoolRepository.deleteById(id);
+    return true;
+  }
+  
+  public Boolean deleteBridgeProjectContract(UUID id) {
+    bridgeRepository.deleteById(id);
+    return true;
+  }
+  
+  public Boolean deleteApartmentHouseProjectContract(UUID id) {
+    apartmentHouseRepository.deleteById(id);
+    return true;
+  }
+  
   //  @Transactional
   public <T, R extends CrudRepository<T, UUID>> ProjectContractEntity saveProjectContract(
     final UUID projectId,

@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @Table("site_team_management")
 public class SiteTeamManagement {
-  private UUID teamId;
+  private UUID siteId;
   @Id
   private UUID engineerId;
 }

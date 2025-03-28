@@ -6,6 +6,7 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.activity.service.ContractService;
 import d.zhdanov.graphql.types.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -46,13 +47,5 @@ public class ContractDataFetcher {
     final var uuid = UUID.fromString(id);
     contractService.deleteCustomerOrganization(uuid);
     return true;
-  }
-  
-  @DgsQuery
-  public List<ProjectContract> projectContracts(
-    @InputArgument Pagination pagination,
-    @InputArgument ContractFilter filter
-  ) {
-    throw new UnsupportedOperationException();
   }
 }

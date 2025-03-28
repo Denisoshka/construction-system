@@ -68,6 +68,24 @@ public class ActivityDataFetcher {
     );
   }
   
+  @DgsMutation
+  Boolean deleteSchoolProjectContract(@InputArgument String id) {
+     final var uuid = UUID.fromString(id);
+     return projectService.deleteSchoolProjectContract(uuid);
+  }
+  
+  @DgsMutation
+  Boolean deleteApartmentHouseProjectContract(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return projectService.deleteApartmentHouseProjectContract(uuid);
+  }
+  
+  @DgsMutation
+  Boolean deleteBridgeProjectContract(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return projectService.deleteBridgeProjectContract(uuid);
+  }
+  
   @Transactional
   public <T> ProjectContract commonAddProjectContractAction(
     ProjectContractInput input,

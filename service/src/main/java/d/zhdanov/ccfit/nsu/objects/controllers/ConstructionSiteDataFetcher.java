@@ -26,17 +26,6 @@ public class ConstructionSiteDataFetcher {
     return constructionSiteService.findConstructionSite(uuid);
   }
   
-  @DgsMutation
-  public ConstructionSite updateConstructionSite(
-    @InputArgument String id,
-    @InputArgument
-    ConstructionSiteInput input
-  ) {
-    throw new UnsupportedOperationException();
-//    final var uuid = UUID.fromString(id);
-//    return constructionSiteService.updateConstructionSite(uuid, input);
-  }
-  
   @DgsData(
     parentType = DgsConstants.BRIGADE.TYPE_NAME, field = DgsConstants.BRIGADE.SiteInfo
   )

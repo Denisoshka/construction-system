@@ -6,8 +6,10 @@ import d.zhdanov.ccfit.nsu.activity.persistence.WorkScheduleRepository;
 import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.WorkScheduleUnit;
+import d.zhdanov.graphql.types.WorkScheduleUnitInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -56,5 +58,27 @@ public class WorkScheduleService {
       paged
     );
     return workScheduleMapper.toWorkScheduleUnitList(ret);
+  }
+  
+  @Transactional
+  public WorkScheduleUnit createWorkScheduleUnit(WorkScheduleUnitInput input) {
+    final var entity = workScheduleMapper.toWorkScheduleEntity(input);
+    workScheduleRepository.save(entity);
+    return workScheduleMapper.toWorkScheduleUnit(entity);
+  }
+  
+  @Transactional
+  public WorkScheduleUnit updateWorkScheduleUnit(
+    UUID id, WorkScheduleUnitInput input) {
+    final var entity = workScheduleMapper.toWorkScheduleEntity(input);
+    entity.setId(id);
+    workScheduleRepository.save(entity);
+    return workScheduleMapper.toWorkScheduleUnit(entity);
+  }
+  
+  @Transactional
+  public Boolean deleteWorkSchedule(UUID uuid) {
+    workScheduleRepository.deleteById(uuid);
+    return true;
   }
 }

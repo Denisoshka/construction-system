@@ -3,11 +3,13 @@ plugins {
   alias(libs.plugins.dgs.codegen)
   alias(libs.plugins.dependency.management)
 }
+
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(23)
   }
 }
+
 group = "d.zhdanov.ccfit.nsu"
 version = "unspecified"
 

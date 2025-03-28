@@ -1,11 +1,13 @@
 package d.zhdanov.ccfit.nsu.activity.controller;
 
 import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.activity.service.WorkScheduleService;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.WorkScheduleUnit;
+import d.zhdanov.graphql.types.WorkScheduleUnitInput;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -41,5 +43,25 @@ public class WorkScheduleDataFetcher {
   public WorkScheduleUnit workScheduleUnit(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return workScheduleService.findWorkScheduleById(uuid);
+  }
+  
+  @DgsMutation
+  public WorkScheduleUnit addWorkScheduleUnit(
+    @InputArgument WorkScheduleUnitInput input
+  ) {
+    return workScheduleService.createWorkScheduleUnit(input);
+  }
+  
+  @DgsMutation
+  public WorkScheduleUnit updateWorkScheduleUnit(
+    @InputArgument String id, @InputArgument WorkScheduleUnitInput input) {
+    final var uuid = UUID.fromString(id);
+    return workScheduleService.updateWorkScheduleUnit(uuid, input);
+  }
+  
+  @DgsMutation
+  public Boolean deleteWorkScheduleUnit(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return workScheduleService.deleteWorkSchedule(uuid);
   }
 }

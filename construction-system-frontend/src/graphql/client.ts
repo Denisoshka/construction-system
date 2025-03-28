@@ -1,30 +1,24 @@
-import {ApolloClient, createHttpLink, InMemoryCache} from "@apollo/client";
-import {setContext} from "@apollo/client/link/context";
-import keycloak from "../auth/keycloak";
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import keycloak from '../auth/keycloak';
 
 const httpLink = createHttpLink({
-  uri: "http://your-api-url/graphql",
+  uri: 'http://localhost:8080/graphql', // URL вашего GraphQL сервера
 });
 
-const authLink = setContext(async (_, {headers}) => {
-  if (keycloak.isTokenExpired(30)) {
-    try {
-      await keycloak.updateToken(30);
-    } catch (error) {
-      console.error("Failed to refresh token:", error);
-      await keycloak.login();
-    }
-  }
-
+const authLink = setContext((_, { headers }) => {
+  const token = keycloak.token;
   return {
     headers: {
       ...headers,
-      authorization: keycloak.token ? `Bearer ${keycloak.token}` : "",
-    },
+      authorization: token ? `Bearer ${token}` : "",
+    }
   };
 });
 
-export const client = new ApolloClient({
+const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 });
+
+export default client;

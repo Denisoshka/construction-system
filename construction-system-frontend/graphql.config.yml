@@ -1,0 +1,16 @@
+schema: './schema/*.graphql'
+extensions:
+  codegen:
+    generates:
+      ./src/generated/graphql.ts:
+        plugins:
+          - "typescript"
+          - "typescript-operations"
+        config:
+          scalars:
+            Date: Date
+          withHooks: true
+          withComponent: false
+          withHOC: false
+          enumsAsTypes: true
+          immutableTypes: true

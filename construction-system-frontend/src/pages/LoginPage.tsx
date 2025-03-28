@@ -1,33 +1,22 @@
 import React, { useEffect } from 'react';
-import keycloak from '../auth/keycloak';
-import { useNavigate } from 'react-router-dom';
+import {keycloak} from '../auth/Keycloak.ts';
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
-    const initKeycloak = async () => {
-      try {
-        const authenticated = await keycloak.init({
-          onLoad: 'login-required',
-          pkceMethod: 'S256'
-        });
+    // Если пользователь не авторизован - покажем форму логина
+    if (!keycloak.authenticated) {
+      void keycloak.login() // Это покажет стандартную форму Keycloak
+    }
+  }, []);
 
-        if (authenticated) {
-          navigate('/dashboard');
-        }
-      } catch (error) {
-        console.error('Keycloak initialization error:', error);
-      }
-    };
-
-    initKeycloak();
-  }, [navigate]);
+  const handleRegister = () => {
+    keycloak.register(); // Открывает форму регистрации
+  };
 
   return (
     <div className="login-container">
-      <h2>Redirecting to login page...</h2>
-      <p>Please wait while we redirect you to the authentication service.</p>
+      <h2>Перенаправление на страницу входа...</h2>
+      <button onClick={handleRegister}>Зарегистрироваться</button>
     </div>
   );
 };

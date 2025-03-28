@@ -1,17 +1,20 @@
 import React from 'react';
-import AuthProvider from './auth/AuthProvider';
-import AppRoutes from './Routes';
-import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from "./pages/Home.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import Unauthorized from "./pages/Unauthorized.tsx";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <div className="App">
-          <AppRoutes />
-        </div>
-      </AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/unauthorized" element={<Unauthorized/>}/>
+      </Routes>
     </BrowserRouter>
   );
 };

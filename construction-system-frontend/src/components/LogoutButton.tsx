@@ -1,6 +1,6 @@
 import React from 'react';
-import keycloak from '../auth/keycloak';
 import { useNavigate } from 'react-router-dom';
+import {keycloak} from "../auth/Keycloak.ts";
 
 const LogoutButton: React.FC = () => {
   const navigate = useNavigate();

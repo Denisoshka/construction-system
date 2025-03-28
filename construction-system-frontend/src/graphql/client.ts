@@ -1,9 +1,9 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import keycloak from '../auth/keycloak';
+import {keycloak} from '../auth/Keycloak.ts';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/graphql', // URL вашего GraphQL сервера
+  uri: 'http://localhost:8080/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

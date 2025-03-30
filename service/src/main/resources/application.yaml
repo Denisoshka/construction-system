@@ -1,20 +1,33 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: service
+
   datasource:
     url: ${CONSTRUCTION_SYSTEM_MS_SERVICE_DB_URL}
     username: ${CONSTRUCTION_SYSTEM_POSTGRES_USER}
     password: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   graphql:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
     graphiql:
       enabled: true
+
+management:
+  tracing:
+    enabled: true
 
 logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
     d.zhdanov.ccfit.nsu: DEBUG
+
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n"

@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 public class ControllerExceptionHandler {
   @GraphQlExceptionHandler
   public GraphQLError handle(EmployeeNotFoundException e) {
-    log.error("xyi {}", e.getMessage());
     return GraphQLError.newError().errorType(ErrorType.NOT_FOUND)
       .message("employee not found").build();
   }
   
-  /*@GraphQlExceptionHandler
+  @GraphQlExceptionHandler
   public GraphQLError handle(RuntimeException e) {
     log.error(e.getMessage());
     return GraphQLError.newError().errorType(ErrorType.INTERNAL).build();
-  }*/
+  }
 }

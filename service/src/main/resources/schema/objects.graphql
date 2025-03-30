@@ -32,7 +32,7 @@ input BrigadeInput {
 
 extend type Query {
   constructionSite(id : ID!): ConstructionSite!
-  constructionSitesBySiteManager(id: ID!) : ConstructionSite!
+  constructionSiteBySiteManager(id: ID!) : ConstructionSite!
   brigades(pagination : Pagination!): [Brigade!]!
   brigade(id: ID!): Brigade!
   brigadeByConstructionSite(id: ID!, pagination : Pagination!): [Brigade!]!

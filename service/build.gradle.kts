@@ -22,6 +22,7 @@ dependencies {
   implementation(libs.netflix.dgs)
   implementation(libs.spring.boot.jdbc)
   implementation(libs.mapstruct.impl)
+  implementation(libs.spring.boot.security)
 //  implementation(libs.caffeine)
   implementation(libs.spring.boot.actuator)
   compileOnly(libs.lombok)

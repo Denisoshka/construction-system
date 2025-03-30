@@ -1,0 +1,67 @@
+###
+
+# curl -v -H "Authorization: Bearer YOUR_TOKEN"
+#     -H "Content-Type: application/json"
+#     -X POST
+#     -d '{"query":"{ yourQuery }"}'
+#     http://localhost:8080/graphql
+POST http://localhost:8080/graphql
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJGRC1SenhMbnZTSmlZVktiN0N5LUlTOGVOX1ZLVHU4dnJXYWM2ZkFlaDVnIn0.eyJleHAiOjE3NDMzNjUxNDUsImlhdCI6MTc0MzM2NDg0NSwiYXV0aF90aW1lIjoxNzQzMzM1ODQ3LCJqdGkiOiJmZDkyZjliZC1mMjQyLTQ1NmYtYTVkYi1mOGU0OWQ1M2ZkODAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwOTAvcmVhbG1zL215cmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiOWUxMGRjODItNDk1Zi00Mjg5LTk0MWMtMzcxNDIxOTViZGU1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZnJvbnRlbmQiLCJzaWQiOiIwNGQ5Y2UyNS03ZDVjLTQ0ODgtOWU4Yy00ZWZiYzI4NWEwYTgiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXlyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRlbmlzIFpoZGFub3YiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkaW5pcy4wNEBnLm5zdSIsImdpdmVuX25hbWUiOiJEZW5pcyIsImZhbWlseV9uYW1lIjoiWmhkYW5vdiIsImVtYWlsIjoiZGluaXMuMDRAZy5uc3UifQ.AMk_OqR3ABqcikjKjMbM00zmroqrvBbno375zfsX_H2H0edTvTUB6dLXzSM4VBPUnB1da7lVfwWvsadfoIG-SQu_kg8lF6eoWVFhK_l5IlTp_fZffOULryhZLkWGHwowiArT1Ic4oZnCG3o6_XJ4lRrPmM8lr5iDSMEdAel2a2FtBnpsc7rjwrC7BPh2da6RgkVAc7ekqX9YIG0fjpala-Bn-LfwQOFqDusqiKdyaLtPZLEQLiHQMhieysg-gYL3AGRoV9dozk083uQOSrb5fV-ca_uZ62fivdF01cl2DBIaw4K6y8A_SDp0sdkCfyv3I5PB1tD-hH3Bcqh-8paMWw
+Content-Type: application/json
+
+###
+# curl -v -X OPTIONS http://localhost:8080/graphql
+#-H "Origin: http://localhost:5173"
+#-H "Access-Control-Request-Method: POST"
+#-H "Access-Control-Request-Headers: authorization, content-type"
+OPTIONS http://localhost:8080/graphql
+Origin: http://localhost:5173
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJGRC1SenhMbnZTSmlZVktiN0N5LUlTOGVOX1ZLVHU4dnJXYWM2ZkFlaDVnIn0.eyJleHAiOjE3NDMzNjc3OTAsImlhdCI6MTc0MzM2NzQ5MCwiYXV0aF90aW1lIjoxNzQzMzY1ODI2LCJqdGkiOiI3NmZkN2M4Yy1kZjZjLTRmOTItYWFiMC0yZDhkMWM3ODI5MDgiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwOTAvcmVhbG1zL215cmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiOWUxMGRjODItNDk1Zi00Mjg5LTk0MWMtMzcxNDIxOTViZGU1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZnJvbnRlbmQiLCJzaWQiOiIwNGQ5Y2UyNS03ZDVjLTQ0ODgtOWU4Yy00ZWZiYzI4NWEwYTgiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXlyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkRlbmlzIFpoZGFub3YiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkaW5pcy4wNEBnLm5zdSIsImdpdmVuX25hbWUiOiJEZW5pcyIsImZhbWlseV9uYW1lIjoiWmhkYW5vdiIsImVtYWlsIjoiZGluaXMuMDRAZy5uc3UifQ.SjZkzKAVVfxkfP7aBh4qUCEdDTS4gk8G8JN--vRCYZT8i_US7nHfbHiE48VaFy4zdzBR436ZfJF8p2j1soSedxG8BK1nYGDie8dvgrfPDzcnCUMPJgSbduz9TCBZVdItinMw5h24oj0r_gYswT0s_AIOpCtpNsVscNhN4bzagivBvDBvnN2M5NTsdnJ1-2lQHtMZy9vE2LCkZitwqi9Iri0dpPS7nVChn26Hizc0zEY40CIn6OEykFt0JWdOfT4RwP45XfWhx-UhawDee80HPWCQiyBUnuL6N0kQQWHjl3gd6GRYNabkhf_gLIIdp8Ph_FD1yhhMTVXUpZ3mJbnyTA
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: authorization, content-type
+
+###
+# curl -v -X OPTIONS http://localhost:8080/graphql
+#-H "Origin: http://localhost:5173"
+#-H "Access-Control-Request-Method: POST"
+#-H "Access-Control-Request-Headers: authorization, content-type"
+OPTIONS http://localhost:8080/graphql
+Origin: http://localhost:5173
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: authorization, content-type
+
+###
+# curl -X POST
+#  -H "Content-Type: application/json"
+#  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+#  -d '{
+#    "query": "query GetConstructionSiteByManager($id: ID!) { constructionSiteBySiteManager(id: $id) { id name address phone siteManager { employee { id name surname patronymic } positionInfo { id name } } } }",
+#    "variables": { "id": "74fa6010-781a-4a42-a610-f8a03d21bee6" }
+#  }'
+#  http://localhost:8080/graphql
+POST http://localhost:8080/graphql
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJGRC1SenhMbnZTSmlZVktiN0N5LUlTOGVOX1ZLVHU4dnJXYWM2ZkFlaDVnIn0.eyJleHAiOjE3NDMzNzM4MDEsImlhdCI6MTc0MzM3MzUwMSwiYXV0aF90aW1lIjoxNzQzMzcyMDAxLCJqdGkiOiI2YTQwN2VkYS0zZGJjLTRhYjYtYjhlOC01MDFjNDg5YzRjOTIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwOTAvcmVhbG1zL215cmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiOWUxMGRjODItNDk1Zi00Mjg5LTk0MWMtMzcxNDIxOTViZGU1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZnJvbnRlbmQiLCJzaWQiOiIyZjE0YmVhYi1jNjk5LTRmZDUtYThiMC05YzRmOTdiNWQzODciLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXlyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiZnJvbnRlbmQiOnsicm9sZXMiOlsiYWRtaW4iXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJEZW5pcyBaaGRhbm92IiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGluaXMuMDRAZy5uc3UiLCJnaXZlbl9uYW1lIjoiRGVuaXMiLCJmYW1pbHlfbmFtZSI6IlpoZGFub3YiLCJlbWFpbCI6ImRpbmlzLjA0QGcubnN1In0.R3NKa_eyiHkGgXmWZXNisLRLU9KzCISjhCvYJkKuksd69VQPdKsealJZP0qdqzOnn8ZzJccJFnCIrceL592jFvDE0cdUz6TBFaSCgisUtTKKhpQRX_yHqxXkqfctUq0a3C3Zo6pccQhHE9Co4Hk-_5SHANZBCVZl42T_FIzhJytc_RWmpzWGKG-GDW8w1-FIzzbdu5MZDXs7LG3HmuXmVuSm0FzH4LHmCNgToWbDguKE0i-qaG72eikAR0aKYKjDDHvq4KWTEvrPHQ1Is_3fu8hB6DehXk7mD0RYxH4gHaBJpR8OEeDuadTFC_6DzCPtEneRJdUk3DY-0kK9qas3ZQ
+Content-Type: application/json
+
+{
+  "query": "query GetConstructionSiteByManager($id: ID!) { constructionSiteBySiteManager(id: $id) { id name address phone siteManager { employee { id name surname patronymic } positionInfo { id name } } } }",
+  "variables": {
+    "id": "74fa6010-781a-4a42-a610-f8a03d21bee6"
+  }
+}
+
+###
+POST http://localhost:8081/graphql
+Content-Type: application/json
+
+{
+  "query": "query GetConstructionSiteByManager($id: ID!) { constructionSiteBySiteManager(id: $id) { id name address phone siteManager { employee { id name surname patronymic } positionInfo { id name } } } }",
+  "variables": {
+    "id": "74fa6010-781a-4a42-a610-f8a03d21bee6"
+  }
+}
+
+
+
+
+###

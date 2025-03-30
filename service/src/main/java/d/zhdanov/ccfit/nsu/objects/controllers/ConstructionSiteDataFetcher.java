@@ -2,6 +2,7 @@ package d.zhdanov.ccfit.nsu.objects.controllers;
 
 import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.objects.dto.BrigadeDTO;
+import d.zhdanov.ccfit.nsu.objects.dto.ConstructionSiteDTO;
 import d.zhdanov.ccfit.nsu.objects.service.ConstructionSiteService;
 import d.zhdanov.graphql.DgsConstants;
 import d.zhdanov.graphql.types.ConstructionSite;
@@ -21,9 +22,15 @@ public class ConstructionSiteDataFetcher {
   }
   
   @DgsQuery
-  public ConstructionSite constructionSite(@InputArgument String id) {
+  public ConstructionSiteDTO constructionSite(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return constructionSiteService.findConstructionSite(uuid);
+  }
+  
+  @DgsQuery
+  public ConstructionSiteDTO constructionSiteBySiteManager(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return constructionSiteService.findConstructionSiteBySiteManager(uuid);
   }
   
   @DgsData(

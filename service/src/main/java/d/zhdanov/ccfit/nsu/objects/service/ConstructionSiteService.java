@@ -1,5 +1,6 @@
 package d.zhdanov.ccfit.nsu.objects.service;
 
+import d.zhdanov.ccfit.nsu.objects.dto.ConstructionSiteDTO;
 import d.zhdanov.ccfit.nsu.objects.exceptions.ConstructionSiteAbsent;
 import d.zhdanov.ccfit.nsu.objects.exceptions.ConstructionSiteCreateException;
 import d.zhdanov.ccfit.nsu.objects.mappers.ConstructionObjectsMapper;
@@ -37,19 +38,27 @@ public class ConstructionSiteService {
     this.constructionSiteRepository    = constructionSiteRepository;
   }
   
-  public ConstructionSite findConstructionSite(UUID uuid) {
+  public ConstructionSiteDTO findConstructionSite(UUID uuid) {
     final var saved =
       constructionSiteRepository.findById(uuid).orElseThrow(
         ConstructionSiteAbsent::new);
-    return constructionObjectsMapper.toConstructionSite(saved);
+    return constructionObjectsMapper.toConstructionSiteDTO(saved);
   }
   
-  public List<ConstructionSite> findAllConstructionSites(
+  
+  public ConstructionSiteDTO findConstructionSiteBySiteManager(UUID uuid) {
+    final var saved =
+      constructionSiteRepository.findBySiteManagerId(uuid).orElseThrow(
+        ConstructionSiteAbsent::new);
+    return constructionObjectsMapper.toConstructionSiteDTO(saved);
+  }
+  
+  public List<ConstructionSiteDTO> findAllConstructionSites(
     final Pagination pagination
   ) {
     final var pageable = Utils.getPageable(pagination);
     final var sites    = constructionSiteRepository.findAll(pageable).toList();
-    return constructionObjectsMapper.toConstructionSiteList(sites);
+    return constructionObjectsMapper.toConstructionSiteDTOList(sites);
   }
   
   @Transactional
@@ -61,12 +70,12 @@ public class ConstructionSiteService {
   }
   
   @Transactional
-  public ConstructionSite createConstructionSite(ConstructionSiteInput input) {
+  public ConstructionSiteDTO createConstructionSite(ConstructionSiteInput input) {
     try {
       final var target = new ConstructionSiteEntity();
       constructionObjectsMapper.updateConstructionSiteEntity(target, input);
       final var ret = constructionSiteRepository.save(target);
-      return constructionObjectsMapper.toConstructionSite(ret);
+      return constructionObjectsMapper.toConstructionSiteDTO(ret);
     } catch(DataIntegrityViolationException e) {
       log.error("during construction site create", e);
       throw new ConstructionSiteCreateException(e.getMessage());
@@ -74,7 +83,7 @@ public class ConstructionSiteService {
   }
   
   @Transactional
-  public ConstructionSite updateConstructionSite(
+  public ConstructionSiteDTO updateConstructionSite(
     final UUID uuid,
     final ConstructionSiteInput input
   ) {
@@ -82,7 +91,7 @@ public class ConstructionSiteService {
       ConstructionSiteAbsent::new);
     constructionObjectsMapper.updateConstructionSiteEntity(saved, input);
     final var ret = constructionSiteRepository.save(saved);
-    return constructionObjectsMapper.toConstructionSite(ret);
+    return constructionObjectsMapper.toConstructionSiteDTO(ret);
   }
   
   @Transactional

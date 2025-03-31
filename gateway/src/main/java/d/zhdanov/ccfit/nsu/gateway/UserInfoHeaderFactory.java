@@ -22,7 +22,7 @@ import java.util.Map;
 public class UserInfoHeaderFactory
   extends AbstractGatewayFilterFactory<Object> {
   
-  public static final String USER_ID_HEADER    = "X-User-Id";
+  public static final String USER_ID_HEADER = "X-User-Id";
   public static final String USER_EMAIL_HEADER = "X-User-Email";
   public static final String USER_ROLES_HEADER = "X-User-Roles";
   
@@ -38,7 +38,8 @@ public class UserInfoHeaderFactory
     }
     resourceAccess = (Map<String, Object>) resourceAccess.get(FRONTEND_CLAIM);
     if(resourceAccess != null) {
-      return (List<String>) resourceAccess.getOrDefault(ROLE_CLAIM, Collections.emptyList());
+      return (List<String>) resourceAccess.getOrDefault(
+        ROLE_CLAIM, Collections.emptyList());
     }
     return Collections.emptyList();
   }

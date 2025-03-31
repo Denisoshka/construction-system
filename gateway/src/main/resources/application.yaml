@@ -3,10 +3,10 @@ server:
 
 logging:
   level:
-    root: INFO
+#    root: INFO
 #    d.zhdanov.ccfit.nsu: DEBUG
 #    org.springframework.web: DEBUG
-    org.springframework.web.cors: TRACE
+    org.springframework.web: TRACE
     org.springframework.security: TRACE
 #    reactor.netty.http.server: DEBUG
 #    org.springframework.cloud.gateway: DEBUG
@@ -18,10 +18,10 @@ logging:
 spring:
   application:
     name: gateway
-
   cloud:
     gateway:
       global cors:
+        add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
             allowedOrigins:
@@ -39,6 +39,7 @@ spring:
             exposedHeaders:
               - authorization
             allow-credentials: true
+
       routes:
         - id: api
           uri: http://localhost:8081

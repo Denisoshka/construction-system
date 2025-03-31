@@ -12,9 +12,6 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   graphql:
-    cors:
-      allowed-origins: "*"
-      allowed-methods: "*"
     graphiql:
       enabled: true
 

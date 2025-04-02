@@ -8,6 +8,7 @@ import d.zhdanov.graphql.DgsConstants;
 import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class EngineersDataFetcher {
     this.engineersService = engineersService;
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsEntityFetcher(name = DgsConstants.ENGINEERPOSITION.TYPE_NAME)
   public EngineerPosition fetchEngineerPosition(
     @NotNull final Map<String, Object> values
@@ -32,6 +34,7 @@ public class EngineersDataFetcher {
     return engineersService.engineerPosition(id);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsQuery
   public List<EngineerInfo> engineers(
     @InputArgument Pagination pagination,
@@ -40,11 +43,13 @@ public class EngineersDataFetcher {
     return engineersService.findAllEngineers(pagination, engineerFilter);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsQuery
   public EngineerInfo engineer(@InputArgument String id) {
     return engineersService.findEngineer(UUID.fromString(id));
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsQuery
   public List<EngineerPosition> engineersPositions(
     @InputArgument Pagination pagination
@@ -52,21 +57,25 @@ public class EngineersDataFetcher {
     return engineersService.engineersPositions(pagination);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsQuery
   public EngineerPosition engineerPositionByName(@InputArgument String name) {
     return engineersService.engineerPosition(name);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsQuery
   public EngineerPosition engineerPosition(@InputArgument Integer id) {
     return engineersService.engineerPosition(id);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @DgsMutation
   public EngineerPosition createEngineerPosition(final @InputArgument EngineerPositionInput input) {
     return engineersService.createEngineerPosition(input);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @DgsMutation
   public EngineerPosition updateEngineerPosition(
     @InputArgument Integer id,

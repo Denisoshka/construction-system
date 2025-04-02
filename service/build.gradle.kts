@@ -25,6 +25,7 @@ dependencies {
   implementation(libs.spring.boot.security)
 //  implementation(libs.caffeine)
   implementation(libs.spring.boot.actuator)
+  implementation(project(":utils"))
   compileOnly(libs.lombok)
   
   runtimeOnly(libs.postgresql)

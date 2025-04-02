@@ -7,6 +7,7 @@ import d.zhdanov.ccfit.nsu.objects.persistence.BrigadeRepository;
 import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,14 @@ public class BrigadeService {
     this.brigadeMapper     = brigadeMapper;
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public BrigadeDTO findBrigade(final UUID id) {
     final var ret =
       brigadeRepository.findById(id).orElseThrow(BrigadeAbsent::new);
     return brigadeMapper.toBrigadeDTO(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<BrigadeDTO> findAllBrigades(final Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = brigadeRepository.findAll(paged).toList();

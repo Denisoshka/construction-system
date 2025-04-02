@@ -48,7 +48,7 @@ public class EmployeeDataFetcher {
   
   @DgsMutation
   public EmployeeInfo createEmployee(final @InputArgument EmployeeInput input) {
-    return employeeService.create(input);
+    return employeeService.createEmployee(input);
   }
   
   @DgsMutation
@@ -57,7 +57,7 @@ public class EmployeeDataFetcher {
     final @InputArgument EmployeeInput input
   ) {
     final var uuid = UUID.fromString(id);
-    return employeeService.update(uuid, input);
+    return employeeService.updateEmployee(uuid, input);
   }
   
   @DgsMutation

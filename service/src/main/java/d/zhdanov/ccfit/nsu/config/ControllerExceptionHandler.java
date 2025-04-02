@@ -18,7 +18,7 @@ public class ControllerExceptionHandler {
   
   @GraphQlExceptionHandler
   public GraphQLError handle(RuntimeException e) {
-    log.error(e.getMessage());
+    log.error("unexpected error: {}", e.getMessage());
     return GraphQLError.newError().errorType(ErrorType.INTERNAL).build();
   }
 }

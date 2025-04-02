@@ -10,3 +10,4 @@ pluginManagement {
 
 include(":service")
 include(":gateway")
+include(":utils")

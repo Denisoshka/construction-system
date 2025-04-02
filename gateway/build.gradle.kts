@@ -26,6 +26,8 @@ dependencies {
   implementation("org.springframework.cloud:spring-cloud-starter-gateway")
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.projectlombok:lombok")
+  implementation(project(":utils"))
+  
   compileOnly("org.projectlombok:lombok")
   annotationProcessor("org.projectlombok:lombok")
 }

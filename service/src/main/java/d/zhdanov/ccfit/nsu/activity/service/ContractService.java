@@ -11,6 +11,7 @@ import d.zhdanov.graphql.types.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,18 +32,21 @@ public class ContractService {
     this.contractMapper                 = contractMapper;
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   public CustomerOrganization findCustomerOrganization(final UUID id) {
     final var ret = customerOrganizationRepository.findById(id).orElseThrow(
       CustomerOrganizationAbsent::new);
     return contractMapper.toCustomerOrganization(ret);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   public List<CustomerOrganization> findAllCustomerOrganizations(Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = customerOrganizationRepository.findAll(paged).toList();
     return contractMapper.toCustomerOrganizationList(ret);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public CustomerOrganization createCustomerOrganization(final CustomerOrganizationInput input) {
     try {
@@ -55,11 +59,13 @@ public class ContractService {
     }
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public void deleteCustomerOrganization(final UUID id) {
     customerOrganizationRepository.deleteById(id);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public CustomerOrganization updateCustomerOrganization(
     UUID uuid,

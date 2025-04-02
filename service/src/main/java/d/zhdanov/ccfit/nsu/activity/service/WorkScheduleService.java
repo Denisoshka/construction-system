@@ -8,6 +8,7 @@ import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.WorkScheduleUnit;
 import d.zhdanov.graphql.types.WorkScheduleUnitInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +28,14 @@ public class WorkScheduleService {
     this.workScheduleMapper     = workScheduleMapper;
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public WorkScheduleUnit findWorkScheduleById(final UUID id) {
     final var ret = workScheduleRepository.findById(id).orElseThrow(
       WorkScheduleUnitAbsent::new);
     return workScheduleMapper.toWorkScheduleUnit(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkScheduleUnit> findWorkScheduleByBrigade(
     final UUID brigadeId,
     final Pagination pagination
@@ -45,6 +48,7 @@ public class WorkScheduleService {
     return workScheduleMapper.toWorkScheduleUnitList(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkScheduleUnit> findWorkScheduleByProject(
     final UUID projectId,
     final Pagination pagination
@@ -60,6 +64,7 @@ public class WorkScheduleService {
     return workScheduleMapper.toWorkScheduleUnitList(ret);
   }
   
+  @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
   @Transactional
   public WorkScheduleUnit createWorkScheduleUnit(WorkScheduleUnitInput input) {
     final var entity = workScheduleMapper.toWorkScheduleEntity(input);
@@ -67,6 +72,7 @@ public class WorkScheduleService {
     return workScheduleMapper.toWorkScheduleUnit(entity);
   }
   
+  @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
   @Transactional
   public WorkScheduleUnit updateWorkScheduleUnit(
     UUID id, WorkScheduleUnitInput input) {
@@ -76,6 +82,7 @@ public class WorkScheduleService {
     return workScheduleMapper.toWorkScheduleUnit(entity);
   }
   
+  @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
   @Transactional
   public Boolean deleteWorkSchedule(UUID uuid) {
     workScheduleRepository.deleteById(uuid);

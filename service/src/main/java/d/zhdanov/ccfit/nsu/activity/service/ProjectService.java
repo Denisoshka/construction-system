@@ -14,6 +14,7 @@ import d.zhdanov.graphql.types.ProjectContractInput;
 import d.zhdanov.graphql.types.SchoolProjectInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,7 @@ public class ProjectService {
     this.bridgeRepository          = bridgeRepository;
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public ProjectContractEntity saveSchoolProjectContract(
     final UUID projectId,
@@ -58,6 +60,7 @@ public class ProjectService {
     );
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public ProjectContractEntity saveBridgeProjectContract(
     final UUID projectId,
@@ -79,6 +82,7 @@ public class ProjectService {
     );
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public ProjectContractEntity saveApartmentHouseProjectContract(
     final UUID projectId,
@@ -98,16 +102,19 @@ public class ProjectService {
     );
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   public Boolean deleteSchoolProjectContract(UUID id) {
     schoolRepository.deleteById(id);
     return true;
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   public Boolean deleteBridgeProjectContract(UUID id) {
     bridgeRepository.deleteById(id);
     return true;
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   public Boolean deleteApartmentHouseProjectContract(UUID id) {
     apartmentHouseRepository.deleteById(id);
     return true;

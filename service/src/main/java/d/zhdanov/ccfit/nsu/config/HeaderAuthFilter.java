@@ -1,11 +1,12 @@
 package d.zhdanov.ccfit.nsu.config;
 
+import d.zhdanov.ccfit.nsu.CustomHeaders;
+import d.zhdanov.ccfit.nsu.Roles;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,38 +20,39 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+@Component
 public class HeaderAuthFilter extends OncePerRequestFilter {
+  
+  @Override
+  protected void doFilterInternal(
+    HttpServletRequest request,
+    @NotNull HttpServletResponse response,
+    @NotNull FilterChain filterChain
+  ) throws ServletException, IOException {
+    final var userId      = request.getHeader(CustomHeaders.USER_ID_HEADER);
+    final var rolesHeader = request.getHeader(CustomHeaders.USER_ROLES_HEADER);
     
-    @Override
-    protected void doFilterInternal(
-      HttpServletRequest request,
-      @NotNull HttpServletResponse response,
-      @NotNull FilterChain filterChain
-    ) throws ServletException, IOException {
-        
-        // Извлекаем данные из заголовков
-        String userId = request.getHeader("X-User-Id");
-        String rolesHeader = request.getHeader("X-User-Roles");
-        
-        // Если заголовки есть - создаем аутентифицированный контекст
-        if (userId != null) {
-            List<GrantedAuthority> authorities = parseRoles(rolesHeader);
-            Authentication auth = new PreAuthenticatedAuthenticationToken(
-              userId,
-              null,
-              authorities
-            );
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        }
-        
-        filterChain.doFilter(request, response);
+    if(userId != null) {
+      List<GrantedAuthority> authorities = parseRoles(rolesHeader);
+      Authentication auth = new PreAuthenticatedAuthenticationToken(
+        userId, null, authorities
+      );
+      SecurityContextHolder.getContext().setAuthentication(auth);
     }
     
-    private List<GrantedAuthority> parseRoles(String rolesHeader) {
-        if (rolesHeader == null) return Collections.emptyList();
-        
-        return Arrays.stream(rolesHeader.split(","))
-          .map(role -> new SimpleGrantedAuthority("ROLE_" + role.trim().toUpperCase()))
-          .collect(Collectors.toList());
+    filterChain.doFilter(request, response);
+  }
+  
+  private List<GrantedAuthority> parseRoles(String rolesHeader) {
+    if(rolesHeader == null || rolesHeader.isEmpty()) {
+      return Collections.emptyList();
     }
+    
+    return Arrays.stream(rolesHeader.split(","))
+      .map(
+        role -> new SimpleGrantedAuthority(
+          Roles.ROLE_PREFIX + role.trim().toUpperCase()))
+      .collect(Collectors.toList());
+  }
 }

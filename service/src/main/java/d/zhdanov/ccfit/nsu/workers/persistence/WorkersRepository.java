@@ -1,6 +1,5 @@
 package d.zhdanov.ccfit.nsu.workers.persistence;
 
-import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.ccfit.nsu.utils.persistence.employees.WorkerRowMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerEntity;
 import org.springframework.dao.DataIntegrityViolationException;

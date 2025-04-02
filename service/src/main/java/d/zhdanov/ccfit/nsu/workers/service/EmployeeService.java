@@ -14,6 +14,7 @@ import d.zhdanov.graphql.types.EmployeeInput;
 import d.zhdanov.graphql.types.Pagination;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,12 +39,14 @@ public class EmployeeService {
     this.employeeMapper     = employeeMapper;
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public EmployeeInfo getEmployee(@NotNull final UUID id) {
     final var ret = employeeRepository.findById(id).orElseThrow(
       EmployeeNotFoundException::new);
     return employeeMapper.toEmployeeInfo(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<EmployeeEntity> getAllEmployees(
     final Pagination pagination,
     final EmployeeFilter employeeFilter
@@ -57,8 +60,9 @@ public class EmployeeService {
     return employeeRepository.findAll(paged).toList();
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
-  public EmployeeInfo create(final @NotNull EmployeeInput input) {
+  public EmployeeInfo createEmployee(final @NotNull EmployeeInput input) {
     final var cur = employeeRepository.findBySystemId(input.getSystemId());
     if(cur.isPresent()) {
       throw new EmployeeAlreadyExistsException();
@@ -70,8 +74,9 @@ public class EmployeeService {
     return employeeMapper.toEmployeeInfo(ret);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
-  public EmployeeInfo update(
+  public EmployeeInfo updateEmployee(
     final UUID id,
     final @NotNull EmployeeInput input
   ) {

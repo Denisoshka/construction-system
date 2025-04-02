@@ -8,6 +8,7 @@ import d.zhdanov.ccfit.nsu.objects.service.BrigadeService;
 import d.zhdanov.ccfit.nsu.workers.service.WorkersService;
 import d.zhdanov.graphql.types.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,14 +16,11 @@ import java.util.UUID;
 @DgsComponent
 public class BrigadeDataFetcher {
   private final BrigadeService brigadeService;
-  private final WorkersService workersService;
   
   public BrigadeDataFetcher(
-    @Autowired BrigadeService brigadeService,
-    @Autowired WorkersService workersService
+    @Autowired BrigadeService brigadeService
   ) {
     this.brigadeService = brigadeService;
-    this.workersService = workersService;
   }
   
   @DgsQuery

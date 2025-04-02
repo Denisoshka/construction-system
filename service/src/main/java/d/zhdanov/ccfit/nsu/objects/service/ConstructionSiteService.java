@@ -9,12 +9,12 @@ import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionSiteRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
 import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionSiteEntity;
 import d.zhdanov.ccfit.nsu.utils.Utils;
-import d.zhdanov.graphql.types.ConstructionSite;
 import d.zhdanov.graphql.types.ConstructionSiteInput;
 import d.zhdanov.graphql.types.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +45,7 @@ public class ConstructionSiteService {
     return constructionObjectsMapper.toConstructionSiteDTO(saved);
   }
   
-  
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public ConstructionSiteDTO findConstructionSiteBySiteManager(UUID uuid) {
     final var saved =
       constructionSiteRepository.findBySiteManagerId(uuid).orElseThrow(
@@ -53,6 +53,7 @@ public class ConstructionSiteService {
     return constructionObjectsMapper.toConstructionSiteDTO(saved);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<ConstructionSiteDTO> findAllConstructionSites(
     final Pagination pagination
   ) {
@@ -63,40 +64,10 @@ public class ConstructionSiteService {
   
   @Transactional
   public ConstructionProjectEntity prepareNewProjectForSite(final UUID siteId) {
+//    todo
     return constructionProjectRepository.save(new ConstructionProjectEntity(
       null,
       siteId
     ));
-  }
-  
-  @Transactional
-  public ConstructionSiteDTO createConstructionSite(ConstructionSiteInput input) {
-    try {
-      final var target = new ConstructionSiteEntity();
-      constructionObjectsMapper.updateConstructionSiteEntity(target, input);
-      final var ret = constructionSiteRepository.save(target);
-      return constructionObjectsMapper.toConstructionSiteDTO(ret);
-    } catch(DataIntegrityViolationException e) {
-      log.error("during construction site create", e);
-      throw new ConstructionSiteCreateException(e.getMessage());
-    }
-  }
-  
-  @Transactional
-  public ConstructionSiteDTO updateConstructionSite(
-    final UUID uuid,
-    final ConstructionSiteInput input
-  ) {
-    final var saved = constructionSiteRepository.findById(uuid).orElseThrow(
-      ConstructionSiteAbsent::new);
-    constructionObjectsMapper.updateConstructionSiteEntity(saved, input);
-    final var ret = constructionSiteRepository.save(saved);
-    return constructionObjectsMapper.toConstructionSiteDTO(ret);
-  }
-  
-  @Transactional
-  public Boolean deleteConstructionSite(UUID uuid) {
-    constructionSiteRepository.deleteById(uuid);
-    return true;
   }
 }

@@ -4,6 +4,7 @@ import d.zhdanov.ccfit.nsu.CustomHeaders;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
@@ -27,7 +28,7 @@ public class UserInfoHeaderFactory
       return Collections.emptyList();
     }
     resourceAccess = (Map<String, Object>) resourceAccess.get(
-      CustomHeaders.FRONTEND_CLAIM
+      CustomHeaders.CONSTRUCTION_SYSTEM_CLAIM
     );
     if(resourceAccess != null) {
       return (List<String>) resourceAccess.getOrDefault(
@@ -45,6 +46,7 @@ public class UserInfoHeaderFactory
         final var jwt      = auth.getToken();
         final var usrRoles = String.join(",", getFrontendResourceClaims(jwt));
         ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
+          .headers(httpHeaders -> httpHeaders.remove(HttpHeaders.AUTHORIZATION))
           .header(CustomHeaders.USER_ID_HEADER, jwt.getSubject())
           .header(CustomHeaders.USER_ROLES_HEADER, usrRoles)
           .header(

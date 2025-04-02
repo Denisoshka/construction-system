@@ -36,14 +36,14 @@ public class MaterialService {
     this.materialMapper          = materialMapper;
   }
   
-  @PreAuthorize("hasAnyAuthority('EMPLOYEE')")
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<Material> findAllMaterialTypes(final Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = materialTypeRepository.findAll(paged).toList();
     return materialMapper.fromMaterialTypeEntityList(ret);
   }
   
-  @PreAuthorize("hasAnyAuthority('EMPLOYEE')")
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public Material findMaterialType(final UUID id) {
     final var ret = materialTypeRepository.findById(id).orElseThrow(
       MaterialTypeAbsent::new);
@@ -71,14 +71,14 @@ public class MaterialService {
     return materialMapper.fromManufacturerEntity(ret);
   }
   
-  @PreAuthorize("hasAnyAuthority('EMPLOYEE')")
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<Manufacturer> findAllManufacturers(final Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = manufacturerRepository.findAll(paged).toList();
     return materialMapper.fromManufacturerEntityList(ret);
   }
   
-  @PreAuthorize("hasAnyAuthority('MANAGER')")
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public Manufacturer createManufacturer(ManufacturerInput input) {
     final var entity = materialMapper.toManufacturerEntity(input);
@@ -86,13 +86,13 @@ public class MaterialService {
     return materialMapper.fromManufacturerEntity(ret);
   }
   
-  @PreAuthorize("hasAnyAuthority('MANAGER')")
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public void deleteManufacturer(final UUID id) {
     manufacturerRepository.deleteById(id);
   }
   
-  @PreAuthorize("hasAnyAuthority('EMPLOYEE')")
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<MaterialUsage> findAllMaterialUsageByScheduleUnit(
     final UUID workUnitId,
     final Pagination pagination

@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class HeaderAuthFilter extends OncePerRequestFilter {
   
@@ -38,7 +40,9 @@ public class HeaderAuthFilter extends OncePerRequestFilter {
       Authentication auth = new PreAuthenticatedAuthenticationToken(
         userId, null, authorities
       );
-      SecurityContextHolder.getContext().setAuthentication(auth);
+      log.debug("user id: {} roles: {}", userId, authorities);
+      final var context = SecurityContextHolder.getContext();
+      context.setAuthentication(auth);
     }
     
     filterChain.doFilter(request, response);

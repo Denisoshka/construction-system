@@ -65,7 +65,7 @@ services:
     networks:
       - dev-net
     depends_on:
-      - postgres
+      - keycloak-db
 
   keycloak-db:
     image: postgres:16

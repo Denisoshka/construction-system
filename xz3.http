@@ -1,0 +1,33 @@
+### GET request to example server
+OPTIONS http://localhost:8080/graphql
+#Origin: http://localhost:5173
+#Access-Control-Request-Method: POST
+#Access-Control-Request-Headers: authorization,content-type
+###
+OPTIONS /graphql HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: ru,en;q=0.9
+Access-Control-Request-Headers: authorization,content-type
+Access-Control-Request-Method: POST
+Connection: keep-alive
+Host: localhost:8080
+Origin: http://localhost:5173
+Referer: http://localhost:5173/
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-site
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 YaBrowser/24.7.0.0 Safari/537.36
+
+###
+POST /graphql HTTP/1.1
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: ru,en;q=0.9
+Content-Length: 504
+Host: localhost:8080
+Origin: http://localhost:5173
+Referer: http://localhost:5173/
+accept: */*
+authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJGRC1SenhMbnZTSmlZVktiN0N5LUlTOGVOX1ZLVHU4dnJXYWM2ZkFlaDVnIn0.eyJleHAiOjE3NDM0MzMxOTYsImlhdCI6MTc0MzQzMjg5NiwiYXV0aF90aW1lIjoxNzQzNDA5MDIyLCJqdGkiOiIzMWNlOWFmOC0xZWFmLTQ3ODUtOWYwYi01NmYzZDNkMzMzMWIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwOTAvcmVhbG1zL215cmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiOWUxMGRjODItNDk1Zi00Mjg5LTk0MWMtMzcxNDIxOTViZGU1IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZnJvbnRlbmQiLCJzaWQiOiIwNDYyOThhNy0wNTBiLTQ1YjAtYTY3My02YjYwYWJkZWExOGYiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXlyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiZnJvbnRlbmQiOnsicm9sZXMiOlsiYWRtaW4iXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJEZW5pcyBaaGRhbm92IiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZGluaXMuMDRAZy5uc3UiLCJnaXZlbl9uYW1lIjoiRGVuaXMiLCJmYW1pbHlfbmFtZSI6IlpoZGFub3YiLCJlbWFpbCI6ImRpbmlzLjA0QGcubnN1In0.fUTzzqztrDnO2T4mzp9jct6VAENoaA_ERqCo1526NcvBnKtBxKl5ghns2Olq9scrs-ngaG0IWDYrNtZrMtek5TQYKsme1_oStsPYWeE1P9NMCDCrRjPjyElM_qk3QlZ98Ua1LgTJ-FCq5ZJwim1z6KgHVP0Iru0Bb9IlWU_Y86a6GHUslVbQAYsGlmLM_Y0tDt5WLvWX_hnyy9x0eacXEissWhgLB4UBe8mo3WAwhYXt_p8AgPB0x5QSaCmlJD74aPhd11ohMnyglasL6pn1_8tAOXRQK-d_D7rtLaQvqBFfnzkQ-oRT2tmM89-gQ377o3Vz1FLXnoxBmLSjgHc9tg
+content-type: application/json
+###

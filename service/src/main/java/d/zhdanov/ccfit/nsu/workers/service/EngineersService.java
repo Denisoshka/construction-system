@@ -13,6 +13,7 @@ import d.zhdanov.graphql.types.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,7 @@ public class EngineersService {
     this.engineersMapper             = engineersMapper;
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<EngineerPosition> engineersPositions(Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = engineersPositionRepository.findAll(paged).toList();
@@ -44,12 +46,14 @@ public class EngineersService {
   /**
    * @throws EngineerPositionNotFoundException
    */
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public EngineerPosition engineerPosition(final Integer id) {
     final var ret = engineersPositionRepository.findById(id)
       .orElseThrow(EngineerPositionNotFoundException::new);
     return engineersMapper.fromEngineerPositionEntity(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public EngineerPosition engineerPosition(final String name) {
     final var ret = engineersPositionRepository.findByName(name)
       .orElseThrow(EngineerPositionNotFoundException::new);
@@ -60,6 +64,7 @@ public class EngineersService {
     return engineersRepository.findById(id).orElseThrow();
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public EngineerPosition updateEngineerPosition(
     final Integer id,
@@ -72,11 +77,13 @@ public class EngineersService {
     return engineersMapper.fromEngineerPositionEntity(ret);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public void deleteEngineerPosition(final int id) {
     engineersPositionRepository.deleteById(id);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public @NotNull EngineerPosition createEngineerPosition(
     final @NotNull EngineerPositionInput engineerPosition
@@ -90,12 +97,14 @@ public class EngineersService {
     }
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public EngineerInfo findEngineer(final UUID id) {
     final var ret = engineersRepository.findEngineerWithPositionEntity(id)
       .orElseThrow(EmployeeNotFoundException::new);
     return engineersMapper.fromEngineerEntityWithAdditionalData(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<EngineerInfo> findAllEngineers(
     Pagination pagination,
     EngineerFilter engineerFilter

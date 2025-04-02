@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ public class WorkersService {
     this.workersMapper             = workersMapper;
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public @NotNull WorkerPosition createWorkerPosition(
     final @NotNull WorkerPositionInput workerPosition
@@ -50,6 +52,7 @@ public class WorkersService {
     }
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public WorkerPosition updateWorkerPosition(
     final Integer id,
@@ -62,6 +65,7 @@ public class WorkersService {
     return workersMapper.fromWorkerPositionEntity(ret);
   }
   
+  @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public void deleteWorkerPosition(final int id) {
     workersPositionRepository.deleteById(id);
@@ -73,16 +77,19 @@ public class WorkersService {
     return workersMapper.fromWorkerPositionEntity(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public WorkerPosition workerPosition(final String name) {
     final var ret = workersPositionRepository.findByName(name)
       .orElseThrow(WorkerPositionNotFoundException::new);
     return workersMapper.fromWorkerPositionEntity(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public WorkerEntity workerEmployeePosition(final UUID id) {
     return workersRepository.findById(id).orElseThrow();
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkerInfo> findAllWorkers(
     Pagination pagination,
     WorkerFilter workerFilter
@@ -96,18 +103,21 @@ public class WorkersService {
     return workersMapper.toWorkersInfo(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public WorkerInfo findWorker(UUID uuid) {
     final var ret = workersRepository.findWorkerWithInfo(uuid)
       .orElseThrow(EmployeeNotFoundException::new);
     return workersMapper.fromWorkerEntityWithAdditionalData(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkerPosition> workersPositions(Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = workersPositionRepository.findAll(paged).toList();
     return workersMapper.fromWorkerPositionEntityList(ret);
   }
   
+  @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkerInfo> findAllWorkersInBrigade(
     final UUID brigadeId,
     final Pagination pagination

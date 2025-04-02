@@ -23,7 +23,8 @@ logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
-    d.zhdanov.ccfit.nsu: DEBUG
+    org.springframework.security: TRACE
+    d.zhdanov.ccfit.nsu.config.HeaderAuthFilter: DEBUG
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n"

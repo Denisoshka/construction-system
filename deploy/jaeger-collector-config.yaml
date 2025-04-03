@@ -1,0 +1,12 @@
+# Конфигурация Jaeger Collector
+collector:
+  otlp:
+    enabled: true
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+  zipkin:
+    enabled: false
+  health-check-http-port: 14269

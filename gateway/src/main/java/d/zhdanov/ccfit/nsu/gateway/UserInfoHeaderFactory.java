@@ -20,6 +20,9 @@ import java.util.Map;
 @Component
 public class UserInfoHeaderFactory
   extends AbstractGatewayFilterFactory<Object> {
+  public UserInfoHeaderFactory() {
+    log.error("xyi");
+  }
   
   public static List<String> getFrontendResourceClaims(Jwt jwt) {
     Map<String, Object> resourceAccess =

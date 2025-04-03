@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
   java
   id("org.springframework.boot") version "3.4.3"
@@ -22,9 +24,20 @@ extra["springCloudVersion"] = "2024.0.0"
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-  implementation("io.micrometer:micrometer-tracing-bridge-brave")
   implementation("org.springframework.cloud:spring-cloud-starter-gateway")
   implementation("org.springframework.boot:spring-boot-starter-security")
+  
+//  implementation("io.micrometer:micrometer-tracing")
+//  implementation("io.micrometer:micrometer-tracing-bridge-otel")
+//  implementation("io.opentelemetry:opentelemetry-exporter-otlp")
+//  implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
+//  implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
+//  implementation(platform(SpringBootPlugin.BOM_COORDINATES))
+//  implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.14.0"))
+
+//  implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.14.0")
+//  implementation(platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.14.0"))
+
   implementation("org.projectlombok:lombok")
   implementation(project(":utils"))
   
@@ -34,6 +47,7 @@ dependencies {
 
 dependencyManagement {
   imports {
+    mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.14.0")
     mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
   }
 }

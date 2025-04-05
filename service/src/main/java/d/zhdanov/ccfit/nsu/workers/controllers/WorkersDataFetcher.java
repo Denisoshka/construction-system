@@ -106,15 +106,4 @@ public class WorkersDataFetcher {
     final var uuid = UUID.fromString(id);
     return workersService.findAllWorkersInBrigade(uuid, pagination);
   }
-  
-  @DgsQuery
-  public List<BrigadeDTO> brigadesByConstructionSite(
-    @InputArgument String id,
-    @InputArgument Pagination pagination
-  ) {
-    final var uuid = UUID.fromString(id);
-    
-  }
-  
-  
 }

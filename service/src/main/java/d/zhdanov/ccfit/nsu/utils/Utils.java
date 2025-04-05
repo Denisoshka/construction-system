@@ -5,6 +5,7 @@ import d.zhdanov.graphql.types.EmployeeFilter;
 import d.zhdanov.graphql.types.EngineerFilter;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.WorkerFilter;
+import graphql.com.google.common.base.Preconditions;
 import lombok.Data;
 import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
@@ -17,9 +18,7 @@ public class Utils {
   
   @NotNull
   public static Pageable getPageable(Pagination pagination) {
-    if(pagination == null) {
-      return Pageable.unpaged();
-    }
+    Preconditions.checkNotNull(pagination, "pagination cannot be null");
     return PageRequest.of(pagination.getPage(), pagination.getPageSize());
   }
   

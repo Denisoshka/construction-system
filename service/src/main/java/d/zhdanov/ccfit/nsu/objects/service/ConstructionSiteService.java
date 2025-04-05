@@ -62,6 +62,4 @@ public class ConstructionSiteService {
     final var ret   = constructionSiteRepository.findAll(paged).toList();
     return constructionObjectsMapper.toConstructionSiteDTOList(ret);
   }
-  
-  public ConstructionProjectContractEntity
 }

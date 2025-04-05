@@ -1,11 +1,7 @@
 package d.zhdanov.ccfit.nsu.activity.mapper;
 
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.CustomerOrganisationEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
-import d.zhdanov.graphql.types.CustomerOrganization;
-import d.zhdanov.graphql.types.CustomerOrganizationInput;
-import d.zhdanov.graphql.types.ProjectContract;
-import d.zhdanov.graphql.types.ProjectContractInput;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.*;
+import d.zhdanov.graphql.types.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -17,20 +13,38 @@ import java.util.List;
   componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface ContractMapper {
-  ProjectContractEntity toProjectContractDTO(final ProjectContractInput input);
+  @Mapping(target = "id", ignore = true)
+  ProjectContractEntity toProjectContractEntity(
+    final ProjectContractInput input
+  );
   
   ProjectContract toProjectContract(final ProjectContractEntity entity);
   
-  CustomerOrganization toCustomerOrganization(final CustomerOrganisationEntity entity);
+  CustomerOrganization toCustomerOrganization(
+    final CustomerOrganisationEntity entity
+  );
   
-  List<CustomerOrganization> toCustomerOrganizationList(final List<CustomerOrganisationEntity> entityList);
+  List<CustomerOrganization> toCustomerOrganizationList(
+    final List<CustomerOrganisationEntity> entityList
+  );
   
   @Mapping(target = "id", ignore = true)
-  CustomerOrganisationEntity toCustomerOrganisationEntity(final CustomerOrganizationInput input);
+  CustomerOrganisationEntity toCustomerOrganisationEntity(
+    final CustomerOrganizationInput input
+  );
   
   @Mapping(target = "id", ignore = true)
   void updateCustomerOrganisation(
     @MappingTarget final CustomerOrganisationEntity entity,
     final CustomerOrganizationInput input
   );
+  
+  @Mapping(target = "projectId", ignore = true)
+  SchoolEntity toSchoolEntity(SchoolProjectInput schoolInput);
+  
+  @Mapping(target = "projectId", ignore = true)
+  BridgeEntity toBridgeEntity(BridgeProjectInput bridgeInput);
+  
+  @Mapping(target = "projectId", ignore = true)
+  ApartmentHouseEntity toApartmentHouseEntity(ApartmentHouseProjectInput bridgeInput);
 }

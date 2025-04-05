@@ -43,7 +43,7 @@ public interface EngineersRepository
                    pos.name AS engineer_position_name
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
-            LEFT JOIN engineer_position pos ON e.position_id = pos.id
+            JOIN engineer_position pos ON e.position_id = pos.id
             """, rowMapperClass = EngineerRowMapper.class
   )
   List<EngineerEntity> findAllEngineersWithPositionEntity();
@@ -57,13 +57,32 @@ public interface EngineersRepository
                    pos.name AS engineer_position_name
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
-            LEFT JOIN engineer_position pos ON e.position_id = pos.id
+            JOIN engineer_position pos ON e.position_id = pos.id
             LIMIT :limit OFFSET :offset
             """, rowMapperClass = EngineerRowMapper.class
   )
   List<EngineerEntity> findAllEngineersWithPositionEntity(
     long offset,
     int limit
+  );
+  
+  @Query(
+    value = """
+            SELECT e.employee_id, emp.system_id,
+                   emp.name, emp.surname,
+                   emp.patronymic, emp.employment_date, emp.post,
+                   pos.id AS engineer_position_id,
+                   pos.name AS engineer_position_name
+            FROM engineers e
+            JOIN employees emp ON e.employee_id = emp.id
+            JOIN engineer_position pos ON e.position_id = pos.id
+            JOIN site_team_management stm ON e.employee_id = stm.engineerid
+            WHERE stm.siteid = :siteId
+            LIMIT :limit OFFSET :offset
+            """, rowMapperClass = EngineerRowMapper.class
+  )
+  List<EngineerEntity> findAllEngineersBySiteWithPositionEntity(
+    UUID siteId, long offset, int limit
   );
   
   @Query(

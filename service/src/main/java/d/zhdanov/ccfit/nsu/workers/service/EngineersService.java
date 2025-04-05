@@ -119,4 +119,17 @@ public class EngineersService {
       );
     return engineersMapper.fromEngineerEntityList(ret);
   }
+  
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<EngineerInfo> findAllEngineersByConstructionSite(
+    final UUID siteId, final Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    
+    final var ret =
+      engineersRepository.findAllEngineersBySiteWithPositionEntity(
+        siteId, paged.getOffset(), paged.getPageSize()
+      );
+    return engineersMapper.fromEngineerEntityList(ret);
+  }
 }

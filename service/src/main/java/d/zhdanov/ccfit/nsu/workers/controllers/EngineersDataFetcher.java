@@ -43,13 +43,21 @@ public class EngineersDataFetcher {
     return engineersService.findAllEngineers(pagination, engineerFilter);
   }
   
-  @PreAuthorize("hasRole('EMPLOYEE')")
   @DgsQuery
   public EngineerInfo engineer(@InputArgument String id) {
     return engineersService.findEngineer(UUID.fromString(id));
   }
   
-  @PreAuthorize("hasRole('EMPLOYEE')")
+  @DgsQuery
+  public List<EngineerInfo> engineersByConstructionSite(
+    @InputArgument String id, @InputArgument Pagination pagination
+  ) {
+    final var uuid = UUID.fromString(id);
+    return engineersService.findAllEngineersByConstructionSite(
+      uuid, pagination
+    );
+  }
+  
   @DgsQuery
   public List<EngineerPosition> engineersPositions(
     @InputArgument Pagination pagination
@@ -71,7 +79,9 @@ public class EngineersDataFetcher {
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
   @DgsMutation
-  public EngineerPosition createEngineerPosition(final @InputArgument EngineerPositionInput input) {
+  public EngineerPosition createEngineerPosition(
+    final @InputArgument EngineerPositionInput input
+  ) {
     return engineersService.createEngineerPosition(input);
   }
   

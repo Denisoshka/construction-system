@@ -1,19 +1,12 @@
 package d.zhdanov.ccfit.nsu.activity.service;
 
+import d.zhdanov.ccfit.nsu.activity.mapper.ContractMapper;
 import d.zhdanov.ccfit.nsu.activity.persistence.ApartmentHouseRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.BridgeRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.ProjectContractRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.SchoolRepository;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.ApartmentHouseEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.BridgeEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.SchoolEntity;
-import d.zhdanov.graphql.types.ApartmentHouseProjectInput;
-import d.zhdanov.graphql.types.BridgeProjectInput;
-import d.zhdanov.graphql.types.ProjectContractInput;
-import d.zhdanov.graphql.types.SchoolProjectInput;
+import d.zhdanov.graphql.types.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,80 +19,63 @@ public class ProjectService {
   private final ApartmentHouseRepository  apartmentHouseRepository;
   private final SchoolRepository          schoolRepository;
   private final BridgeRepository          bridgeRepository;
+  private final ContractMapper            contractMapper;
   
   public ProjectService(
     @Autowired ProjectContractRepository projectContractRepository,
     @Autowired ApartmentHouseRepository apartmentHouseRepository,
     @Autowired SchoolRepository schoolRepository,
-    @Autowired BridgeRepository bridgeRepository
+    @Autowired BridgeRepository bridgeRepository,
+    @Autowired ContractMapper contractMapper
   ) {
     this.projectContractRepository = projectContractRepository;
     this.apartmentHouseRepository  = apartmentHouseRepository;
     this.schoolRepository          = schoolRepository;
     this.bridgeRepository          = bridgeRepository;
+    this.contractMapper            = contractMapper;
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
-  public ProjectContractEntity saveSchoolProjectContract(
-    final UUID projectId,
+  public ProjectContract saveSchoolProjectContract(
     final ProjectContractInput contractInput,
     final SchoolProjectInput schoolInput
   ) {
-    final var schoolEntity = new SchoolEntity(
-      projectId,
-      schoolInput.getClassRoomCount(),
-      schoolInput.getFloors()
-    );
-    
-    return saveProjectContract(
-      projectId,
-      contractInput,
-      schoolEntity,
-      schoolRepository
-    );
+    final var school   = contractMapper.toSchoolEntity(schoolInput);
+    final var contract = contractMapper.toProjectContractEntity(contractInput);
+    final var ret      = projectContractRepository.save(contract);
+    school.setProjectId(ret.getProjectId());
+    schoolRepository.save(school);
+    return contractMapper.toProjectContract(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
-  public ProjectContractEntity saveBridgeProjectContract(
-    final UUID projectId,
+  public ProjectContract saveBridgeProjectContract(
     final ProjectContractInput contractInput,
     final BridgeProjectInput bridgeInput
   ) {
-    final var bridgeEntity = new BridgeEntity(
-      projectId,
-      bridgeInput.getSpan(),
-      bridgeInput.getWidth(),
-      bridgeInput.getTrafficLanesNumber()
-    );
-    
-    return saveProjectContract(
-      projectId,
-      contractInput,
-      bridgeEntity,
-      bridgeRepository
-    );
+    final var bridge   = contractMapper.toBridgeEntity(bridgeInput);
+    final var contract = contractMapper.toProjectContractEntity(contractInput);
+    final var ret      = projectContractRepository.save(contract);
+    bridge.setProjectId(ret.getProjectId());
+    bridgeRepository.save(bridge);
+    return contractMapper.toProjectContract(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
-  public ProjectContractEntity saveApartmentHouseProjectContract(
-    final UUID projectId,
+  public ProjectContract saveApartmentHouseProjectContract(
     final ProjectContractInput contractInput,
     final ApartmentHouseProjectInput apartmentHouseInput
   ) {
-    final var entity = new ApartmentHouseEntity(
-      projectId,
-      apartmentHouseInput.getFloors()
-    );
-    
-    return saveProjectContract(
-      projectId,
-      contractInput,
-      entity,
-      apartmentHouseRepository
-    );
+    final var house =
+      contractMapper.toApartmentHouseEntity(apartmentHouseInput);
+    final var contract = contractMapper.toProjectContractEntity(contractInput);
+    final var ret      = projectContractRepository.save(contract);
+    house.setProjectId(ret.getProjectId());
+    apartmentHouseRepository.save(house);
+    return contractMapper.toProjectContract(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
@@ -118,25 +94,5 @@ public class ProjectService {
   public Boolean deleteApartmentHouseProjectContract(UUID id) {
     apartmentHouseRepository.deleteById(id);
     return true;
-  }
-  
-  //  @Transactional
-  public <T, R extends CrudRepository<T, UUID>> ProjectContractEntity saveProjectContract(
-    final UUID projectId,
-    final ProjectContractInput projectContractInput,
-    final T projectEntity,
-    final R repository
-  ) {
-    final var projectContract = ProjectContractEntity.builder()
-      .projectId(projectId)
-      .customerId(UUID.fromString(projectContractInput.getCustomerId()))
-      .siteId(UUID.fromString(projectContractInput.getSiteId()))
-      .type(projectContractInput.getObjectType())
-      .signingDate(projectContractInput.getSigningDate())
-      .planStartDate(projectContractInput.getPlanStartDate())
-      .planEndDate(projectContractInput.getPlanEndDate())
-      .build();
-    repository.save(projectEntity);
-    return projectContractRepository.save(projectContract);
   }
 }

@@ -28,6 +28,11 @@ public class ConstructionSiteDataFetcher {
   }
   
   @DgsQuery
+  public List<ConstructionSiteDTO> constructionSites(@InputArgument Pagination pagination){
+    return constructionSiteService.findConstructionSites(pagination);
+  }
+  
+  @DgsQuery
   public ConstructionSiteDTO constructionSiteBySiteManager(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return constructionSiteService.findConstructionSiteBySiteManager(uuid);

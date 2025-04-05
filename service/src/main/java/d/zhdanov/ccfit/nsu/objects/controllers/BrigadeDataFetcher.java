@@ -33,4 +33,11 @@ public class BrigadeDataFetcher {
     final var uuid = UUID.fromString(id);
     return brigadeService.findBrigade(uuid);
   }
+  @DgsQuery
+  public List<BrigadeDTO> brigadesByConstructionSite(
+    @InputArgument String id, @InputArgument Pagination pagination
+  ){
+    final var uuid = UUID.fromString(id);
+    return brigadeService.findAllBrigadesBySite(uuid, pagination);
+  }
 }

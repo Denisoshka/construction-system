@@ -1,4 +1,4 @@
-CREATE OR REPLACE TRIGGER tr_work_schedule_BI_BU
+CREATE OR REPLACE TRIGGER check_work_schedule
     BEFORE INSERT OR UPDATE
     ON work_schedule
     FOR EACH ROW

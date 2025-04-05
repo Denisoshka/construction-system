@@ -1,19 +1,14 @@
 package d.zhdanov.ccfit.nsu.objects.service;
 
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ConstructionProjectContractEntity;
 import d.zhdanov.ccfit.nsu.objects.dto.ConstructionSiteDTO;
 import d.zhdanov.ccfit.nsu.objects.exceptions.ConstructionSiteAbsent;
-import d.zhdanov.ccfit.nsu.objects.exceptions.ConstructionSiteCreateException;
 import d.zhdanov.ccfit.nsu.objects.mappers.ConstructionObjectsMapper;
-import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionProjectRepository;
 import d.zhdanov.ccfit.nsu.objects.persistence.ConstructionSiteRepository;
-import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionProjectEntity;
-import d.zhdanov.ccfit.nsu.objects.persistence.entities.ConstructionSiteEntity;
 import d.zhdanov.ccfit.nsu.utils.Utils;
-import d.zhdanov.graphql.types.ConstructionSiteInput;
 import d.zhdanov.graphql.types.Pagination;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +19,13 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class ConstructionSiteService {
-  private final ConstructionProjectRepository constructionProjectRepository;
   private final ConstructionObjectsMapper     constructionObjectsMapper;
   private final ConstructionSiteRepository    constructionSiteRepository;
   
   public ConstructionSiteService(
-    @Autowired ConstructionProjectRepository constructionProjectRepository,
     @Autowired ConstructionObjectsMapper constructionObjectsMapper,
     @Autowired ConstructionSiteRepository constructionSiteRepository
   ) {
-    this.constructionProjectRepository = constructionProjectRepository;
     this.constructionObjectsMapper     = constructionObjectsMapper;
     this.constructionSiteRepository    = constructionSiteRepository;
   }
@@ -62,12 +54,14 @@ public class ConstructionSiteService {
     return constructionObjectsMapper.toConstructionSiteDTOList(sites);
   }
   
-  @Transactional
-  public ConstructionProjectEntity prepareNewProjectForSite(final UUID siteId) {
-//    todo
-    return constructionProjectRepository.save(new ConstructionProjectEntity(
-      null,
-      siteId
-    ));
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<ConstructionSiteDTO> findConstructionSites(
+    Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret   = constructionSiteRepository.findAll(paged).toList();
+    return constructionObjectsMapper.toConstructionSiteDTOList(ret);
   }
+  
+  public ConstructionProjectContractEntity
 }

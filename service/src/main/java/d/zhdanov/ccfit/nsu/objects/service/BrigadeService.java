@@ -39,4 +39,12 @@ public class BrigadeService {
     final var ret   = brigadeRepository.findAll(paged).toList();
     return brigadeMapper.toBrigadeDTOList(ret);
   }
+  
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<BrigadeDTO> findAllBrigadesBySite(
+    UUID uuid, Pagination pagination) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret = brigadeRepository.findAllBySiteId(uuid, paged);
+    return brigadeMapper.toBrigadeDTOList(ret);
+  }
 }

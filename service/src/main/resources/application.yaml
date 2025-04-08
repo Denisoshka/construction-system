@@ -23,8 +23,11 @@ logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
+    org.springframework.jdbc: TRACE
     org.springframework.security: TRACE
     d.zhdanov.ccfit.nsu.config.HeaderAuthFilter: DEBUG
+    com.netflix.graphql.dgs: DEBUG
+    org.springframework.graphql: DEBUG
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n"

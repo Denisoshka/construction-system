@@ -11,7 +11,6 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-//@Builder
 public class ConstructionSiteDTO extends ConstructionSite {
   private UUID siteManagerId;
 }

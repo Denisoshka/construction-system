@@ -118,8 +118,4 @@ type Mutation {
   createWorkerPosition(input : WorkerPositionInput!): WorkerPosition!
   updateWorkerPosition(id :Int!,input: WorkerPositionInput!): EngineerPosition!
   deleteWorkerPosition(id :Int!): Boolean!
-
-  createBrigade(input : BrigadeInput!): Brigade!
-  deleteBrigade(id : ID!): Boolean!
-  addWorkerInBrigade(workerId: ID!, BrigadeID : ID!) : Boolean
 }

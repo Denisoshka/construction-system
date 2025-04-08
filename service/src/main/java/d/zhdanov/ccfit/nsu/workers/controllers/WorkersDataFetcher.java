@@ -47,6 +47,16 @@ public class WorkersDataFetcher {
     return workersService.findAllWorkers(pagination, filter);
   }
   
+  @DgsQuery
+  public List<WorkerInfo> workersByConstructionSite(
+    @InputArgument String id, @InputArgument Pagination pagination
+  ) {
+    final var uuid = UUID.fromString(id);
+    return workersService.findAllWorkersByConstructionSite(
+      uuid, pagination
+    );
+  }
+
   @DgsMutation
   public WorkerPosition createWorkerPosition(
     final @InputArgument WorkerPositionInput input
@@ -88,14 +98,11 @@ public class WorkersDataFetcher {
   @DgsData(
     parentType = DgsConstants.BRIGADE.TYPE_NAME, field = DgsConstants.BRIGADE.Foreman
   )
-  public BrigadeDTO brigadeWorkerInfo(
+  public WorkerInfo brigadeWorkerInfo(
     DgsDataFetchingEnvironment dfe
   ) {
     final BrigadeDTO brigadeDTO = dfe.getSource();
-    
-    final var worker = worker(brigadeDTO.getForemanId().toString());
-    brigadeDTO.setForeman(worker);
-    return brigadeDTO;
+    return worker(brigadeDTO.getForemanId().toString());
   }
   
   @DgsQuery

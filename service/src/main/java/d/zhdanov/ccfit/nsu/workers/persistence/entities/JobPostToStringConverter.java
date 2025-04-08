@@ -1,6 +1,5 @@
-package d.zhdanov.ccfit.nsu.workers.persistence;
+package d.zhdanov.ccfit.nsu.workers.persistence.entities;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.entities.JobPost;
 import jakarta.annotation.Nonnull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;

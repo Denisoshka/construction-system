@@ -62,8 +62,7 @@ public interface EngineersRepository
             """, rowMapperClass = EngineerRowMapper.class
   )
   List<EngineerEntity> findAllEngineersWithPositionEntity(
-    long offset,
-    int limit
+    long offset, int limit
   );
   
   @Query(

@@ -14,29 +14,31 @@ import java.util.List;
 )
 public interface ContractMapper {
   @Mapping(target = "id", ignore = true)
-  ProjectContractEntity toProjectContractEntity(
-    final ProjectContractInput input
+  ProjectContractEntity toProjectContractEntity(ProjectContractInput input);
+  
+  ProjectContract toProjectContract(ProjectContractEntity entity);
+  
+  List<ProjectContract> toProjectContractList(
+    List<ProjectContractEntity> entities
   );
   
-  ProjectContract toProjectContract(final ProjectContractEntity entity);
-  
   CustomerOrganization toCustomerOrganization(
-    final CustomerOrganisationEntity entity
+    CustomerOrganisationEntity entity
   );
   
   List<CustomerOrganization> toCustomerOrganizationList(
-    final List<CustomerOrganisationEntity> entityList
+    List<CustomerOrganisationEntity> entityList
   );
   
   @Mapping(target = "id", ignore = true)
   CustomerOrganisationEntity toCustomerOrganisationEntity(
-    final CustomerOrganizationInput input
+    CustomerOrganizationInput input
   );
   
   @Mapping(target = "id", ignore = true)
   void updateCustomerOrganisation(
-    @MappingTarget final CustomerOrganisationEntity entity,
-    final CustomerOrganizationInput input
+    @MappingTarget CustomerOrganisationEntity entity,
+    CustomerOrganizationInput input
   );
   
   @Mapping(target = "projectId", ignore = true)
@@ -46,5 +48,7 @@ public interface ContractMapper {
   BridgeEntity toBridgeEntity(BridgeProjectInput bridgeInput);
   
   @Mapping(target = "projectId", ignore = true)
-  ApartmentHouseEntity toApartmentHouseEntity(ApartmentHouseProjectInput bridgeInput);
+  ApartmentHouseEntity toApartmentHouseEntity(
+    ApartmentHouseProjectInput bridgeInput
+  );
 }

@@ -16,23 +16,24 @@ import java.util.UUID;
 @DgsComponent
 public class BrigadeDataFetcher {
   private final BrigadeService brigadeService;
-  
+
   public BrigadeDataFetcher(
     @Autowired BrigadeService brigadeService
   ) {
     this.brigadeService = brigadeService;
   }
-  
+
   @DgsQuery
   public List<BrigadeDTO> brigades(@InputArgument Pagination pagination) {
     return brigadeService.findAllBrigades(pagination);
   }
-  
+
   @DgsQuery
   public BrigadeDTO brigade(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return brigadeService.findBrigade(uuid);
   }
+
   @DgsQuery
   public List<BrigadeDTO> brigadesByConstructionSite(
     @InputArgument String id, @InputArgument Pagination pagination

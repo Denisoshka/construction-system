@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -16,18 +17,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table("construction_project_contract")
 public class ProjectContractEntity {
   @Id
   private UUID      id;
-  @NotNull
-  private UUID      projectId;
   @NotNull
   private UUID      siteId;
   @Nullable
   @Column("customer_organization_id")
   private UUID      customerId;
   @NotNull
-  private String    type;
+  private String type;
   @NotNull
   private LocalDate dateOfCreation;
   @Nullable

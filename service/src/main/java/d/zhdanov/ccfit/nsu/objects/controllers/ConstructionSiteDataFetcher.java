@@ -41,14 +41,10 @@ public class ConstructionSiteDataFetcher {
   @DgsData(
     parentType = DgsConstants.BRIGADE.TYPE_NAME, field = DgsConstants.BRIGADE.SiteInfo
   )
-  public BrigadeDTO BrigadeSiteInfo(
+  public ConstructionSiteDTO BrigadeSiteInfo(
     DgsDataFetchingEnvironment dfe
   ) {
     final BrigadeDTO brigadeDTO = dfe.getSource();
-    
-    final var siteInfo = constructionSite(brigadeDTO.getSiteId().toString());
-    brigadeDTO.setSiteInfo(siteInfo);
-    
-    return brigadeDTO;
+    return constructionSite(brigadeDTO.getSiteId().toString());
   }
 }

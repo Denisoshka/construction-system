@@ -23,6 +23,8 @@ dependencies {
   implementation(libs.spring.boot.jdbc)
   implementation(libs.mapstruct.impl)
   implementation(libs.spring.boot.security)
+  testImplementation(libs.spring.boot.test)
+  testImplementation("com.netflix.graphql.dgs:dgs-starter-test")
 //  implementation(libs.caffeine)
   implementation(libs.spring.boot.actuator)
   implementation(project(":utils"))
@@ -52,7 +54,6 @@ tasks.test {
   useJUnitPlatform()
 }
 
-
 tasks.generateJava {
   schemaPaths.add("${projectDir}/src/main/resources/schema")
   packageName = "d.zhdanov.graphql"
@@ -60,9 +61,6 @@ tasks.generateJava {
   generateClientv2 = false
 }
 
-
 tasks.withType<JavaCompile> {
   options.compilerArgs.add("-parameters")
 }
-
-

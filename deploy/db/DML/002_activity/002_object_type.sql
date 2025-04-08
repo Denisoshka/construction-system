@@ -1,6 +1,4 @@
-INSERT INTO object_type (type)
-VALUES
-    ('bridge'),
-    ('school'),
-    ('apartment_house')
-ON CONFLICT (type) DO NOTHING;
+insert into object_type (type)
+values ('bridge'),
+       ('apartment_house'),
+       ('school');

@@ -94,7 +94,7 @@ public class WorkersService {
     Pagination pagination,
     WorkerFilter workerFilter
   ) {
-    final var paged = Utils.getPageable(pagination);
+    final var paged  = Utils.getPageable(pagination);
     final var filter = Utils.getRepositoryWorkerFilter(workerFilter);
     final var ret = workersRepository.findAllWorkersWithInfo(
       paged.getOffset(),
@@ -123,8 +123,24 @@ public class WorkersService {
     final Pagination pagination
   ) {
     final var paged = Utils.getPageable(pagination);
-    final var ret =
-      workersRepository.findWorkersWithInfoByBrigadeId(brigadeId, paged);
+    final var ret = workersRepository.findWorkersWithInfoByBrigadeId(
+      brigadeId,
+      paged.getOffset(),
+      paged.getPageSize()
+    );
     return workersMapper.toWorkersInfo(ret);
+  }
+
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<WorkerInfo> findAllWorkersByConstructionSite(
+    UUID siteId, Pagination pagination) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret =
+      workersRepository.findAllWorkersBySiteWithPositionEntity(
+        siteId,
+        paged.getOffset(),
+        paged.getPageSize()
+      );
+    return workersMapper.fromWorkerEntityList(ret);
   }
 }

@@ -1,4 +1,4 @@
-insert into public.work_type (id, name)
+insert into work_type (id, name)
 values ('b099ddaa-4804-4c0f-9bf7-362dd4a0cdea', 'Фундаментные работы'),
        ('faa5e686-9abc-4445-a066-5821f2d81999', 'Кладочные работы'),
        ('9d84502a-53fb-4177-ae76-91af7bb73b5f', 'Монтаж каркасов и перекрытий'),

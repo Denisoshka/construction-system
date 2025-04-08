@@ -60,6 +60,7 @@ spring-boot-docker-compose = { group = "org.springframework.boot", name = "sprin
 junit_platform_launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "1.7.2" }
 netflix-dgs = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-spring-graphql-starter", version.ref = "dgs-ver" }
 netflix-dgs-extended-scalars = { group = "com.netflix.graphql.dgs", name = "graphql-dgs-extended-scalars", version.ref = "dgs-extended-scalars-ver" }
+netflix-dgs-test = {group = "com.netflix.graphql.dgs", name = "dgs-starter-test", version.ref = "dgs-ver"}
 mapstruct-impl = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct-ver" }
 mapstruct-annotationprocessor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct-ver" }
 caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine", version.ref = "caffeine-ver" }

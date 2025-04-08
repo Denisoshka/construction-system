@@ -18,19 +18,22 @@ import java.util.List;
 public interface WorkersMapper {
   @Mapping(target = "employee", source = "employee")
 //  @Mapping(target = "positionInfo", ignore = true)
-  WorkerInfo fromWorkerEntityWithAdditionalData(final WorkerEntity workerEntity);
+  WorkerInfo fromWorkerEntityWithAdditionalData(
+    final WorkerEntity workerEntity
+  );
   
-  List<WorkerInfo> toWorkersInfo(final List<WorkerEntity> workerEntities);
+  List<WorkerInfo> toWorkersInfo(List<WorkerEntity> workerEntities);
   
-  WorkerPosition fromWorkerPositionEntity(final WorkerPositionEntity entity);
+  WorkerPosition fromWorkerPositionEntity(WorkerPositionEntity entity);
   
   List<WorkerPosition> fromWorkerPositionEntityList(
-    final List<WorkerPositionEntity> workerPositionEntities
+    List<WorkerPositionEntity> workerPositionEntities
   );
   
   @Mapping(target = "id", ignore = true)
   void updateWorkerPositionEntity(
-    @MappingTarget final WorkerPositionEntity entity,
-    final WorkerPositionInput input
+    @MappingTarget WorkerPositionEntity entity, WorkerPositionInput input
   );
+  
+  List<WorkerInfo> fromWorkerEntityList(List<WorkerEntity> ret);
 }

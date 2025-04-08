@@ -1,6 +1,6 @@
 package d.zhdanov.ccfit.nsu.utils.persistence;
 
-import d.zhdanov.ccfit.nsu.workers.persistence.JobPostToStringConverter;
+import d.zhdanov.ccfit.nsu.workers.persistence.entities.JobPostToStringConverter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;

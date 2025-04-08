@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS site_team_management
 (
-    siteId     UUID NOT NULL REFERENCES construction_site (id) ON
+    site_id     UUID NOT NULL REFERENCES construction_site (id) ON
         DELETE CASCADE,
-    engineerId UUID NOT NULL REFERENCES engineers (employee_id) ON DELETE CASCADE,
-    PRIMARY KEY (engineerId)
+    engineer_id UUID NOT NULL REFERENCES engineers (employee_id) ON DELETE CASCADE,
+    PRIMARY KEY (engineer_id)
 );

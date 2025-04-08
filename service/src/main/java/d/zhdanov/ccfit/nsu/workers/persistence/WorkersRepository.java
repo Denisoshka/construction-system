@@ -3,7 +3,6 @@ package d.zhdanov.ccfit.nsu.workers.persistence;
 import d.zhdanov.ccfit.nsu.utils.persistence.employees.WorkerRowMapper;
 import d.zhdanov.ccfit.nsu.workers.persistence.entities.WorkerEntity;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -48,8 +47,7 @@ public interface WorkersRepository
             """, rowMapperClass = WorkerRowMapper.class
   )
   List<WorkerEntity> findAllWorkersWithInfo(
-    long offset,
-    int limit
+    long offset, int limit
   );
   
   @Query(
@@ -62,22 +60,14 @@ public interface WorkersRepository
                    pos.name AS worker_position_name
             FROM workers w
             JOIN employees emp ON w.employee_id = emp.id
-            LEFT JOIN engineer_position pos ON w.position_id = pos.id
+            JOIN worker_position pos ON w.position_id = pos.id
             WHERE w.employee_id = :id
             """, rowMapperClass = WorkerRowMapper.class
   )
-  Optional<WorkerEntity> findWorkerWithInfo(UUID id);
+  Optional<WorkerEntity> findWorkerWithInfo(@Param("id") UUID id);
   
   @Query(
     value = """
-            WITH brigade_workers AS (
-                SELECT w.employee_id
-                FROM workers w
-                JOIN brigade b ON w.employee_id = b.foreman_id OR w.employee_id IN (
-                    SELECT employee_id FROM workers WHERE site_id = b.site_id
-                )
-                WHERE b.id = :brigadeId
-            )
             SELECT
                 w.employee_id, emp.system_id,
                 emp.name, emp.surname,
@@ -87,12 +77,34 @@ public interface WorkersRepository
                 pos.name AS worker_position_name
             FROM workers w
             JOIN employees emp ON w.employee_id = emp.id
-            LEFT JOIN worker_position pos ON w.position_id = pos.id
-            WHERE w.employee_id IN (SELECT employee_id FROM brigade_workers)
-            LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}
+            JOIN worker_position pos ON w.position_id = pos.id
+            JOIN brigade_management br_mg ON br_mg.worker_id = w.employee_id
+            WHERE br_mg.team_id = :brigadeId
+            LIMIT :pageable OFFSET :offset
             """, rowMapperClass = WorkerRowMapper.class
   )
   List<WorkerEntity> findWorkersWithInfoByBrigadeId(
-    @Param("brigadeId") UUID brigadeId, @Param("pageable") Pageable pageable
+    @Param("brigadeId") UUID brigadeId, long offset, int pageSize
+  );
+  
+  @Query(
+    value = """
+            SELECT
+                w.employee_id, emp.system_id,
+                emp.name, emp.surname,
+                emp.patronymic, emp.employment_date,
+                emp.post,
+                pos.id AS worker_position_id,
+                pos.name AS worker_position_name
+            FROM workers w
+            JOIN employees emp ON w.employee_id = emp.id
+            JOIN worker_position pos ON w.position_id = pos.id
+            JOIN brigade_management br_mg ON br_mg.worker_id = w.employee_id
+            JOIN brigade br ON br.site_id = :siteId AND br.id = br_mg.team_id
+            LIMIT :pageSize OFFSET :offset
+            """, rowMapperClass = WorkerRowMapper.class
+  )
+  List<WorkerEntity> findAllWorkersBySiteWithPositionEntity(
+    UUID siteId, long offset, int pageSize
   );
 }

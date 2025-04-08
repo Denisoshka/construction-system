@@ -2,12 +2,15 @@ package d.zhdanov.ccfit.nsu.activity.controller;
 
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
+import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.activity.service.ProjectService;
-import d.zhdanov.graphql.types.*;
+import d.zhdanov.graphql.types.Pagination;
+import d.zhdanov.graphql.types.ProjectContract;
+import d.zhdanov.graphql.types.ProjectContractInput;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @DgsComponent
@@ -20,7 +23,33 @@ public class ActivityDataFetcher {
     this.projectService = projectService;
   }
   
+  @DgsQuery
+  public ProjectContract projectContract(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return projectService.findProjectContract(uuid);
+  }
+  
+  @DgsQuery
+  public List<ProjectContract> contractsByConstructionSite(
+    @InputArgument String id, @InputArgument Pagination pagination) {
+    final var uuid = UUID.fromString(id);
+    return projectService.contractsByConstructionSite(uuid, pagination);
+  }
+  
   @DgsMutation
+  public Boolean deleteContract(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return projectService.deleteProjectContract(uuid);
+  }
+  
+  @DgsMutation
+  public ProjectContract saveContract(
+    @InputArgument ProjectContractInput input
+  ) {
+    return projectService.saveProjectContract(input);
+  }
+  
+  /*@DgsMutation
   @Transactional
   public ProjectContract addBridgeProjectContract(
     @InputArgument ProjectContractInput input,
@@ -65,5 +94,5 @@ public class ActivityDataFetcher {
   Boolean deleteBridgeProjectContract(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return projectService.deleteBridgeProjectContract(uuid);
-  }
+  }*/
 }

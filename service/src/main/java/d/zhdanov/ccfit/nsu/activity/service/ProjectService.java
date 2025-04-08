@@ -2,10 +2,7 @@ package d.zhdanov.ccfit.nsu.activity.service;
 
 import d.zhdanov.ccfit.nsu.activity.exceptions.ProjectContractAbsent;
 import d.zhdanov.ccfit.nsu.activity.mapper.ContractMapper;
-import d.zhdanov.ccfit.nsu.activity.persistence.ApartmentHouseRepository;
-import d.zhdanov.ccfit.nsu.activity.persistence.BridgeRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.ProjectContractRepository;
-import d.zhdanov.ccfit.nsu.activity.persistence.SchoolRepository;
 import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.ProjectContract;

@@ -16,20 +16,20 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 @Table("construction_project_contract")
 public class ProjectContractEntity {
   @Id
   private UUID      id;
   @NotNull
   private UUID      siteId;
-  @Nullable
-  @Column("customer_organization_id")
+  @NotNull
+//  @Column("customer_organization_id")
   private UUID      customerId;
   @NotNull
   private String type;
-  @NotNull
-  private LocalDate dateOfCreation;
+  @Nullable
+  private LocalDate dateOfCreation = LocalDate.now();
   @Nullable
   private LocalDate signingDate;
   @NotNull

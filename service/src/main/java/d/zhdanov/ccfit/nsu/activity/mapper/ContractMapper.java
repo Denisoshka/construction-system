@@ -1,6 +1,8 @@
 package d.zhdanov.ccfit.nsu.activity.mapper;
 
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.*;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.CustomerOrganisationEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ObjectTypeEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
 import d.zhdanov.graphql.types.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,8 +16,10 @@ import java.util.List;
 )
 public interface ContractMapper {
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "type", source = "objectType")
   ProjectContractEntity toProjectContractEntity(ProjectContractInput input);
   
+  @Mapping(target = "objectType", source = "type")
   ProjectContract toProjectContract(ProjectContractEntity entity);
   
   List<ProjectContract> toProjectContractList(
@@ -41,14 +45,7 @@ public interface ContractMapper {
     CustomerOrganizationInput input
   );
   
-  @Mapping(target = "projectId", ignore = true)
-  SchoolEntity toSchoolEntity(SchoolProjectInput schoolInput);
+  ObjectType toObjectType(ObjectTypeEntity objectTypeEntity);
   
-  @Mapping(target = "projectId", ignore = true)
-  BridgeEntity toBridgeEntity(BridgeProjectInput bridgeInput);
-  
-  @Mapping(target = "projectId", ignore = true)
-  ApartmentHouseEntity toApartmentHouseEntity(
-    ApartmentHouseProjectInput bridgeInput
-  );
+  List<ObjectType> toObjectTypeList(List<ObjectTypeEntity> objectTypeEntities);
 }

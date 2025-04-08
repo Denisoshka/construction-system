@@ -19,21 +19,6 @@ import java.util.UUID;
 public interface EngineersRepository
   extends PagingAndSortingRepository<EngineerEntity, UUID>,
           CrudRepository<EngineerEntity, UUID> {
-  @Modifying
-  @Transactional
-  @Query("INSERT INTO engineers (employee_id, position_id) VALUES (:employeeId, :positionId)")
-  void insertEngineer(
-    @Param("employeeId") UUID employeeId,
-    @Param("positionId") int positionId
-  ) throws DataIntegrityViolationException;
-  
-  @Modifying
-  @Query("UPDATE engineers SET position_id = :positionId WHERE employee_id = :employeeId")
-  void updatePosition(
-    @Param("employeeId") UUID employeeId,
-    @Param("positionId") Integer positionId
-  );
-  
   @Query(
     value = """
             SELECT e.employee_id, emp.system_id,
@@ -75,8 +60,8 @@ public interface EngineersRepository
             FROM engineers e
             JOIN employees emp ON e.employee_id = emp.id
             JOIN engineer_position pos ON e.position_id = pos.id
-            JOIN site_team_management stm ON e.employee_id = stm.engineerid
-            WHERE stm.siteid = :siteId
+            JOIN site_team_management stm ON e.employee_id = stm.engineer_id
+            WHERE stm.site_id = :siteId
             LIMIT :limit OFFSET :offset
             """, rowMapperClass = EngineerRowMapper.class
   )

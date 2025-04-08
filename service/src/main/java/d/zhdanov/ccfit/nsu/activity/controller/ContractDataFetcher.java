@@ -5,9 +5,11 @@ import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.activity.service.ContractService;
-import d.zhdanov.graphql.types.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
+import d.zhdanov.graphql.types.CustomerOrganization;
+import d.zhdanov.graphql.types.CustomerOrganizationInput;
+import d.zhdanov.graphql.types.ObjectType;
+import d.zhdanov.graphql.types.Pagination;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +17,15 @@ import java.util.UUID;
 @DgsComponent
 public class ContractDataFetcher {
   ContractService contractService;
+  
+  public ContractDataFetcher(@Autowired ContractService contractService) {
+    this.contractService = contractService;
+  }
+  
+  @DgsQuery
+  public List<ObjectType> objectTypes(@InputArgument Pagination pagination) {
+    return contractService.findObjectTypes(pagination);
+  }
   
   @DgsQuery
   public CustomerOrganization customerOrganization(@InputArgument String id) {

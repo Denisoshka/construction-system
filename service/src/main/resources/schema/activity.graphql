@@ -6,7 +6,7 @@ type CustomerOrganization {
 type ProjectContract {
   id: ID!
   siteId: ID!
-  customerOrganizationId: ID!
+  customerId: ID!
   objectType: String!
   dateOfCreation: Date!
   signingDate: Date
@@ -24,68 +24,11 @@ input ProjectContractInput {
   planEndDate: Date!
 }
 
-#input BridgeProjectInput {
-#  span: Int!
-#  width: Int!
-#  trafficLanesNumber: Int!
-#}
-
-#type ApartmentHouseProject implements ProjectType {
-#  projectId: ID!
-#  floors: Int!
-#}
-#
-#type ApartmentHouseProjectContract {
-#  contract: ProjectContract!
-#  project: ApartmentHouseProject!
-#}
-#
-#input ApartmentHouseProjectInput {
-#  floors: Int!
-#}
-#
-#type SchoolProject implements ProjectType {
-#  projectId: ID!
-#  classRoomCount: Int!
-#  floors: Int!
-#}
-
-#type SchoolProjectContract  {
-#  id: ID!
-#  projectId: ID!
-#  siteId: ID!
-#  objectType: String!
-#  dateOfCreation: Date!
-#  signingDate: Date
-#  planStartDate: Date
-#  planEndDate: Date
-#  factStartDate: Date
-#  factEndDate: Date
-#  project: SchoolProject!
-#}
-#
-#input SchoolProjectInput {
-#  classRoomCount: Int!
-#  floors: Int!
-#}
-#
-#type BridgeProject implements ProjectType {
-#  projectId: ID!
-#  span: Int!
-#  width: Int!
-#  trafficLanesNumber: Int!
-#}
-#
-#type BridgeProjectContract {
-#  contract: ProjectContract!
-#  project: BridgeProject!
-#}
-
-#input BridgeProjectInput {
-#  span: Int!
-#  width: Int!
-#  trafficLanesNumber: Int!
-#}
+input ProjectContractInputAddition{
+  signingDate: Date
+  factStartDate: Date
+  factEndDate: Date
+}
 
 type Material {
   id: ID!
@@ -103,6 +46,10 @@ input MaterialInput {
 type Manufacturer {
   id: ID!
   manufacturer: String!
+}
+
+type ObjectType{
+  type: String!
 }
 
 input ManufacturerInput {
@@ -158,18 +105,14 @@ input ContractFilter {
 }
 
 type Query {
-  objectTypes(pagination: Pagination!): [String!]!
+  objectTypes(pagination: Pagination!): [ObjectType!]!
   customerOrganization(id : ID!): CustomerOrganization!
   customerOrganizations(pagination: Pagination!): [CustomerOrganization!]!
 
   projectContract(id : ID!): ProjectContract!
-  #  projectContracts(pagination: Pagination!): [ProjectContract!]!
   contractsByConstructionSite(
     id : ID!, pagination: Pagination!
   ): [ProjectContract!]!
-  #  schoolProjectContract(id : ID): SchoolProjectContract!
-  #  apartmentHouseProjectContract(id: ID): ApartmentHouseProjectContract!
-  #  bridgeProjectContract(id: ID!): BridgeProjectContract!
 
   manufacturer(id: ID!): Manufacturer!
   manufacturers(pagination: Pagination): [Manufacturer!]!
@@ -203,19 +146,6 @@ extend type Mutation  {
   ): WorkScheduleUnit!
   deleteWorkScheduleUnit(id:ID!) :Boolean!
   addProjectContract(input: ProjectContractInput!): ProjectContract!
-  #  addSchoolProjectContract(
-  #    input: ProjectContractInput!,project: SchoolProjectInput
-  #  ): ProjectContract!
-  #  addBridgeProjectContract(
-  #    input:ProjectContractInput!, project: BridgeProjectInput
-  #  ): ProjectContract!
-  #  addApartmentHouseProjectContract(
-  #    input:ProjectContractInput!, project: ApartmentHouseProjectInput
-  #  ): ProjectContract!
-
-  #  deleteSchoolProjectContract(id: ID!): Boolean!
-  #  deleteBridgeProjectContract(id: ID!): Boolean!
-  #  deleteApartmentHouseProjectContract(id: ID!): Boolean!
 
   createManufacturer(input: ManufacturerInput!): Manufacturer!
   deleteManufacturer(id: ID!): Boolean!

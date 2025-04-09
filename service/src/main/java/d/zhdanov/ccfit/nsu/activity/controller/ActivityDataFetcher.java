@@ -8,6 +8,7 @@ import d.zhdanov.ccfit.nsu.activity.service.ProjectService;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.ProjectContract;
 import d.zhdanov.graphql.types.ProjectContractInput;
+import d.zhdanov.graphql.types.ProjectContractInputAddition;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -49,50 +50,12 @@ public class ActivityDataFetcher {
     return projectService.saveProjectContract(input);
   }
   
-  /*@DgsMutation
-  @Transactional
-  public ProjectContract addBridgeProjectContract(
-    @InputArgument ProjectContractInput input,
-    @InputArgument BridgeProjectInput project
+  @DgsMutation
+  public ProjectContract updateContract(
+    @InputArgument String id,
+    @InputArgument ProjectContractInputAddition update
   ) {
-    return projectService.saveBridgeProjectContract(input, project);
-  }
-  
-  @DgsMutation
-  @Transactional
-  public ProjectContract addSchoolProjectContract(
-    @InputArgument ProjectContractInput input,
-    @InputArgument SchoolProjectInput project
-  ) {
-    return projectService.saveSchoolProjectContract(input, project);
-  }
-  
-  @DgsMutation
-  @Transactional
-  public ProjectContract addApartmentHouseProjectContract(
-    @InputArgument ProjectContractInput input,
-    @InputArgument ApartmentHouseProjectInput project
-  ) {
-    return projectService.saveApartmentHouseProjectContract(
-      input, project
-    );
-  }
-  
-  @DgsMutation
-  Boolean deleteSchoolProjectContract(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    return projectService.deleteSchoolProjectContract(uuid);
+    return projectService.updateProjectContract(uuid, update);
   }
-  
-  @DgsMutation
-  Boolean deleteApartmentHouseProjectContract(@InputArgument String id) {
-    final var uuid = UUID.fromString(id);
-    return projectService.deleteApartmentHouseProjectContract(uuid);
-  }
-  
-  @DgsMutation
-  Boolean deleteBridgeProjectContract(@InputArgument String id) {
-    final var uuid = UUID.fromString(id);
-    return projectService.deleteBridgeProjectContract(uuid);
-  }*/
 }

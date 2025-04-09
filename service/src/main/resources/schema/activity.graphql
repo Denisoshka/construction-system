@@ -97,7 +97,7 @@ input WorkScheduleUnitInput{
 }
 
 input CustomerOrganizationInput{
-  name  : String
+  name : String
 }
 
 input ContractFilter {
@@ -130,7 +130,10 @@ type Query {
 
 extend type Mutation  {
   saveContract(input: ProjectContractInput!): ProjectContract!
-  deleteContract(id : ID!) : Boolean!
+  deleteContract(id: ID!) : Boolean!
+  updateContract(
+    id: ID!, update: ProjectContractInputAddition!
+  ): ProjectContract!
 
   createCustomerOrganization(
     input : CustomerOrganizationInput!

@@ -4,10 +4,7 @@ import d.zhdanov.ccfit.nsu.activity.persistence.entities.CustomerOrganisationEnt
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ObjectTypeEntity;
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.ProjectContractEntity;
 import d.zhdanov.graphql.types.*;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -40,6 +37,7 @@ public interface ContractMapper {
   );
   
   @Mapping(target = "id", ignore = true)
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void updateCustomerOrganisation(
     @MappingTarget CustomerOrganisationEntity entity,
     CustomerOrganizationInput input
@@ -48,4 +46,11 @@ public interface ContractMapper {
   ObjectType toObjectType(ObjectTypeEntity objectTypeEntity);
   
   List<ObjectType> toObjectTypeList(List<ObjectTypeEntity> objectTypeEntities);
+  
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  @Mapping(target = "id", ignore = true)
+  void updateObjectTypeEntity(
+    ProjectContractInputAddition addition,
+    @MappingTarget ProjectContractEntity entity
+  );
 }

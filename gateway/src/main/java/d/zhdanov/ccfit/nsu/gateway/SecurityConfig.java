@@ -22,7 +22,7 @@ public class SecurityConfig {
     return httpSecurity.authorizeExchange(
         auth -> auth
           .pathMatchers(HttpMethod.OPTIONS, "/graphql").permitAll()
-          .pathMatchers("/graphql").authenticated() // Разрешаем
+          .pathMatchers("/graphql").permitAll() // Разрешаем
           .anyExchange().authenticated()
       ).oauth2ResourceServer(
         oauth2 -> oauth2.jwt(jwt -> jwt.jwkSetUri(jwkSetUri)))

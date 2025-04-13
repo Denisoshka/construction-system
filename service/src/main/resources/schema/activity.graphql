@@ -88,12 +88,10 @@ type WorkScheduleUnit{
 input WorkScheduleUnitInput{
   workTypeId: ID!
   brigadeId: ID!
+  contractId : ID!
   planStartDate: Date!
   planEndDate: Date!
-  factStartDate: Date
-  factEndDate: Date
   planOrder: Int!
-  factOrder: Int
 }
 
 input CustomerOrganizationInput{
@@ -125,6 +123,7 @@ type Query {
     brigadeId: ID!, pagination: Pagination!
   ): [WorkScheduleUnit!]!
   workScheduleUnit(id: ID!): WorkScheduleUnit!
+  workTypes(pagination: Pagination!): [WorkType!]!
   workMaterials(scheduleUnitID: ID!, pagination: Pagination!): [MaterialUsage!]!
 }
 
@@ -148,7 +147,7 @@ extend type Mutation  {
     id: ID!, input : WorkScheduleUnitInput!
   ): WorkScheduleUnit!
   deleteWorkScheduleUnit(id:ID!) :Boolean!
-  addProjectContract(input: ProjectContractInput!): ProjectContract!
+  #  addProjectContract(input: ProjectContractInput!): ProjectContract!
 
   createManufacturer(input: ManufacturerInput!): Manufacturer!
   deleteManufacturer(id: ID!): Boolean!

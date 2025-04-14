@@ -5,19 +5,18 @@ services:
     image: postgres:16
     container_name: postgres-db
     environment:
-      POSTGRES_USER: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
-      POSTGRES_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
-      POSTGRES_DB: ${POSTGRES_DB:-construction-system}
+      POSTGRES_USER: ${CONSTRUCTION_SYSTEM_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${CONSTRUCTION_SYSTEM_POSTGRES_DB}
     ports:
       - "5433:5432"
     volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql  # Добавляем скрипт для инициализации базы данных
       - postgres-data-dev:/var/lib/postgresql/data
     networks:
       - dev-net
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "$POSTGRES_USER", "-d", "$POSTGRES_DB" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
       interval: 10s
       retries: 5
       timeout: 5s
@@ -49,19 +48,21 @@ services:
     container_name: keycloak
     command:
       - start-dev
+      - --import-realm
     environment:
       KC_HEALTH_ENABLED: true
       KC_METRICS_ENABLED: true
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-password}
+#      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+#      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/${CONSTRUCTION_SYSTEM_POSTGRES_DB:-keycloak-db}
-      KC_DB_USERNAME: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
-      KC_DB_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/${KEYCLOAK_POSTGRES_DB}
+      KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER}
+      KC_DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
     ports:
       - "9091:8080"
     volumes:
-      - ./keycloak:/opt/keycloak/data/import
+#      - ./keycloak/required:/opt/keycloak/data/export
+      - ./keycloak/data:/opt/keycloak/data/import
     networks:
       - dev-net
     depends_on:
@@ -71,19 +72,18 @@ services:
     image: postgres:16
     container_name: keycloak-db
     environment:
-      POSTGRES_USER: ${CONSTRUCTION_SYSTEM_POSTGRES_USER:-user}
-      POSTGRES_PASSWORD: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD:-password}
-      POSTGRES_DB: ${POSTGRES_DB:-keycloak-db}
+      POSTGRES_USER: ${KEYCLOAK_POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${KEYCLOAK_POSTGRES_DB:-keycloak-db}
     ports:
       - "5432:5432"
     volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql  # Добавляем скрипт для инициализации базы данных
       - keycloak-db-data-dev:/var/lib/postgresql/data
     networks:
       - dev-net
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "$POSTGRES_USER", "-d", "$POSTGRES_DB" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
       interval: 10s
       retries: 5
       timeout: 5s

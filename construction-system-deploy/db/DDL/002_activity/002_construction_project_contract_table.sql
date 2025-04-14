@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS construction_project_contract
         ),
     plan_start_date  DATE         NOT NULL CHECK (
         plan_start_date >= '1900-01-01'::DATE AND
-        signing_date >= plan_start_date
+        signing_date <= plan_start_date
         ),
     plan_end_date    DATE         NOT NULL CHECK (
         plan_end_date >= '1900-01-01'::DATE AND

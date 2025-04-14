@@ -77,4 +77,9 @@ public class MaterialDataFetcher {
     final var uuid = UUID.fromString(scheduleUnitID);
     return materialService.findAllMaterialUsageByScheduleUnit(uuid, pagination);
   }
+  
+  @DgsQuery
+  public List<WorkType> workTypes(@InputArgument Pagination pagination){
+    return
+  }
 }

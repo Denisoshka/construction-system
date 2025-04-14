@@ -6,7 +6,7 @@ spring:
     name: service
 
   datasource:
-    url: ${CONSTRUCTION_SYSTEM_MS_SERVICE_DB_URL}
+    url: ${CONSTRUCTION_SYSTEM_DB_URL}
     username: ${CONSTRUCTION_SYSTEM_POSTGRES_USER}
     password: ${CONSTRUCTION_SYSTEM_POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver

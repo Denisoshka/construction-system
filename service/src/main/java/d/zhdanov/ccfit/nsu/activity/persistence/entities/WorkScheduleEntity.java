@@ -11,7 +11,6 @@ import java.util.UUID;
 @Data
 @Table("work_schedule")
 public class WorkScheduleEntity {
-  @NotNull
   @Id
   private UUID      id;
   @NotNull

@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.UUID;
 
 @DgsComponent
-public class WorkScheduleDataFetcher {
+public class WorkDataFetcher {
   final private WorkScheduleService workScheduleService;
   
-  public WorkScheduleDataFetcher(
+  public WorkDataFetcher(
     @Autowired WorkScheduleService workScheduleService
   ) {
     this.workScheduleService = workScheduleService;

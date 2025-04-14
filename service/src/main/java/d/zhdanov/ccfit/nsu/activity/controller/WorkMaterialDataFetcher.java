@@ -4,68 +4,67 @@ import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
-import d.zhdanov.ccfit.nsu.activity.service.MaterialService;
+import d.zhdanov.ccfit.nsu.activity.service.WorkMaterialService;
 import d.zhdanov.graphql.types.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.UUID;
 
 @DgsComponent
-public class MaterialDataFetcher {
-  private final MaterialService materialService;
+public class WorkMaterialDataFetcher {
+  private final WorkMaterialService workMaterialService;
   
-  public MaterialDataFetcher(MaterialService materialService) {
-    this.materialService = materialService;
+  public WorkMaterialDataFetcher(WorkMaterialService workMaterialService) {
+    this.workMaterialService = workMaterialService;
   }
   
   @DgsQuery
   public Material materialType(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    return materialService.findMaterialType(uuid);
+    return workMaterialService.findMaterialType(uuid);
   }
   
   @DgsQuery
   public List<Material> materialTypes(@InputArgument Pagination pagination) {
-    return materialService.findAllMaterialTypes(pagination);
+    return workMaterialService.findAllMaterialTypes(pagination);
   }
   
   @DgsMutation
   public Material createMaterialType(@InputArgument MaterialInput input) {
-    return materialService.createMaterialType(input);
+    return workMaterialService.createMaterialType(input);
   }
   
   @DgsMutation
   public Boolean deleteMaterialType(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    materialService.deleteMaterial(uuid);
+    workMaterialService.deleteMaterial(uuid);
     return true;
   }
   
   @DgsQuery
   public Manufacturer manufacturer(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    return materialService.findManufacturer(uuid);
+    return workMaterialService.findManufacturer(uuid);
   }
   
   @DgsQuery
   public List<Manufacturer> manufacturers(
     @InputArgument Pagination pagination
   ) {
-    return materialService.findAllManufacturers(pagination);
+    return workMaterialService.findAllManufacturers(pagination);
   }
   
   @DgsMutation
   public Manufacturer createManufacturer(
     @InputArgument ManufacturerInput input
   ) {
-    return materialService.createManufacturer(input);
+    return workMaterialService.createManufacturer(input);
   }
   
   @DgsMutation
   Boolean deleteManufacturer(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
-    materialService.deleteManufacturer(uuid);
+    workMaterialService.deleteManufacturer(uuid);
     return true;
   }
   
@@ -75,11 +74,11 @@ public class MaterialDataFetcher {
     @InputArgument Pagination pagination
   ) {
     final var uuid = UUID.fromString(scheduleUnitID);
-    return materialService.findAllMaterialUsageByScheduleUnit(uuid, pagination);
+    return workMaterialService.findAllMaterialUsageByScheduleUnit(uuid, pagination);
   }
   
   @DgsQuery
   public List<WorkType> workTypes(@InputArgument Pagination pagination){
-    return
+    return workMaterialService.findAllWorkTypes(pagination);
   }
 }

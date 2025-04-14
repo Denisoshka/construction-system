@@ -53,22 +53,3 @@ spring:
         jwt:
           issuer-uri: ${KEYCLOAK_ISSUER_URI}
           jwk-set-uri: ${KEYCLOAK_SET_URI}
-
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: health
-#  tracing:
-#    enabled: true
-#    sampling:
-#      probability: 1.0
-#    propagation:
-#      produce: W3C
-#  otlp:
-#    tracing:
-#      endpoint: http://localhost:4318/v1/traces
-#
-#otel:
-#  service:
-#    name: ${spring.application.name}

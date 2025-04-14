@@ -4,9 +4,10 @@ import d.zhdanov.ccfit.nsu.activity.mapper.MaterialMapper;
 import d.zhdanov.ccfit.nsu.activity.persistence.ManufacturerRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.MaterialTypeRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.MaterialUsageRepository;
-import d.zhdanov.ccfit.nsu.utils.Utils;
+import d.zhdanov.ccfit.nsu.activity.persistence.WorkTypeRepository;
 import d.zhdanov.ccfit.nsu.objects.exceptions.ManufacturerAbsent;
 import d.zhdanov.ccfit.nsu.objects.exceptions.MaterialTypeAbsent;
+import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,21 +19,24 @@ import java.util.UUID;
 
 
 @Service
-public class MaterialService {
+public class WorkMaterialService {
   private final MaterialTypeRepository  materialTypeRepository;
   private final ManufacturerRepository  manufacturerRepository;
   private final MaterialUsageRepository materialUsageRepository;
+  private final WorkTypeRepository      workTypeRepository;
   private final MaterialMapper          materialMapper;
   
-  public MaterialService(
+  public WorkMaterialService(
     @Autowired MaterialTypeRepository materialTypeRepository,
     @Autowired ManufacturerRepository manufacturerRepository,
     @Autowired MaterialMapper materialMapper,
-    @Autowired MaterialUsageRepository materialUsageRepository
+    @Autowired MaterialUsageRepository materialUsageRepository,
+    @Autowired WorkTypeRepository workTypeRepository
   ) {
     this.materialTypeRepository  = materialTypeRepository;
     this.manufacturerRepository  = manufacturerRepository;
     this.materialUsageRepository = materialUsageRepository;
+    this.workTypeRepository      = workTypeRepository;
     this.materialMapper          = materialMapper;
   }
   
@@ -103,5 +107,14 @@ public class MaterialService {
       paged
     );
     return materialMapper.fromMaterialUsageEntityList(ret);
+  }
+  
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<WorkType> findAllWorkTypes(
+    final Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret   = workTypeRepository.findAll(paged).toList();
+    return materialMapper.fromWorkTypeEntityList(ret);
   }
 }

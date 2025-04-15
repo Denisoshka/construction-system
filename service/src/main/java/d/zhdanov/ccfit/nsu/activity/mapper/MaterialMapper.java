@@ -6,6 +6,7 @@ import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialUsageEntity;
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.WorkTypeEntity;
 import d.zhdanov.graphql.types.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public interface MaterialMapper {
   MaterialTypeEntity toMaterialTypeEntity(MaterialInput materialInput);
   
+  @Mapping(target = "manufacturer", source = "manufacturerEntity")
   Material fromMaterialTypeEntity(MaterialTypeEntity materialTypeEntity);
   
   List<Material> fromMaterialTypeEntityList(
@@ -30,6 +32,7 @@ public interface MaterialMapper {
     List<ManufacturerEntity> manufacturerEntities
   );
   
+  @Mapping(target = "material", source = "materialType")
   MaterialUsage toMaterialUsage(MaterialUsageEntity entity);
   
   List<MaterialUsage> fromMaterialUsageEntityList(
@@ -39,4 +42,16 @@ public interface MaterialMapper {
   WorkType toWorkType(WorkTypeEntity entity);
   
   List<WorkType> fromWorkTypeEntityList(List<WorkTypeEntity> workTypeEntities);
+  
+  @Mapping(target = "id", ignore = true)
+  MaterialUsageEntity toMaterialUsageEntity(
+    MaterialUsageInput materialUsageInput
+  );
+  
+  List<MaterialUsageEntity> toMaterialUsageEntityList(
+    List<MaterialUsageInput> materialUsageInputs
+  );
+  
+//  MaterialUsage toMaterialUsage(MaterialUsageEntity entity);
+  
 }

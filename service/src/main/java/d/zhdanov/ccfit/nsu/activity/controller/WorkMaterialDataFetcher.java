@@ -68,17 +68,33 @@ public class WorkMaterialDataFetcher {
     return true;
   }
   
+  @DgsMutation
+  public Boolean deleteWorkMaterials(@InputArgument List<String> materials) {
+    final var matUUIDs = materials.stream().map(UUID::fromString).toList();
+    return workMaterialService.deleteMaterials(matUUIDs);
+  }
+  
+  @DgsMutation
+  public boolean addWorkMaterials(
+    @InputArgument String workUnitId,
+    @InputArgument List<MaterialUsageInput> materials
+  ) {
+    final var uuid = UUID.fromString(workUnitId);
+    return workMaterialService.addWorkMaterials(uuid, materials);
+  }
+  
   @DgsQuery
   public List<MaterialUsage> workMaterials(
     @InputArgument String scheduleUnitID,
     @InputArgument Pagination pagination
   ) {
     final var uuid = UUID.fromString(scheduleUnitID);
-    return workMaterialService.findAllMaterialUsageByScheduleUnit(uuid, pagination);
+    return workMaterialService.findAllMaterialUsageByScheduleUnit(
+      uuid, pagination);
   }
   
   @DgsQuery
-  public List<WorkType> workTypes(@InputArgument Pagination pagination){
+  public List<WorkType> workTypes(@InputArgument Pagination pagination) {
     return workMaterialService.findAllWorkTypes(pagination);
   }
 }

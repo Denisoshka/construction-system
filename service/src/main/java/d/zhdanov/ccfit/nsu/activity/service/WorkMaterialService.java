@@ -43,14 +43,16 @@ public class WorkMaterialService {
   @PreAuthorize("hasRole('EMPLOYEE')")
   public List<Material> findAllMaterialTypes(final Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
-    final var ret   = materialTypeRepository.findAll(paged).toList();
+    final var ret =
+      materialTypeRepository.findMaterialsWithManufacturer(
+        paged.getOffset(), paged.getPageSize());
     return materialMapper.fromMaterialTypeEntityList(ret);
   }
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public Material findMaterialType(final UUID id) {
-    final var ret = materialTypeRepository.findById(id).orElseThrow(
-      MaterialTypeAbsent::new);
+    final var ret = materialTypeRepository.findMaterialsWithManufacturer(id)
+      .orElseThrow(MaterialTypeAbsent::new);
     return materialMapper.fromMaterialTypeEntity(ret);
   }
   
@@ -70,8 +72,8 @@ public class WorkMaterialService {
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public Manufacturer findManufacturer(final UUID id) {
-    final var ret = manufacturerRepository.findById(id).orElseThrow(
-      ManufacturerAbsent::new);
+    final var ret =
+      manufacturerRepository.findById(id).orElseThrow(ManufacturerAbsent::new);
     return materialMapper.fromManufacturerEntity(ret);
   }
   
@@ -98,14 +100,14 @@ public class WorkMaterialService {
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public List<MaterialUsage> findAllMaterialUsageByScheduleUnit(
-    final UUID workUnitId,
-    final Pagination pagination
-  ) {
+    final UUID workUnitId, final Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
-    final var ret = materialUsageRepository.findByWorkUnitId(
-      workUnitId,
-      paged
-    );
+    final var ret =
+      materialUsageRepository.findMaterialUsageWithDetails(
+        workUnitId,
+        paged.getOffset(),
+        paged.getPageSize()
+      );
     return materialMapper.fromMaterialUsageEntityList(ret);
   }
   
@@ -116,5 +118,25 @@ public class WorkMaterialService {
     final var paged = Utils.getPageable(pagination);
     final var ret   = workTypeRepository.findAll(paged).toList();
     return materialMapper.fromWorkTypeEntityList(ret);
+  }
+  
+  @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
+  public Boolean deleteMaterials(List<UUID> matUUIDs) {
+    materialUsageRepository.deleteAllById(matUUIDs);
+    return true;
+  }
+  
+  @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
+  @Transactional
+  public boolean addWorkMaterials(
+    UUID uuid,
+    List<MaterialUsageInput> materials
+  ) {
+    final var forSave = materialMapper.toMaterialUsageEntityList(materials);
+    for(var entity : forSave) {
+      entity.setWorkUnitId(uuid);
+    }
+    materialUsageRepository.saveAll(forSave);
+    return true;
   }
 }

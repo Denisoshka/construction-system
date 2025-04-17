@@ -15,19 +15,11 @@ public class EngineerRowMapper implements RowMapper<EngineerEntity> {
   public EngineerEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
     UUID    employeeId = rs.getObject("employee_id", UUID.class);
     Integer positionId = rs.getObject("engineer_position_id", Integer.class);
+    final var employee         = EmployeeEntity.of(rs, employeeId);
+    final var engineerPosition = EngineerPositionEntity.of(rs, positionId);
     
-    EmployeeEntity employee = EmployeeEntityFetcher.of(rs, employeeId);
-    
-    EngineerPositionEntity engineerPosition = null;
-    if(positionId != null) {
-      engineerPosition = EngineerPositionEntityFetcher.of(rs, positionId);
-    }
     
     return new EngineerEntity(
-      employeeId,
-      positionId,
-      employee,
-      engineerPosition
-    );
+      employeeId, positionId, employee, engineerPosition);
   }
 }

@@ -15,13 +15,8 @@ public class WorkerRowMapper implements RowMapper<WorkerEntity> {
   public WorkerEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
     UUID    employeeId = rs.getObject("employee_id", UUID.class);
     Integer positionId = rs.getObject("worker_position_id", Integer.class);
-    
-    EmployeeEntity employee = EmployeeEntityFetcher.of(rs, employeeId);
-    
-    WorkerPositionEntity workerPosition = null;
-    if(positionId != null) {
-      workerPosition = WorkerPositionEntityFetcher.of(rs, positionId);
-    }
+    final var employee       = EmployeeEntity.of(rs, employeeId);
+    final var workerPosition = WorkerPositionEntity.of(rs, positionId);
     
     return new WorkerEntity(employeeId, positionId, employee, workerPosition);
   }

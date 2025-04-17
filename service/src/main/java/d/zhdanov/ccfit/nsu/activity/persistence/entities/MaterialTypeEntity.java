@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 
 @Data
@@ -14,13 +16,24 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MaterialTypeEntity {
   @Id
-  private UUID               id;
+  private UUID    id;
   @NotNull
-  private UUID               manufacturerId;
+  private UUID    manufacturerId;
   @NotNull
-  private String             name;
+  private String  name;
   @NotNull
-  private Integer            cost;
+  private Integer cost;
+  
   @Transient
   private ManufacturerEntity manufacturerEntity;
+  
+  public static MaterialTypeEntity of(ResultSet rs) throws SQLException {
+    final var materialType = new MaterialTypeEntity();
+    materialType.setId(rs.getObject("mt_id", UUID.class));
+    materialType.setManufacturerId(
+      rs.getObject("mt_manufacturer_id", UUID.class));
+    materialType.setName(rs.getString("mt_name"));
+    materialType.setCost(rs.getInt("mt_cost"));
+    return materialType;
+  }
 }

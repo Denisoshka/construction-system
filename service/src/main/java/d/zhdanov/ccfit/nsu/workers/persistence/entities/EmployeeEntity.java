@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -23,5 +25,18 @@ public class EmployeeEntity {
   private String    patronymic;
   private LocalDate employmentDate;
   private JobPost   post;
+  
+  public static EmployeeEntity of(final ResultSet rs, final UUID employeeId)
+  throws SQLException {
+    return new EmployeeEntity(
+      employeeId,
+      rs.getString("system_id"),
+      rs.getString("name"),
+      rs.getString("surname"),
+      rs.getString("patronymic"),
+      rs.getDate("employment_date").toLocalDate(),
+      JobPost.valueOf(rs.getString("post"))
+    );
+  }
 }
 

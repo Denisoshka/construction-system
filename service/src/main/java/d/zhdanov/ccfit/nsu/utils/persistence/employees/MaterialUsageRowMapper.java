@@ -1,5 +1,6 @@
-package d.zhdanov.ccfit.nsu.activity.persistence.utils;
+package d.zhdanov.ccfit.nsu.utils.persistence.employees;
 
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialTypeEntity;
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialUsageEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,9 +14,10 @@ public class MaterialUsageRowMapper implements RowMapper<MaterialUsageEntity> {
   @Override
   public MaterialUsageEntity mapRow(@NotNull ResultSet rs, int rowNum)
   throws SQLException {
-    final var usage    = MaterialUsageEntityFetcher.of(rs);
-    final var material = MaterialEntityFetcher.of(rs);
+    final var usage    = MaterialUsageEntity.of(rs);
+    final var material = MaterialTypeEntity.of(rs);
     usage.setMaterialType(material);
+    
     return usage;
   }
 }

@@ -1,8 +1,7 @@
 package d.zhdanov.ccfit.nsu.activity.persistence;
 
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialUsageEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.utils.MaterialUsageRowMapper;
-import org.springframework.data.domain.Pageable;
+import d.zhdanov.ccfit.nsu.utils.persistence.employees.MaterialUsageRowMapper;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -30,7 +29,7 @@ public interface MaterialUsageRepository
             FROM material_usage mu
             JOIN material_type mt ON mu.material_id = mt.id
             JOIN manufacturer_table mr ON mt.manufacturer_id = mr.id
-            WHERE mu.work_unit_id = :workUnitId
+            WHERE mu.work_unit_id = :workUnitId::uuid
             LIMIT :limit OFFSET :offset
             """, rowMapperClass = MaterialUsageRowMapper.class
   )
@@ -53,10 +52,9 @@ public interface MaterialUsageRepository
             FROM material_usage mu
             JOIN material_type mt ON mu.material_id = mt.id
             JOIN manufacturer_table mr ON mt.manufacturer_id = mr.id
-            WHERE mu.id = :unitId
+            WHERE mu.id = :unitId::uuid
             LIMIT :limit OFFSET :offset
             """, rowMapperClass = MaterialUsageRowMapper.class
   )
   Optional<MaterialUsageEntity> findMaterialUsageWithDetails(UUID workUnitId);
-  
 }

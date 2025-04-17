@@ -1,0 +1,6 @@
+federation_version: 2.3.5
+subgraphs:
+  construction-service:
+    routing_url: http://localhost:8080/graphql
+    schema:
+      subgraph_url: http://localhost:8080/graphql

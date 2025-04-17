@@ -1,7 +1,13 @@
 supergraph:
-  listen: 0.0.0.0:8080
+  listen: 0.0.0.0:4000
   path: /graphql
   introspection: true
+  schema:
+    composition:
+      subgraphs:
+        - name: construction-service
+          url: http://localhost:8080/graphql
+
 cors:
   allow_any_origin: true
 headers:
@@ -24,3 +30,15 @@ telemetry:
       enabled: true
       listen: 0.0.0.0:9090
       path: /metrics
+
+authentication:
+  router:
+    jwt:
+      jwks:
+        - url: ${KEYCLOAK_SET_URI}
+      header_name: Authorization
+      header_value_prefix: Bearer
+
+rhai:
+  scripts:
+    - scripts/auth.rhai

@@ -1,6 +1,28 @@
 version: '3.8'
 
 services:
+  rover:
+    build: ./rover
+    command: supergraph compose --config /opt/supergraph/supergraph.yaml --output /opt/supergraph/supergraph.graphqls --elv2-license=accept
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    volumes:
+      - ./apollo/router/supergraph.yaml:/opt/supergraph/supergraph.yaml
+    networks:
+      - dev-net
+
+  router:
+    image: ghcr.io/apollographql/router:v1.61.3-rc.0
+    volumes:
+      - ./router:/dist/config/
+    ports:
+      - "4000:4000"
+    command: -c config/router.yaml
+    networks:
+      - dev-net
+
   postgres:
     image: postgres:16
     container_name: postgres-db

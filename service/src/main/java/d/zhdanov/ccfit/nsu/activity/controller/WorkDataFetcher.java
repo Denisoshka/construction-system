@@ -64,4 +64,10 @@ public class WorkDataFetcher {
     final var uuid = UUID.fromString(id);
     return workScheduleService.deleteWorkSchedule(uuid);
   }
+  
+  @DgsMutation
+  public Boolean deleteWorkScheduleUnits(@InputArgument List<String> units){
+    final var uuids = units.stream().map(UUID::fromString).toList();
+    return workScheduleService.deleteWorkSchedule(uuids);
+  }
 }

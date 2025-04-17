@@ -1,8 +1,7 @@
 package d.zhdanov.ccfit.nsu.activity.persistence;
 
 import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialTypeEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialUsageEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.utils.MaterialTypeRowMapper;
+import d.zhdanov.ccfit.nsu.utils.persistence.employees.MaterialTypeRowMapper;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;

@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Service
 public class WorkScheduleService {
-  private final WorkScheduleMapper     workScheduleMapper;
+  private final WorkScheduleMapper workScheduleMapper;
   private final WorkScheduleRepository workScheduleRepository;
   
   public WorkScheduleService(
@@ -30,8 +30,8 @@ public class WorkScheduleService {
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public WorkScheduleUnit findWorkScheduleById(final UUID id) {
-    final var ret = workScheduleRepository.findById(id).orElseThrow(
-      WorkScheduleUnitAbsent::new);
+    final var ret = workScheduleRepository.findById(id)
+      .orElseThrow(WorkScheduleUnitAbsent::new);
     return workScheduleMapper.toWorkScheduleUnit(ret);
   }
   
@@ -40,11 +40,12 @@ public class WorkScheduleService {
     final UUID brigadeId,
     final Pagination pagination
   ) {
-    final var paged = Utils.getPageable(
-      pagination,
-      WorkScheduleRepository.defSort
-    );
-    final var ret = workScheduleRepository.findAllByBrigadeId(brigadeId, paged);
+    final var paged = Utils.getPageable(pagination);
+    final var ret =
+      workScheduleRepository.findAllByBrigadeId(
+        brigadeId, paged.getOffset(), paged.getPageSize(),
+        WorkScheduleRepository.defSort
+      );
     return workScheduleMapper.toWorkScheduleUnitList(ret);
   }
   
@@ -53,14 +54,12 @@ public class WorkScheduleService {
     final UUID projectId,
     final Pagination pagination
   ) {
-    final var paged = Utils.getPageable(
-      pagination,
-      WorkScheduleRepository.defSort
-    );
-    final var ret = workScheduleRepository.findAllByContractId(
-      projectId,
-      paged
-    );
+    final var paged = Utils.getPageable(pagination);
+    final var ret =
+      workScheduleRepository.findAllByContractId(
+        projectId, paged.getOffset(), paged.getPageSize(),
+        WorkScheduleRepository.defSort
+      );
     return workScheduleMapper.toWorkScheduleUnitList(ret);
   }
   
@@ -75,7 +74,9 @@ public class WorkScheduleService {
   @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
   @Transactional
   public WorkScheduleUnit updateWorkScheduleUnit(
-    UUID id, WorkScheduleUnitInput input) {
+    UUID id,
+    WorkScheduleUnitInput input
+  ) {
     final var entity = workScheduleMapper.toWorkScheduleEntity(input);
     entity.setId(id);
     workScheduleRepository.save(entity);
@@ -86,6 +87,12 @@ public class WorkScheduleService {
   @Transactional
   public Boolean deleteWorkSchedule(UUID uuid) {
     workScheduleRepository.deleteById(uuid);
+    return true;
+  }
+  
+  @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
+  public Boolean deleteWorkSchedule(List<UUID> uuids) {
+    workScheduleRepository.deleteAllById(uuids);
     return true;
   }
 }

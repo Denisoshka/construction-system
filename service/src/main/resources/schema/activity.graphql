@@ -77,6 +77,8 @@ type WorkScheduleUnit{
   id: ID!
   workTypeId: ID!
   brigadeId: ID!
+  workType: WorkType!
+  brigade: Brigade!
   contractId : ID!
   planStartDate: Date!
   planEndDate: Date!
@@ -146,6 +148,7 @@ extend type Mutation  {
     id: ID!, input : WorkScheduleUnitInput!
   ): WorkScheduleUnit!
   deleteWorkScheduleUnit(id:ID!) :Boolean!
+  deleteWorkScheduleUnits(units: [ID!]!) : Boolean
   #  addProjectContract(input: ProjectContractInput!): ProjectContract!
 
   createManufacturer(input: ManufacturerInput!): Manufacturer!

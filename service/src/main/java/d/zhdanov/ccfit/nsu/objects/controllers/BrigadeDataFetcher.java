@@ -5,10 +5,8 @@ import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
 import d.zhdanov.ccfit.nsu.objects.dto.BrigadeDTO;
 import d.zhdanov.ccfit.nsu.objects.service.BrigadeService;
-import d.zhdanov.ccfit.nsu.workers.service.WorkersService;
 import d.zhdanov.graphql.types.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.UUID;

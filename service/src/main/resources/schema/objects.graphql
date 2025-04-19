@@ -34,6 +34,7 @@ extend type Query {
   constructionSite(id : ID!): ConstructionSite!
   constructionSites(pagination: Pagination!): [ConstructionSite!]!
   constructionSiteBySiteManager(id: ID!) : ConstructionSite!
+  constructionsSiteByEngineer(id: ID!): ConstructionSite!
   brigades(pagination : Pagination!): [Brigade!]!
   brigade(id: ID!): Brigade!
   brigadesByConstructionSite(id: ID!, pagination : Pagination!): [Brigade!]!

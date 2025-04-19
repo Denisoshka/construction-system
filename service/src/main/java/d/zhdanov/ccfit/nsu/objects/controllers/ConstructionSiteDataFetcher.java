@@ -5,10 +5,7 @@ import d.zhdanov.ccfit.nsu.objects.dto.BrigadeDTO;
 import d.zhdanov.ccfit.nsu.objects.dto.ConstructionSiteDTO;
 import d.zhdanov.ccfit.nsu.objects.service.ConstructionSiteService;
 import d.zhdanov.graphql.DgsConstants;
-import d.zhdanov.graphql.types.ConstructionSite;
-import d.zhdanov.graphql.types.ConstructionSiteInput;
 import d.zhdanov.graphql.types.Pagination;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +14,9 @@ import java.util.UUID;
 public class ConstructionSiteDataFetcher {
   private final ConstructionSiteService constructionSiteService;
   
-  public ConstructionSiteDataFetcher(ConstructionSiteService constructionSiteService) {
+  public ConstructionSiteDataFetcher(
+    ConstructionSiteService constructionSiteService
+  ) {
     this.constructionSiteService = constructionSiteService;
   }
   
@@ -28,7 +27,9 @@ public class ConstructionSiteDataFetcher {
   }
   
   @DgsQuery
-  public List<ConstructionSiteDTO> constructionSites(@InputArgument Pagination pagination){
+  public List<ConstructionSiteDTO> constructionSites(
+    @InputArgument Pagination pagination
+  ) {
     return constructionSiteService.findConstructionSites(pagination);
   }
   
@@ -36,6 +37,14 @@ public class ConstructionSiteDataFetcher {
   public ConstructionSiteDTO constructionSiteBySiteManager(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return constructionSiteService.findConstructionSiteBySiteManager(uuid);
+  }
+  
+  @DgsQuery
+  public ConstructionSiteDTO constructionsSiteByEngineer(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return constructionSiteService.findConstructionSiteByEngineer(
+      uuid
+    );
   }
   
   @DgsData(

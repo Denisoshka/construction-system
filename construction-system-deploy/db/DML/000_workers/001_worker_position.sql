@@ -1,5 +1,6 @@
-insert into worker_position (id, name)
-values (1, 'Каменщик'),
+insert into public.worker_position (id, name)
+values (0, 'UNKNOWN'),
+       (1, 'Каменщик'),
        (2, 'Плотник'),
        (3, 'Сварщик'),
        (4, 'Электрик'),
@@ -7,4 +8,5 @@ values (1, 'Каменщик'),
        (6, 'Монтажник'),
        (7, 'Бетонщик'),
        (8, 'Отделочник'),
-       (9, 'Сантехник');
+       (9, 'Сантехник')
+on conflict (id) do nothing;

@@ -74,8 +74,6 @@ services:
     environment:
       KC_HEALTH_ENABLED: true
       KC_METRICS_ENABLED: true
-#      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-#      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://keycloak-db:5432/${KEYCLOAK_POSTGRES_DB}
       KC_DB_USERNAME: ${KEYCLOAK_POSTGRES_USER}

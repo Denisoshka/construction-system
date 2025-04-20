@@ -1,0 +1,2 @@
+insert into public.work_schedule (id, brigade_id, work_type_id, contract_id, plan_start_date, plan_end_date, plan_order)
+values  ('a66119c7-8dfe-40ec-b0c0-28e94cc9c8f4', '5881f81d-0b1e-4f08-b542-d6af73301f03', '916b76fe-0f3f-454f-813a-5990a55468d5', '82881598-142f-441b-8e7b-7b00c4028267', '2025-04-01', '2025-04-26', 5);

@@ -130,7 +130,7 @@ public class WorkersService {
     );
     return workersMapper.toWorkersInfo(ret);
   }
-
+  
   @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkerInfo> findAllWorkersByConstructionSite(
     UUID siteId, Pagination pagination) {
@@ -141,6 +141,20 @@ public class WorkersService {
         paged.getOffset(),
         paged.getPageSize()
       );
+    return workersMapper.fromWorkerEntityList(ret);
+  }
+  
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<WorkerInfo> findAllWorkersByBrigade(
+    UUID id,
+    Pagination pagination
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret = workersRepository.findAllByBrigadeIdWithPositionEntity(
+      id,
+      paged.getOffset(),
+      paged.getPageSize()
+    );
     return workersMapper.fromWorkerEntityList(ret);
   }
 }

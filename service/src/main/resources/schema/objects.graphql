@@ -37,6 +37,7 @@ extend type Query {
   constructionsSiteByEngineer(id: ID!): ConstructionSite!
   brigades(pagination : Pagination!): [Brigade!]!
   brigade(id: ID!): Brigade!
+  brigadeByWorker(id: ID!): Brigade!
   brigadesByConstructionSite(id: ID!, pagination : Pagination!): [Brigade!]!
   engineersByConstructionSite(
     id: ID!, pagination : Pagination!

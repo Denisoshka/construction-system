@@ -1,0 +1,3 @@
+insert into public.construction_project_contract (id, site_id, customer_id, type, date_of_creation, signing_date, plan_start_date, plan_end_date, fact_start_date, fact_end_date)
+values  ('82881598-142f-441b-8e7b-7b00c4028267', 'd0e018be-f419-4576-9806-1712990d60d1', 'c101465a-abec-43ed-af96-0791bc609f49', 'apartment_house', '2025-04-16', '2025-04-01', '2025-04-01', '2025-04-24', '2025-04-15', '2025-04-16'),
+        ('503ed279-bca6-4547-93e5-bd542a6a1694', 'd0e018be-f419-4576-9806-1712990d60d1', 'c101465a-abec-43ed-af96-0791bc609f49', 'apartment_house', '2025-04-18', '2025-04-01', '2025-04-01', '2025-04-30', null, null);

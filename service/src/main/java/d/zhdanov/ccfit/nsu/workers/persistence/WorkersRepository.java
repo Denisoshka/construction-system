@@ -107,4 +107,23 @@ public interface WorkersRepository
   List<WorkerEntity> findAllWorkersBySiteWithPositionEntity(
     UUID siteId, long offset, int pageSize
   );
+  @Query(
+    value = """
+            SELECT
+                w.employee_id, emp.system_id,
+                emp.name, emp.surname,
+                emp.patronymic, emp.employment_date,
+                emp.post,
+                pos.id AS worker_position_id,
+                pos.name AS worker_position_name
+            FROM workers w
+            JOIN employees emp ON w.employee_id = emp.id
+            JOIN worker_position pos ON w.position_id = pos.id
+            JOIN brigade_management br_mg ON br_mg.worker_id = w.employee_id
+            JOIN brigade br ON br.id = br_mg.team_id
+            WHERE w.employee_id = :id::uuid
+            LIMIT :pageSize OFFSET :offset
+            """, rowMapperClass = WorkerRowMapper.class
+  )
+  List<WorkerEntity> findAllByBrigadeIdWithPositionEntity(UUID id, long offset, int pageSize);
 }

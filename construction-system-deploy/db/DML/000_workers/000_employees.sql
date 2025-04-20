@@ -1,6 +1,8 @@
-insert into employees (id, system_id, name, surname, patronymic,
-                       employment_date, post)
-values ('e30cc88d-8a09-40e7-9c00-7b13aa44b51e', 'SYS-001', 'Иван', 'Петров',
+insert into public.employees (id, system_id, name, surname, patronymic,
+                              employment_date, post)
+values ('00000000-0000-0000-0000-000000000000', 'UNKNOWN', 'UNKNOWN', 'UNKNOWN',
+        'UNKNOWN', '2025-04-15', 'UNKNOWN'),
+       ('e30cc88d-8a09-40e7-9c00-7b13aa44b51e', 'SYS-001', 'Иван', 'Петров',
         'Александрович', '2020-05-10', 'WORKER'),
        ('80346b28-cf25-49c2-a1ec-451e13f472e9', 'SYS-002', 'Андрей', 'Сидоров',
         'Владимирович', '2019-08-15', 'WORKER'),
@@ -23,4 +25,8 @@ values ('e30cc88d-8a09-40e7-9c00-7b13aa44b51e', 'SYS-001', 'Иван', 'Петр
        ('3c91b653-1c1d-4cdd-be19-5ceb861c446b', 'SYS-011', 'Ирина', 'Валова',
         'Викторовна', '2024-09-01', 'ENGINEER'),
        ('27e50886-dbc6-49cb-94ec-290ef5046461', 'SYS-012', 'Артем', 'Чувашов',
-        'Сергеевич', '2024-09-01', 'ENGINEER');
+        'Сергеевич', '2024-09-01', 'ENGINEER'),
+       ('776d5ee2-547e-4105-83f8-1fbc11a2de27', 'SYS-013', 'Андрей',
+        'Власенко', 'Юрьевич', '2019-01-23', 'ENGINEER'),
+       ('d4f66a3d-56c1-4ed7-9200-53f975a2163a', 'SYS-014', 'Ирина', 'Шваб',
+        'Васильевна', '2018-06-25', 'WORKER');

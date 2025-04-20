@@ -48,6 +48,12 @@ public class WorkersDataFetcher {
   }
   
   @DgsQuery
+  public List<WorkerInfo> workersByBrigade(
+    @InputArgument String id, @InputArgument Pagination pagination){
+    final var uuid = UUID.fromString(id);
+    return workersService.findAllWorkersByBrigade(uuid, pagination);
+  }
+  @DgsQuery
   public List<WorkerInfo> workersByConstructionSite(
     @InputArgument String id, @InputArgument Pagination pagination
   ) {

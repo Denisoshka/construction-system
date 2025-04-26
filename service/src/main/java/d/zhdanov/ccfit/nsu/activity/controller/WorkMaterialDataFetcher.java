@@ -1,10 +1,8 @@
 package d.zhdanov.ccfit.nsu.activity.controller;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsMutation;
-import com.netflix.graphql.dgs.DgsQuery;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.activity.service.WorkMaterialService;
+import d.zhdanov.graphql.DgsConstants;
 import d.zhdanov.graphql.types.*;
 
 import java.util.List;
@@ -96,5 +94,19 @@ public class WorkMaterialDataFetcher {
   @DgsQuery
   public List<WorkType> workTypes(@InputArgument Pagination pagination) {
     return workMaterialService.findAllWorkTypes(pagination);
+  }
+  
+  @DgsQuery
+  public WorkType workType(@InputArgument String id) {
+    final var uuid = UUID.fromString(id);
+    return workMaterialService.findWorkType(uuid);
+  }
+  
+  @DgsData(
+    parentType = DgsConstants.WORKSCHEDULEUNIT.TYPE_NAME, field = DgsConstants.WORKSCHEDULEUNIT.WorkType
+  )
+  public WorkType workScheduleUnitWorkTypeInfo(DgsDataFetchingEnvironment dfe) {
+    final WorkScheduleUnit workScheduleUnit = dfe.getSource();
+    return workType(workScheduleUnit.getWorkTypeId());
   }
 }

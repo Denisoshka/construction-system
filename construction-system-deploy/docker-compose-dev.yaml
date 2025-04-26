@@ -109,41 +109,41 @@ services:
       timeout: 5s
       start_period: 10s
 
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    container_name: jaeger
-    ports:
-      - "16686:16686"    # Web UI
-      - "4317:4317"      # OTLP/gRPC
-      - "4318:4318"      # OTLP/HTTP
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
-    volumes:
-      - ./jaeger-collector-config.yaml:/etc/jaeger/collector.yaml
-    networks:
-      - dev-net
-
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - dev-net
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana-data:/var/lib/grafana
-    networks:
-      - dev-net
-    depends_on:
-      - prometheus
+#  jaeger:
+#    image: jaegertracing/all-in-one:latest
+#    container_name: jaeger
+#    ports:
+#      - "16686:16686"    # Web UI
+#      - "4317:4317"      # OTLP/gRPC
+#      - "4318:4318"      # OTLP/HTTP
+#    environment:
+#      - COLLECTOR_OTLP_ENABLED=true
+#    volumes:
+#      - ./jaeger-collector-config.yaml:/etc/jaeger/collector.yaml
+#    networks:
+#      - dev-net
+#
+#  prometheus:
+#    image: prom/prometheus:latest
+#    container_name: prometheus
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#    networks:
+#      - dev-net
+#
+#  grafana:
+#    image: grafana/grafana:latest
+#    container_name: grafana
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - grafana-data:/var/lib/grafana
+#    networks:
+#      - dev-net
+#    depends_on:
+#      - prometheus
 
 volumes:
   postgres-data-dev:

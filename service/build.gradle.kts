@@ -1,5 +1,6 @@
 plugins {
   java
+  alias(libs.plugins.spring.boot)
   alias(libs.plugins.dgs.codegen)
   alias(libs.plugins.dependency.management)
 }
@@ -35,6 +36,7 @@ dependencies {
   
   annotationProcessor(libs.lombok)
   annotationProcessor(libs.mapstruct.annotationprocessor)
+  runtimeOnly("org.springframework.boot:spring-boot-docker-compose")
 }
 extra["netflixDgsVersion"] = "10.0.4"
 

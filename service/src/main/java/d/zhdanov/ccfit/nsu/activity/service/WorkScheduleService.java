@@ -79,8 +79,8 @@ public class WorkScheduleService {
   ) {
     final var entity = workScheduleMapper.toWorkScheduleEntity(input);
     entity.setId(id);
-    workScheduleRepository.save(entity);
-    return workScheduleMapper.toWorkScheduleUnit(entity);
+    final var ret = workScheduleRepository.save(entity);
+    return workScheduleMapper.toWorkScheduleUnit(ret);
   }
   
   @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")

@@ -7,7 +7,6 @@ import d.zhdanov.ccfit.nsu.utils.Utils;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.ProjectContract;
 import d.zhdanov.graphql.types.ProjectContractInput;
-import d.zhdanov.graphql.types.ProjectContractInputAddition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -66,7 +65,7 @@ public class ProjectService {
   @Transactional
   public ProjectContract updateProjectContract(
     UUID id,
-    ProjectContractInputAddition update
+    ProjectContractInput update
   ) {
     final var saved = projectContractRepository.findById(id)
       .orElseThrow(ProjectContractAbsent::new);

@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper(
   componentModel = MappingConstants.ComponentModel.SPRING
 )
-public interface MaterialMapper {
+public interface WorkMaterialMapper {
   MaterialTypeEntity toMaterialTypeEntity(MaterialInput materialInput);
   
   @Mapping(target = "manufacturer", source = "manufacturerEntity")
@@ -41,7 +41,7 @@ public interface MaterialMapper {
   
   WorkType toWorkType(WorkTypeEntity entity);
   
-  List<WorkType> fromWorkTypeEntityList(List<WorkTypeEntity> workTypeEntities);
+  List<WorkType> toWorkType(List<WorkTypeEntity> workTypeEntities);
   
   @Mapping(target = "id", ignore = true)
   MaterialUsageEntity toMaterialUsageEntity(

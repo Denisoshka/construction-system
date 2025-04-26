@@ -30,8 +30,10 @@ public interface WorkScheduleRepository
                     ws.contract_id AS ws_contract_id,
                     ws.plan_start_date AS ws_plan_start_date,
                     ws.plan_end_date AS ws_plan_end_date,
+                    ws.fact_start_date AS ws_fact_start_date,
+                    ws.fact_end_date AS ws_fact_end_date,
                     ws.plan_order AS ws_plan_order,
-            
+                    ws.fact_order AS ws_fact_order,
                     wt.id AS wt_id,
                     wt.name AS wt_name,
             
@@ -59,7 +61,10 @@ public interface WorkScheduleRepository
                     ws.plan_start_date AS ws_plan_start_date,
                     ws.plan_end_date AS ws_plan_end_date,
                     ws.plan_order AS ws_plan_order,
-            
+                    ws.fact_start_date AS ws_fact_start_date,
+                    ws.fact_end_date AS ws_fact_end_date,
+                    ws.fact_order AS ws_fact_order,
+
                     wt.id AS wt_id,
                     wt.name AS wt_name,
             
@@ -90,7 +95,9 @@ public interface WorkScheduleRepository
                     ws.plan_start_date AS ws_plan_start_date,
                     ws.plan_end_date AS ws_plan_end_date,
                     ws.plan_order AS ws_plan_order,
-            
+                    ws.fact_start_date AS ws_fact_start_date,
+                    ws.fact_end_date AS ws_fact_end_date,
+                    ws.fact_order AS ws_fact_order,
                     wt.id AS wt_id,
                     wt.name AS wt_name,
             

@@ -1,11 +1,11 @@
 package d.zhdanov.ccfit.nsu.objects.controllers;
 
-import com.netflix.graphql.dgs.DgsComponent;
-import com.netflix.graphql.dgs.DgsQuery;
-import com.netflix.graphql.dgs.InputArgument;
+import com.netflix.graphql.dgs.*;
 import d.zhdanov.ccfit.nsu.objects.dto.BrigadeDTO;
 import d.zhdanov.ccfit.nsu.objects.service.BrigadeService;
+import d.zhdanov.graphql.DgsConstants;
 import d.zhdanov.graphql.types.Pagination;
+import d.zhdanov.graphql.types.WorkScheduleUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -30,6 +30,17 @@ public class BrigadeDataFetcher {
   public BrigadeDTO brigade(@InputArgument String id) {
     final var uuid = UUID.fromString(id);
     return brigadeService.findBrigade(uuid);
+  }
+  
+  @DgsData(
+    parentType = DgsConstants.WORKSCHEDULEUNIT.TYPE_NAME, field =
+    DgsConstants.WORKSCHEDULEUNIT.Brigade
+  )
+  public BrigadeDTO workScheduleUnitBrigadeFetcher(
+    DgsDataFetchingEnvironment dfe
+  ){
+    final WorkScheduleUnit workScheduleUnit = dfe.getSource();
+    return brigade(workScheduleUnit.getBrigadeId());
   }
   
   @DgsQuery

@@ -1,6 +1,7 @@
 package d.zhdanov.ccfit.nsu.activity.service;
 
-import d.zhdanov.ccfit.nsu.activity.mapper.MaterialMapper;
+import d.zhdanov.ccfit.nsu.activity.exceptions.WorkTypeAbsent;
+import d.zhdanov.ccfit.nsu.activity.mapper.WorkMaterialMapper;
 import d.zhdanov.ccfit.nsu.activity.persistence.ManufacturerRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.MaterialTypeRepository;
 import d.zhdanov.ccfit.nsu.activity.persistence.MaterialUsageRepository;
@@ -24,12 +25,12 @@ public class WorkMaterialService {
   private final ManufacturerRepository  manufacturerRepository;
   private final MaterialUsageRepository materialUsageRepository;
   private final WorkTypeRepository      workTypeRepository;
-  private final MaterialMapper          materialMapper;
+  private final WorkMaterialMapper      workMaterialMapper;
   
   public WorkMaterialService(
     @Autowired MaterialTypeRepository materialTypeRepository,
     @Autowired ManufacturerRepository manufacturerRepository,
-    @Autowired MaterialMapper materialMapper,
+    @Autowired WorkMaterialMapper workMaterialMapper,
     @Autowired MaterialUsageRepository materialUsageRepository,
     @Autowired WorkTypeRepository workTypeRepository
   ) {
@@ -37,7 +38,7 @@ public class WorkMaterialService {
     this.manufacturerRepository  = manufacturerRepository;
     this.materialUsageRepository = materialUsageRepository;
     this.workTypeRepository      = workTypeRepository;
-    this.materialMapper          = materialMapper;
+    this.workMaterialMapper      = workMaterialMapper;
   }
   
   @PreAuthorize("hasRole('EMPLOYEE')")
@@ -45,23 +46,25 @@ public class WorkMaterialService {
     final var paged = Utils.getPageable(pagination);
     final var ret =
       materialTypeRepository.findMaterialsWithManufacturer(
-        paged.getOffset(), paged.getPageSize());
-    return materialMapper.fromMaterialTypeEntityList(ret);
+        paged.getOffset(),
+        paged.getPageSize()
+      );
+    return workMaterialMapper.fromMaterialTypeEntityList(ret);
   }
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public Material findMaterialType(final UUID id) {
     final var ret = materialTypeRepository.findMaterialsWithManufacturer(id)
       .orElseThrow(MaterialTypeAbsent::new);
-    return materialMapper.fromMaterialTypeEntity(ret);
+    return workMaterialMapper.fromMaterialTypeEntity(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public Material createMaterialType(final MaterialInput input) {
-    final var entity = materialMapper.toMaterialTypeEntity(input);
+    final var entity = workMaterialMapper.toMaterialTypeEntity(input);
     final var ret    = materialTypeRepository.save(entity);
-    return materialMapper.fromMaterialTypeEntity(ret);
+    return workMaterialMapper.fromMaterialTypeEntity(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
@@ -74,22 +77,22 @@ public class WorkMaterialService {
   public Manufacturer findManufacturer(final UUID id) {
     final var ret =
       manufacturerRepository.findById(id).orElseThrow(ManufacturerAbsent::new);
-    return materialMapper.fromManufacturerEntity(ret);
+    return workMaterialMapper.fromManufacturerEntity(ret);
   }
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public List<Manufacturer> findAllManufacturers(final Pagination pagination) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = manufacturerRepository.findAll(paged).toList();
-    return materialMapper.fromManufacturerEntityList(ret);
+    return workMaterialMapper.fromManufacturerEntityList(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
   @Transactional
   public Manufacturer createManufacturer(ManufacturerInput input) {
-    final var entity = materialMapper.toManufacturerEntity(input);
+    final var entity = workMaterialMapper.toManufacturerEntity(input);
     final var ret    = manufacturerRepository.save(entity);
-    return materialMapper.fromManufacturerEntity(ret);
+    return workMaterialMapper.fromManufacturerEntity(ret);
   }
   
   @PreAuthorize("hasRole('SITE_MANAGER')")
@@ -108,7 +111,7 @@ public class WorkMaterialService {
         paged.getOffset(),
         paged.getPageSize()
       );
-    return materialMapper.fromMaterialUsageEntityList(ret);
+    return workMaterialMapper.fromMaterialUsageEntityList(ret);
   }
   
   @PreAuthorize("hasRole('EMPLOYEE')")
@@ -117,7 +120,14 @@ public class WorkMaterialService {
   ) {
     final var paged = Utils.getPageable(pagination);
     final var ret   = workTypeRepository.findAll(paged).toList();
-    return materialMapper.fromWorkTypeEntityList(ret);
+    return workMaterialMapper.toWorkType(ret);
+  }
+  
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public WorkType findWorkType(UUID id) {
+    final var ret =
+      workTypeRepository.findById(id).orElseThrow(WorkTypeAbsent::new);
+    return workMaterialMapper.toWorkType(ret);
   }
   
   @PreAuthorize("hasAnyRole('ENGINEER, FOREMEN')")
@@ -132,7 +142,7 @@ public class WorkMaterialService {
     UUID uuid,
     List<MaterialUsageInput> materials
   ) {
-    final var forSave = materialMapper.toMaterialUsageEntityList(materials);
+    final var forSave = workMaterialMapper.toMaterialUsageEntityList(materials);
     for(var entity : forSave) {
       entity.setWorkUnitId(uuid);
     }

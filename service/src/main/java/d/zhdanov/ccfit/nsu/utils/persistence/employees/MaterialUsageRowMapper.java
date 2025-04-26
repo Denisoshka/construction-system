@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MaterialUsageRowMapper implements RowMapper<MaterialUsageEntity> {
-  
-  
   @Override
   public MaterialUsageEntity mapRow(@NotNull ResultSet rs, int rowNum)
   throws SQLException {

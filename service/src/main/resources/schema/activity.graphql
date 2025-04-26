@@ -22,9 +22,6 @@ input ProjectContractInput {
   objectType: String!
   planStartDate: Date!
   planEndDate: Date!
-}
-
-input ProjectContractInputAddition{
   signingDate: Date
   factStartDate: Date
   factEndDate: Date
@@ -61,11 +58,13 @@ type MaterialUsage {
   workUnitId: ID!
   material: Material!
   planQuantity: Int!
+  factQuantity: Int
 }
 
 input MaterialUsageInput {
   materialId: ID!
   planQuantity: Int!
+  factQuantity: Int
 }
 
 type WorkType {
@@ -82,7 +81,10 @@ type WorkScheduleUnit{
   contractId : ID!
   planStartDate: Date!
   planEndDate: Date!
+  factStartDate: Date
+  factEndDate: Date
   planOrder: Int!
+  factOrder: Int
 }
 
 input WorkScheduleUnitInput{
@@ -91,7 +93,10 @@ input WorkScheduleUnitInput{
   contractId : ID!
   planStartDate: Date!
   planEndDate: Date!
+  factStartDate: Date
+  factEndDate: Date
   planOrder: Int!
+  factOrder: Int
 }
 
 input CustomerOrganizationInput{
@@ -124,7 +129,7 @@ type Query {
   ): [WorkScheduleUnit!]!
   workScheduleUnit(id: ID!): WorkScheduleUnit!
   workTypes(pagination: Pagination!): [WorkType!]!
-
+  workType(id: ID!): WorkType!
   workMaterials(scheduleUnitID: ID!, pagination: Pagination!): [MaterialUsage!]!
 }
 
@@ -132,7 +137,7 @@ extend type Mutation  {
   saveContract(input: ProjectContractInput!): ProjectContract!
   deleteContract(id: ID!) : Boolean!
   updateContract(
-    id: ID!, update: ProjectContractInputAddition!
+    id: ID!, update: ProjectContractInput!
   ): ProjectContract!
 
   createCustomerOrganization(
@@ -149,7 +154,6 @@ extend type Mutation  {
   ): WorkScheduleUnit!
   deleteWorkScheduleUnit(id:ID!) :Boolean!
   deleteWorkScheduleUnits(units: [ID!]!) : Boolean
-  #  addProjectContract(input: ProjectContractInput!): ProjectContract!
 
   createManufacturer(input: ManufacturerInput!): Manufacturer!
   deleteManufacturer(id: ID!): Boolean!

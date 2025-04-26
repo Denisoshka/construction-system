@@ -17,6 +17,7 @@ public class MaterialUsageEntity {
   private UUID    workUnitId;
   private UUID    materialId;
   private Integer planQuantity;
+  private Integer factQuantity;
   
   @Transient
   private MaterialTypeEntity materialType;
@@ -28,7 +29,7 @@ public class MaterialUsageEntity {
     usage.setWorkUnitId(rs.getObject("mu_work_unit_id", UUID.class));
     usage.setMaterialId(rs.getObject("mu_material_id", UUID.class));
     usage.setPlanQuantity(rs.getInt("mu_plan_quantity"));
-//    usage.setFactQuantity(rs.getInt("fact_quantity"));
+    usage.setFactQuantity(rs.getInt("mu_fact_quantity"));
     return usage;
   }
 }

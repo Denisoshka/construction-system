@@ -19,18 +19,15 @@ import java.util.UUID;
 public class WorkScheduleEntity {
   @Id
   private UUID      id;
-  @NotNull
   private UUID      brigadeId;
-  @NotNull
   private UUID      workTypeId;
-  @NotNull
   private UUID      contractId;
-  @NotNull
   private LocalDate planStartDate;
-  @NotNull
+  private LocalDate factStartDate;
   private LocalDate planEndDate;
-  @NotNull
+  private LocalDate factEndDate;
   private Integer   planOrder;
+  private Integer   factOrder;
   
   @Transient
   private WorkTypeEntity workType;
@@ -45,8 +42,11 @@ public class WorkScheduleEntity {
     ws.setWorkTypeId(rs.getObject("ws_work_type_id", UUID.class));
     ws.setContractId(rs.getObject("ws_contract_id", UUID.class));
     ws.setPlanStartDate(rs.getObject("ws_plan_start_date", LocalDate.class));
+    ws.setFactStartDate(rs.getObject("ws_fact_start_date", LocalDate.class));
     ws.setPlanEndDate(rs.getObject("ws_plan_end_date", LocalDate.class));
+    ws.setFactEndDate(rs.getObject("ws_fact_end_date", LocalDate.class));
     ws.setPlanOrder(rs.getInt("ws_plan_order"));
+    ws.setFactOrder(rs.getInt("ws_fact_order"));
     return ws;
   }
 }

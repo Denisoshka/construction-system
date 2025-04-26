@@ -50,7 +50,7 @@ public interface ContractMapper {
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   @Mapping(target = "id", ignore = true)
   void updateObjectTypeEntity(
-    ProjectContractInputAddition addition,
+    ProjectContractInput addition,
     @MappingTarget ProjectContractEntity entity
   );
 }

@@ -17,14 +17,11 @@ dgs-ver = "10.0.4"
 dgs-extended-scalars-ver = "10.0.3"
 mapstruct-ver = "1.6.3"
 caffeine-ver = "3.2.0"
-graphql-java-ver = "22.1"
-graphql-java-dataloader-ver = "3.3.0"
 
 [plugins]
 spring_boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dgs_codegen = { id = "com.netflix.dgs.codegen", version.ref = "dgs-codegen" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
-gradle_docker_plugin = { id = "com.palantir.docker", version.ref = "docker_plugin" }
 
 
 [libraries]

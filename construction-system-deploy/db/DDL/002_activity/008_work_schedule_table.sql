@@ -9,5 +9,10 @@ CREATE TABLE IF NOT EXISTS work_schedule
     plan_end_date   DATE    NOT NULL CHECK (
         plan_end_date >= '1900-01-01'::DATE AND plan_end_date >= plan_start_date
         ),
-    plan_order      INTEGER NOT NULL CHECK ( plan_order > 0 )
+    plan_order      INTEGER NOT NULL CHECK ( plan_order > 0 ),
+    fact_start_date DATE CHECK ( plan_start_date >= '1900-01-01'::DATE),
+    fact_end_date   DATE CHECK (
+        fact_end_date >= '1900-01-01'::DATE AND fact_end_date >= fact_start_date
+        ),
+    fact_order      INTEGER CHECK ( fact_order > 0 )
 )

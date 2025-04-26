@@ -8,7 +8,6 @@ import d.zhdanov.ccfit.nsu.activity.service.ProjectService;
 import d.zhdanov.graphql.types.Pagination;
 import d.zhdanov.graphql.types.ProjectContract;
 import d.zhdanov.graphql.types.ProjectContractInput;
-import d.zhdanov.graphql.types.ProjectContractInputAddition;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public class ActivityDataFetcher {
   @DgsMutation
   public ProjectContract updateContract(
     @InputArgument String id,
-    @InputArgument ProjectContractInputAddition update
+    @InputArgument ProjectContractInput update
   ) {
     final var uuid = UUID.fromString(id);
     return projectService.updateProjectContract(uuid, update);

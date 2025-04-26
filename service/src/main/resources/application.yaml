@@ -1,6 +1,5 @@
 server:
   port: 8081
-
 spring:
   application:
     name: service
@@ -14,6 +13,11 @@ spring:
   graphql:
     graphiql:
       enabled: true
+
+  docker:
+    compose:
+      file: construction-system-deploy/docker-compose-dev.yaml
+      enabled: false
 
 management:
   tracing:

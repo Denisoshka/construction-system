@@ -19,7 +19,7 @@ public interface BrigadeRepository
     """
     SELECT * FROM brigade br
     JOIN brigade_management bm ON br.id = bm.team_id
-    WHERE worker_id = :workerId::uuid
+    WHERE bm.worker_id = :workerId::uuid
     """)
   Optional<BrigadeEntity> findByWorkerId(UUID workerId);
 }

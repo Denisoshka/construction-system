@@ -46,9 +46,7 @@ public interface WorkersRepository
             LIMIT :limit OFFSET :offset
             """, rowMapperClass = WorkerRowMapper.class
   )
-  List<WorkerEntity> findAllWorkersWithInfo(
-    long offset, int limit
-  );
+  List<WorkerEntity> findAllWorkersWithInfo(long offset, int limit);
   
   @Query(
     value = """
@@ -84,8 +82,7 @@ public interface WorkersRepository
             """, rowMapperClass = WorkerRowMapper.class
   )
   List<WorkerEntity> findWorkersWithInfoByBrigadeId(
-    @Param("brigadeId") UUID brigadeId, long offset, int pageSize
-  );
+    @Param("brigadeId") UUID brigadeId, long offset, int pageSize);
   
   @Query(
     value = """
@@ -105,8 +102,8 @@ public interface WorkersRepository
             """, rowMapperClass = WorkerRowMapper.class
   )
   List<WorkerEntity> findAllWorkersBySiteWithPositionEntity(
-    UUID siteId, long offset, int pageSize
-  );
+    UUID siteId, long offset, int pageSize);
+  
   @Query(
     value = """
             SELECT
@@ -116,14 +113,14 @@ public interface WorkersRepository
                 emp.post,
                 pos.id AS worker_position_id,
                 pos.name AS worker_position_name
-            FROM workers w
-            JOIN employees emp ON w.employee_id = emp.id
-            JOIN worker_position pos ON w.position_id = pos.id
-            JOIN brigade_management br_mg ON br_mg.worker_id = w.employee_id
-            JOIN brigade br ON br.id = br_mg.team_id
-            WHERE w.employee_id = :id::uuid
+                FROM brigade_management br_mg
+                JOIN workers w ON br_mg.worker_id = w.employee_id
+                JOIN worker_position pos ON w.position_id = pos.id
+                JOIN employees emp ON w.employee_id = emp.id
+                WHERE br_mg.team_id = :id::uuid
             LIMIT :pageSize OFFSET :offset
             """, rowMapperClass = WorkerRowMapper.class
   )
-  List<WorkerEntity> findAllByBrigadeIdWithPositionEntity(UUID id, long offset, int pageSize);
+  List<WorkerEntity> findAllByBrigadeIdWithPositionEntity(
+    UUID id, long offset, int pageSize);
 }

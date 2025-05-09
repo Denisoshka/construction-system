@@ -107,6 +107,11 @@ input ContractFilter {
   projectType : String
 }
 
+input MaterialUsageFilter {
+  siteId: ID
+  contractId : ID
+}
+
 type Query {
   objectTypes(pagination: Pagination!): [ObjectType!]!
   customerOrganization(id : ID!): CustomerOrganization!
@@ -127,10 +132,18 @@ type Query {
   brigadeWorkSchedule(
     brigadeId: ID!, pagination: Pagination!
   ): [WorkScheduleUnit!]!
+  brigadeWorkScheduleByPeriod(
+    brigadeId: ID!, pagination: Pagination!, start: Date!, end: Date!
+  ): [WorkScheduleUnit!]!
   workScheduleUnit(id: ID!): WorkScheduleUnit!
   workTypes(pagination: Pagination!): [WorkType!]!
   workType(id: ID!): WorkType!
-  workMaterials(scheduleUnitID: ID!, pagination: Pagination!): [MaterialUsage!]!
+  workMaterialsUsage(
+    scheduleUnitID: ID!, pagination: Pagination!
+  ): [MaterialUsage!]!
+  workMaterialsOverruns(
+    pagination: Pagination!, filter: MaterialUsageFilter!
+  ): [MaterialUsage!]!
 }
 
 extend type Mutation  {
@@ -161,6 +174,9 @@ extend type Mutation  {
   createMaterialType(input : MaterialInput!): Material!
   deleteMaterialType(id :ID!): Boolean!
 
-  deleteWorkMaterials(materials: [ID!]!) : Boolean
-  addWorkMaterials(workUnitId: ID!, materials: [MaterialUsageInput]!) : Boolean
+  deleteWorkMaterialsUsage(materials: [ID!]!) : Boolean
+  addWorkMaterialsUsage(
+    workUnitId: ID!, materials: [MaterialUsageInput]!
+  ): [MaterialUsage!]!
+  updateWorkMaterialUsage(id: ID!, input: MaterialUsageInput!): MaterialUsage!
 }

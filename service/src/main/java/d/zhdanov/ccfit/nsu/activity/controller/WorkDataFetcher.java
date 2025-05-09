@@ -10,6 +10,7 @@ import d.zhdanov.graphql.types.WorkScheduleUnit;
 import d.zhdanov.graphql.types.WorkScheduleUnitInput;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,9 +26,7 @@ public class WorkDataFetcher {
   
   @DgsQuery
   public List<WorkScheduleUnit> projectWorkSchedule(
-    @InputArgument String projectId,
-    @InputArgument Pagination pagination
-  ) {
+    @InputArgument String projectId, @InputArgument Pagination pagination) {
     final var uuid = UUID.fromString(projectId);
     return workScheduleService.findWorkScheduleByProject(uuid, pagination);
   }
@@ -37,6 +36,16 @@ public class WorkDataFetcher {
     @InputArgument String brigadeId, @InputArgument Pagination pagination) {
     final var uuid = UUID.fromString(brigadeId);
     return workScheduleService.findWorkScheduleByBrigade(uuid, pagination);
+  }
+  
+  @DgsQuery
+  public Iterable<WorkScheduleUnit> brigadeWorkScheduleByPeriod(
+    @InputArgument String brigadeId, @InputArgument Pagination pagination,
+    @InputArgument LocalDate start, @InputArgument LocalDate end
+  ) {
+    final var uuid = UUID.fromString(brigadeId);
+    return workScheduleService.findWorkScheduleByBrigade(
+      uuid, pagination, start, end);
   }
   
   @DgsQuery
@@ -54,7 +63,10 @@ public class WorkDataFetcher {
   
   @DgsMutation
   public WorkScheduleUnit updateWorkScheduleUnit(
-    @InputArgument String id, @InputArgument WorkScheduleUnitInput input) {
+    @InputArgument String id,
+    @InputArgument
+    WorkScheduleUnitInput input
+  ) {
     final var uuid = UUID.fromString(id);
     return workScheduleService.updateWorkScheduleUnit(uuid, input);
   }
@@ -66,7 +78,7 @@ public class WorkDataFetcher {
   }
   
   @DgsMutation
-  public Boolean deleteWorkScheduleUnits(@InputArgument List<String> units){
+  public Boolean deleteWorkScheduleUnits(@InputArgument List<String> units) {
     final var uuids = units.stream().map(UUID::fromString).toList();
     return workScheduleService.deleteWorkSchedule(uuids);
   }

@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,6 +49,20 @@ public class WorkScheduleService {
       );
     return workScheduleMapper.toWorkScheduleUnitList(ret);
   }
+  
+  @PreAuthorize("hasRole('EMPLOYEE')")
+  public List<WorkScheduleUnit> findWorkScheduleByBrigade(
+    final UUID brigadeId, final Pagination pagination,
+    final LocalDate startDate, final LocalDate endDate
+  ) {
+    final var paged = Utils.getPageable(pagination);
+    final var ret = workScheduleRepository.findAllByBrigadeId(
+      brigadeId, paged.getOffset(), paged.getPageSize(), startDate, endDate,
+      WorkScheduleRepository.defSort
+    );
+    return workScheduleMapper.toWorkScheduleUnitList(ret);
+  }
+  
   
   @PreAuthorize("hasRole('EMPLOYEE')")
   public List<WorkScheduleUnit> findWorkScheduleByProject(

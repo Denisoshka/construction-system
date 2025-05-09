@@ -67,28 +67,48 @@ public class WorkMaterialDataFetcher {
   }
   
   @DgsMutation
-  public Boolean deleteWorkMaterials(@InputArgument List<String> materials) {
+  public Boolean deleteWorkMaterialsUsage(
+    @InputArgument List<String> materials
+  ) {
     final var matUUIDs = materials.stream().map(UUID::fromString).toList();
     return workMaterialService.deleteMaterials(matUUIDs);
   }
   
   @DgsMutation
-  public boolean addWorkMaterials(
+  public Iterable<MaterialUsage> addWorkMaterialsUsage(
     @InputArgument String workUnitId,
     @InputArgument List<MaterialUsageInput> materials
   ) {
     final var uuid = UUID.fromString(workUnitId);
-    return workMaterialService.addWorkMaterials(uuid, materials);
+    return workMaterialService.addWorkMaterialsUsage(uuid, materials);
+  }
+  
+  @DgsMutation
+  public MaterialUsage updateWorkMaterialUsage(
+    @InputArgument String id,
+    @InputArgument
+    MaterialUsageInput input
+  ) {
+    final var uuid = UUID.fromString(id);
+    return workMaterialService.updateWorkMaterialUsage(uuid, input);
   }
   
   @DgsQuery
-  public List<MaterialUsage> workMaterials(
+  public Iterable<MaterialUsage> workMaterialsUsage(
     @InputArgument String scheduleUnitID,
     @InputArgument Pagination pagination
   ) {
     final var uuid = UUID.fromString(scheduleUnitID);
     return workMaterialService.findAllMaterialUsageByScheduleUnit(
       uuid, pagination);
+  }
+  
+  @DgsQuery
+  public Iterable<MaterialUsage> workMaterialsOverruns(
+    @InputArgument Pagination pagination,
+    @InputArgument MaterialUsageFilter filter
+  ){
+    return workMaterialService.findMaterialsOverruns(pagination, filter);
   }
   
   @DgsQuery

@@ -25,8 +25,8 @@ public interface MaterialUsageRepository
                 mt.manufacturer_id AS mt_manufacturer_id,
                 mt.name AS mt_name,
                 mt.cost AS mt_cost,
-                mr.id AS m_id,
-                mr.manufacturer AS m_manufacturer
+                mr.id AS mr_id,
+                mr.manufacturer AS mr_manufacturer
             FROM material_usage mu
             JOIN material_type mt ON mu.material_id = mt.id
             JOIN manufacturer_table mr ON mt.manufacturer_id = mr.id
@@ -49,8 +49,44 @@ public interface MaterialUsageRepository
                 mt.manufacturer_id AS mt_manufacturer_id,
                 mt.name AS mt_name,
                 mt.cost AS mt_cost,
-                mr.id AS m_id,
-                mr.manufacturer AS m_manufacturer
+                mr.id AS mr_id,
+                mr.manufacturer AS mr_manufacturer
+            FROM material_usage mu
+            JOIN material_type mt ON mu.material_id = mt.id
+            JOIN manufacturer_table mr ON mt.manufacturer_id = mr.id
+            JOIN work_schedule ws ON mu.work_unit_id = ws.id
+            JOIN construction_project_contract cpc ON ws.contract_id = cpc.id
+            WHERE
+                mu.fact_quantity > mu.plan_quantity
+                AND (
+                    (:siteId IS NOT NULL AND cpc.site_id = :siteId::uuid)
+                    OR
+                    (:contractId IS NOT NULL AND cpc.id = :contractId::uuid)
+                    OR
+                    (TRUE)
+                )
+            """, rowMapperClass = MaterialUsageRowMapper.class
+  )
+  List<MaterialUsageEntity> findMaterialUsageWithDetails(
+    UUID siteId,
+    UUID contractId,
+    long offset, int limit
+  );
+  
+  @Query(
+    value = """
+            SELECT
+                mu.id as mu_id,
+                mu.work_unit_id as mu_work_unit_id,
+                mu.material_id as mu_material_id,
+                mu.plan_quantity as mu_plan_quantity,
+                mu.fact_quantity as mu_fact_quantity,
+                mt.id AS mt_id,
+                mt.manufacturer_id AS mt_manufacturer_id,
+                mt.name AS mt_name,
+                mt.cost AS mt_cost,
+                mr.id AS mr_id,
+                mr.manufacturer AS mr_manufacturer
             FROM material_usage mu
             JOIN material_type mt ON mu.material_id = mt.id
             JOIN manufacturer_table mr ON mt.manufacturer_id = mr.id

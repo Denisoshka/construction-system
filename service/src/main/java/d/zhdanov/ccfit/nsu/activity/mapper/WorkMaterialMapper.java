@@ -1,13 +1,8 @@
 package d.zhdanov.ccfit.nsu.activity.mapper;
 
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.ManufacturerEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialTypeEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.MaterialUsageEntity;
-import d.zhdanov.ccfit.nsu.activity.persistence.entities.WorkTypeEntity;
+import d.zhdanov.ccfit.nsu.activity.persistence.entities.*;
 import d.zhdanov.graphql.types.*;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -18,25 +13,25 @@ public interface WorkMaterialMapper {
   MaterialTypeEntity toMaterialTypeEntity(MaterialInput materialInput);
   
   @Mapping(target = "manufacturer", source = "manufacturerEntity")
-  Material fromMaterialTypeEntity(MaterialTypeEntity materialTypeEntity);
+  Material toMaterial(MaterialTypeEntity materialTypeEntity);
   
-  List<Material> fromMaterialTypeEntityList(
+  List<Material> toMaterial(
     List<MaterialTypeEntity> materialTypeEntities
   );
   
   ManufacturerEntity toManufacturerEntity(ManufacturerInput manufacturerInput);
   
-  Manufacturer fromManufacturerEntity(ManufacturerEntity manufacturerEntity);
+  Manufacturer toManufacturer(ManufacturerEntity manufacturerEntity);
   
-  List<Manufacturer> fromManufacturerEntityList(
+  List<Manufacturer> toManufacturer(
     List<ManufacturerEntity> manufacturerEntities
   );
   
   @Mapping(target = "material", source = "materialType")
   MaterialUsage toMaterialUsage(MaterialUsageEntity entity);
   
-  List<MaterialUsage> fromMaterialUsageEntityList(
-    List<MaterialUsageEntity> materialUsageEntities
+  Iterable<MaterialUsage> toMaterialUsage(
+    Iterable<MaterialUsageEntity> materialUsageEntities
   );
   
   WorkType toWorkType(WorkTypeEntity entity);
@@ -52,6 +47,12 @@ public interface WorkMaterialMapper {
     List<MaterialUsageInput> materialUsageInputs
   );
   
-//  MaterialUsage toMaterialUsage(MaterialUsageEntity entity);
+  @Mapping(target = "id", ignore = true)
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void updateMaterialUsage(
+    @MappingTarget MaterialUsageEntity entity,
+    MaterialUsageInput input
+  );
   
+  MaterialUsageFilterEntity toMaterialUsageFilter(MaterialUsageFilter usageFilter);
 }
